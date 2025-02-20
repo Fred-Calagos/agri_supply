@@ -1,11 +1,16 @@
 {
-  "name": "bsab",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "boxicons": "^2.1.4",
+    "datatables.net-autofill-bs5": "^2.7.0",
+    "datatables.net-bs5": "^2.2.1",
+    "datatables.net-buttons-bs5": "^3.2.1",
+    "jquery": "^3.7.1"
   },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "devDependencies": {
+    "vite": "^0.10.3"
+  },
+  "scripts": {
+    "dev": "vite"
+  }
 }

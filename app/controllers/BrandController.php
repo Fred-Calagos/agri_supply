@@ -32,16 +32,11 @@ class BrandController extends BaseController
             $instagram = $_POST['instagram'] ?? '';
     
             // File upload handling for brand logo
+            // File upload handling
             $image = null;
             if (!empty($_FILES['image']['name'])) {
                 $image_name = time() . '_' . $_FILES['image']['name'];
                 $upload_dir = __DIR__ . '/../../public/uploads/';
-                
-                // Ensure upload directory exists
-                if (!is_dir($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
-                }
-    
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $image_name)) {
                     $image = '/uploads/' . $image_name; // Save the relative path
                 }
@@ -57,12 +52,12 @@ class BrandController extends BaseController
                 'email' => $email,
                 'facebook' => $facebook,
                 'instagram' => $instagram,
-                'image_path' => $image
+                'brand_logo' => $image
             ];
     
             if ($brandModel->create($brandData)) {
                 // Redirect to brand list or success page
-                header('Location: /brands');
+                header('Location: /brand');
                 exit;
             } else {
                 die('Error saving brand.');

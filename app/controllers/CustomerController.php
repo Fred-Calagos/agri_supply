@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\BaseController;
+use App\Models\Products;
 
 class CustomerController extends BaseController
 {
@@ -14,9 +15,23 @@ class CustomerController extends BaseController
 
     public function index()
     {
+        // Fetch all products
+        $products = Products::all();
+
+        // Fetch products by category
+        $fruitProducts = Products::getByCategory('Fruit');
+        $vegetableProducts = Products::getByCategory('Vegetable');
+
         $data = [
             'title' => 'Customer Dashboard',
-            'content' => $this->renderView('/customer/dashboard/index')
+            'products' => $products,
+            'fruitProducts' => $fruitProducts,
+            'vegetableProducts' => $vegetableProducts,
+            'content' => $this->renderView('/customer/dashboard/index', [
+                'products' => $products,
+                'fruitProducts' => $fruitProducts,
+                'vegetableProducts' => $vegetableProducts
+            ])
         ];
 
         $this->view('layout/main', $data);

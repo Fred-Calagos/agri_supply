@@ -1,8 +1,8 @@
 {
-    "name": "acer/bsab",
+    "name": "acer/agri_supply",
     "autoload": {
-        "psr-4": {
-           "App\\": "app/"
+    "psr-4": {
+        "App\\": "app/"
         }
     },
     "authors": [

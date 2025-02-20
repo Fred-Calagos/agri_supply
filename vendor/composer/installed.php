@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'acer/bsab',
+        'name' => 'acer/agri_supply',
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
-        'reference' => NULL,
+        'reference' => null,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'acer/bsab' => array(
+        'acer/agri_supply' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
-            'reference' => NULL,
+            'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
