@@ -10,6 +10,7 @@ use App\Controllers\CustomerController;
 use App\Controllers\DashboardController;
 use App\controllers\OrderStatusController;
 use App\controllers\ProductCategoryController;
+use App\controllers\CartController;
 
 // LOGIN ROUTE
 $router->get('/login', [AuthController::class, 'showLogin']);
@@ -19,8 +20,6 @@ $router->get('/logout', [AuthController::class, 'logout']);
 
 // Admin Routes (Protected)
 $router->get('/admin', [AdminController::class, 'index']);
-
-
 
 
 // SETTINGS ROUTES
@@ -56,3 +55,8 @@ $router->get('/customer/dashboard', [CustomerController::class, 'index']);
 $router->get('/customer/profile', [CustomerController::class, 'profile']);
 $router->get('/customer/orders', [CustomerController::class, 'orders']);
 $router->get('/customer/cart', [CustomerController::class, 'cart']);
+$router->get('/customer/product_detail', [CustomerController::class, 'viewProduct']);
+
+
+// CART ROUTES
+$router->post('/customer/cart/store',[CartController::class, 'store']);

@@ -19,7 +19,17 @@ class Products extends Model {
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    public static function find($id) {
+        $stmt = Database::connect()->prepare("
+            SELECT p.*, pc.id as category_id, pc.product_category 
+            FROM products p
+            JOIN product_category pc ON p.product_category_id = pc.id
+            WHERE p.id = ?
+        ");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
     // Function to get products by category
     public static function getByCategory($category) {
         $stmt = Database::connect()->prepare("

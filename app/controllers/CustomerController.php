@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\BaseController;
+use App\models\ProductCategory;
 use App\Models\Products;
 
 class CustomerController extends BaseController
@@ -65,6 +66,37 @@ class CustomerController extends BaseController
 
         $this->view('layout/main', $data);
     }
+
+    public function viewProduct() {
+    
+        // Check if the product ID is set in the URL
+        if (!isset($_GET['id'])) {
+            die("Invalid Product ID.");
+        }
+    
+        // Fetch product details
+        $product = Products::find($_GET['id']);
+    
+        if (!$product) {
+            die("Product not found.");
+        }
+    
+        // Fetch user data (assuming you store user data in session)
+        $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+    
+        $data = [
+            'title' => 'Product Detail',
+            'product' => $product,
+            'user' => $user, // Pass user data to the view
+            'content' => $this->renderView('/customer/product_detail/index', [
+                'product' => $product,
+                'user' => $user
+            ])
+        ];
+    
+        $this->view('layout/main', $data);
+    }
+    
 
     private function checkAuth()
     {

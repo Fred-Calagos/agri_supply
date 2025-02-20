@@ -1,6 +1,6 @@
 
 <div class="container-fluid mt-4 bg-dark-50">
-<div class="d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">

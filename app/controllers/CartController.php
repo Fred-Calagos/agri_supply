@@ -2,8 +2,10 @@
 
 namespace App\controllers;
 
+use App\Core\Database;
 use App\Core\BaseController;
 use App\models\Cart;
+
 
 class CartController extends BaseController
 {
@@ -26,30 +28,34 @@ class CartController extends BaseController
 
         $this->view('layout/main', $data);
     }
+
     public function store()
     {
+    
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Get the form data
-            $product_id = $_POST['product_id'] ?? '';
-            $quantity = $_POST['quantity'] ?? '';
-            $price = $_POST['price'] ?? '';
-            $total = $_POST['total'] ?? '';
-            $status = $_POST['status'] ?? '';
-
-            // Save to database (assuming you have a Cart model)
-            $cartModel = new Cart();
-            $cartData = [
-                'product_id' => $product_id,
-                'quantity' => $quantity,
-                'price' => $price,
-                'total' => $total,
-                'status' => $status
-            ];
-
-            if ($cartModel->create($cartData)) {
-                // Redirect to cart list or success page
-                header('Location: /cart');
+            $pdo = Database::connect();
+            $productId = $_POST['product_id'] ?? null;
+            $userId = $_POST['user_id'] ?? null;
+            $quantity = $_POST['quantity'] ?? null;
+    
+            if ($productId && $userId && $quantity) {
+                Cart::create([
+                    'product_id' => $productId,
+                    'user_id' => $userId,
+                    'quantity' => $quantity
+                ]);
+    
+                // Return JSON success message
+                echo json_encode(["status" => "success", "message" => "Product added to cart!"]);
+            } else {
+                // Return JSON error message
+                echo json_encode(["status" => "error", "message" => "Failed to add product to cart."]);
             }
+            exit; // Stop execution after sending JSON
         }
     }
+    
+    
+
 }
+
