@@ -1,0 +1,103 @@
+/* Small screens (Phones) */
+@media only screen and (max-width: 600px) {
+  }
+  
+  /* Medium screens (Tablets) */
+  @media only screen and (min-width: 601px) and (max-width: 1024px) {
+
+  }
+  
+  /* Large screens (Desktops & Laptops) */
+  @media only screen and (min-width: 1025px) {
+
+  }
+
+  /* Extra small devices (Phones) */
+@media (max-width: 575px) {}
+
+/* Small devices (Tablets) */
+@media (min-width: 576px) and (max-width: 767px) {}
+
+/* Medium devices (Laptops) */
+@media (min-width: 768px) and (max-width: 991px) {}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .sidebar {
+      width: 260px; /* Slightly smaller for compact screens */
+      font-size: 10px;
+      transition: all 0.5s ease;
+    }
+  
+    .sidebar.close {
+      width: 0;
+      overflow: hidden;
+    }
+  
+    .home-section {
+      left: 0;
+      width: 100%;
+      transition: all 0.4s ease;
+    }
+  
+    .sidebar.close ~ .home-section {
+      left: 0;
+      width: 100%;
+    }
+  
+    /* Ensure dropdown aligns correctly */
+    .dropdown-menu {
+      right: 15px; 
+      left: auto;
+    }
+  
+    /* Adjustments for smaller icons and text */
+    .sidebar .nav-links li i {
+      font-size: 18px; 
+    }
+  
+    .sidebar .logo-details .logo_name {
+      font-size: 18px;
+    }
+  
+    .profile-details {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .profile-details .profile_name, 
+    .profile-details .job {
+      font-size: 14px;
+    }
+  
+    .home-content {
+      font-size: 12px;
+      left: 0;
+      width: 100%;
+    }
+  
+    .main-title {
+      font-size: 18px;
+    }
+    
+  }
+/* Large devices (Desktops) */
+@media (min-width: 992px) and (max-width: 1199px) {}
+
+/* Extra large devices (Large screens) */
+@media (min-width: 1200px) {}
+
+/* Portrait mode */
+@media screen and (orientation: portrait) {
+
+  }
+  
+  /* Landscape mode */
+  @media screen and (orientation: landscape) {
+
+  }
+  @media screen and (-webkit-min-device-pixel-ratio: 2),
+  screen and (min-resolution: 192dpi) {
+
+}
+
+  

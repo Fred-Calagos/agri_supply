@@ -1,0 +1,174 @@
+<div class="container">
+    <!-- Navigation and Button Container -->
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="/settings"><i class='bx bx-cog bread-icon'></i> Settings</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"> Product Category</li>
+            </ol>
+        </nav>
+
+        <!-- Add Product Category Button -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productCategoryModal">
+            <i class="bx bx-plus-circle"></i> Add Product Category
+        </button>
+    </div>
+
+    <!-- Message Container -->
+    <div id="message-container"></div>
+
+    <!-- Product Category Table -->
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>No.</th>
+                <th>Category Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($productCategories as $index => $category): ?>
+                <tr>
+                    <td><?= $index + 1 ?></td>
+                    <td><?= $category['product_category'] ?></td>
+                    <td>    
+                        <button class="edit-product-category btn btn-warning" 
+                                data-id="<?= $category['id'] ?>" 
+                                data-product-category="<?= $category['product_category'] ?>">
+                            <i class="bx bxs-edit"></i> Edit
+                        </button>
+                        <button class="delete-category btn btn-danger" 
+                                data-id="<?= $category['id'] ?>">
+                            <i class="bx bxs-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <!-- Modal for Adding Product Category -->
+    <div class="modal fade" id="productCategoryModal" tabindex="-1" aria-labelledby="productCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productCategoryModalLabel">Add Product Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCategoryForm">
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" id="categoryName" name="product_category" placeholder="Enter Category Name" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" id="saveCategory"><i class="bx bx-save"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Product Category Modal -->
+    <div class="modal fade" id="editProductCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCategoryModalLabel">Edit Product Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductCategoryForm">
+                        <input type="hidden" id="editCategoryId" name="id">
+                        <div class="mb-3">
+                            <label for="editProductCategoryName" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" id="editProductCategoryName" name="product_category" required>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="saveEditedCategory"><i class="bx bx-save"></i> Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $("#saveCategory").click(function() {
+            $('#productCategoryModal').modal('hide');
+
+            $.ajax({
+                type: "POST",
+                url: "/product_category/store",
+                data: $("#addCategoryForm").serialize(),
+                success: function (response) {
+                var message = $('<div class="alert alert-success">Product Category Added Successfully!</div>');
+
+                    $('#message-container').html('').append(message);
+
+                    setTimeout(function () {
+                        message.fadeOut();
+                        location.reload();
+                    }, 2000);
+                },
+                error: function () {
+                    var message = $('<div class="alert alert-danger">Error Adding Product Category.</div>');
+
+                    $('#message-container').html('').append(message);
+
+                    setTimeout(function () {
+                        message.fadeOut();
+                    }, 2000);
+                }
+                });
+            });
+
+
+        $(document).on('click', '.edit-product-category', function() {
+            $('#editCategoryId').val($(this).data('id'));
+            $('#editProductCategoryName').val($(this).data('product-category'));
+            $('#editProductCategoryModal').modal('show');
+        });
+
+        $('#saveEditedCategory').click(function (event) {
+            event.preventDefault();
+            
+            var prodCatId = $('#editCategoryId').val();
+            
+            $.ajax({
+                type: "POST",
+                url: "/product_category/update/" + prodCatId, // Send the ID in the URL
+                data: $("#editProductCategoryForm").serialize(),
+                dataType: "json",
+                success: function (response) {
+                    var message = $('<div class="alert alert-success">Product Category Successfully!</div>');
+                    $('#message-container').html('').append(message);
+
+                    $('#editProductCategoryModal').modal('hide');
+
+                    setTimeout(function () {
+                        message.fadeOut();
+                        location.reload();
+                    }, 2000);
+                },
+                error: function () {
+                    var message = $('<div class="alert alert-danger">Error updating Product Category.</div>');
+                    $('#message-container').html('').append(message);
+
+                    setTimeout(function () {
+                        message.fadeOut();
+                    }, 2000);
+                }
+            });
+        });
+
+    });
+</script>

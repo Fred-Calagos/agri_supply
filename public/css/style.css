@@ -1,0 +1,96 @@
+@import 'node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+@import 'node_modules/datatables.net-autofill-bs5/css/autoFill.bootstrap5.min.css';
+@import 'node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css';
+@import 'button.css';
+@import 'responsive.css';
+
+
+.form-container {
+    min-height: 300px; /* Ensures it doesn't shrink too much */
+    padding: 15px;
+    border: 1px solid white; /* Optional border for styling */
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 1px 2px 5px 5px rgba(150,150,150,0.40);
+    -webkit-box-shadow: 1px 2px 5px 5px rgba(150,150,150,0.40);
+    -moz-box-shadow: 1px 2px 5px 5px rgba(150,150,150,0.40);
+}
+
+
+.section-divider {
+  background-color: #7a7a7a; /* Bootstrap Primary Color (Blue) */
+  color: white; /* White text for contrast */
+  padding: 10px; /* Add padding inside */
+  border-radius: 5px; /* Rounded edges */
+  text-align: center; /* Center text */
+  font-weight: bold; /* Make text bold */
+}
+.sub-section-divider {
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    background: none; /* Remove default Bootstrap background */
+    padding: 0;
+    margin: 0;
+}
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+.breadcrumb-item a {
+    font-size: 1rem;
+    color: #000000;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+.bread-icon {
+    color: #000000;
+    font-size: 20px;
+    margin-right: 5px;
+}
+/* Custom breadcrumb separator */
+.breadcrumb-item + .breadcrumb-item::before {
+    content: " > ";
+    color: #000000;
+    padding: 0 8px;
+}
+
+
+/* ALLERTS */
+
+.alert {
+    margin-bottom: 20px;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* FORM TITLE */
+.section-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    padding: 10px 0;
+    border-bottom: 2px solid #007bff;
+    margin-bottom: 15px;
+}
