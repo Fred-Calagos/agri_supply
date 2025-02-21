@@ -1,163 +1,117 @@
-<div class="p-3 border rounded bg-white">
-    <h4 class="section-title mb-3">🍎 Fruit Section</h4>
+<div class="container mt-4">
     <div class="row g-3">
-        <?php foreach($fruitProducts as $product): ?>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="card product-card h-100 shadow-sm add-to-cart-card" 
-                data-id="<?= $product['id'] ?>" 
-                style="cursor: pointer;"
-                onclick="window.location.href='/customer/product_detail?id=<?= $product['id'] ?>'">
-
-                    
-                    <img src="<?= htmlspecialchars($product['image_path']) ?>" class="card-img-top product-img" alt="Product Image">
-                    <div class="card-body text-center">
-                        <h5 class="card-title"><?= htmlspecialchars($product['product_name']) ?></h5>
-                        <p class="card-text text-success fw-bold">₱ <?= number_format($product['selling_price'], 2) ?> per kilo</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <button class="btn btn-primary btn-sm add-to-cart">
-                                <i class='bx bx-cart-add' style="font-size: 1.2rem;"></i> Add to Cart
-                            </button>
-                            <i class='bx bx-heart heart-icon' style="font-size: 1.5rem; cursor: pointer;"></i>
-                        </div>
+        <?php foreach($categories as $category): ?>
+            <!-- First Card -->
+            <div class="col-md-3">
+                <div class="card shadow-sm text-white" style="
+                    background: url('/uploads/logo.png') center/cover no-repeat;
+                    height: 180px; /* Adjust as needed */
+                    position: relative;
+                    overflow: hidden;">
+                    <div class="card-body d-flex align-items-center justify-content-center" style="background: rgba(0, 0, 0, 0.4); height: 100%;">
+                        <h5 class="card-title text-center"><?= htmlspecialchars($category['product_category']) ?></h5>
+                        <a href="/customer/category?category=<?= htmlspecialchars($category['id']) ?>" class="stretched-link"></a>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php endforeach;?>
     </div>
 </div>
 
+<!-- Search Box -->
+<div class="p-3 border rounded bg-white mt-4">
+<!-- Header Section with Search Bar -->
+<div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-primary">
+    <div class="row">
+        <div class="col-md-8 mb-2">
+            <!-- Title on the Left -->
+            <h4 class="mb-0">Agri-Supply Products</h4>
+        </div>
+        <div class="col-md-4">
+        <!-- Search Bar with Icon -->
+        <div class="mb-2 position-relative" style="right:0; width: auto;">
+            <!-- Search Icon -->
+            <i class='bx bx-search-alt-2 position-absolute' style="left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: gray;"></i>
+            <!-- Search Input -->
+            <input type="text" id="searchInput" class="form-control ps-5" placeholder="Search for products...">
 
-    <!-- Vegetable Section -->
-    <div class="p-3 border rounded bg-white">
-        <h4 class="section-title mb-3">🥦 Vegetable Section</h4>
-        <div class="row g-3">
-            <?php foreach ($vegetableProducts as $product): ?>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card product-card h-100 shadow-sm add-to-cart-card" data-id="<?= $product['id'] ?>" data-name="<?= htmlspecialchars($product['product_name']) ?>" data-price="<?= $product['selling_price'] ?>" data-image="<?= htmlspecialchars($product['image_path']) ?>" style="cursor: pointer;">
-                        <img src="<?= htmlspecialchars($product['image_path']) ?>" class="card-img-top product-img" alt="Product Image">
-                        <div class="card-body text-center">
-                            <h5 class="card-title"><?= htmlspecialchars($product['product_name']) ?></h5>
-                            <p class="card-text text-success fw-bold">₱ <?= number_format($product['selling_price'], 2) ?> per kilo</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                            <button class="btn btn-primary btn-sm add-to-cart" data-id="<?= $product['id'] ?>" data-name="<?= htmlspecialchars($product['product_name']) ?>" data-price="<?= $product['selling_price'] ?>" data-image="<?= htmlspecialchars($product['image_path']) ?>">
-                                <i class='bx bx-cart-add' style="font-size: 1.2rem;"></i> Add to Cart
-                            </button>
 
-                                <i class='bx bx-heart heart-icon' style="font-size: 1.5rem; cursor: pointer;"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+            <!-- Search Results (With High Z-Index) -->
+            <div id="searchResults" class="position-absolute d-flex flex-column"></div>
+        </div>
         </div>
     </div>
+    
 
-<!-- Product Modal -->
-<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="productModalLabel">Product Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+</div>
 
-            <!-- Modal Body -->
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-5 text-center">
-                        <img id="modalProductImage" src="" class="img-fluid img-thumbnail" style="width: 200px; height: 200px; object-fit: contain; border-radius: 10%;">
-                    </div>
-                    <div class="col-md-7">
-                        <h4 id="modalProductName"></h4>
-                        <p class="text-success fw-bold">₱ <span id="modalProductPrice"></span> per kilo</p>
 
-                        <!-- Quantity Selection -->
-                        <div class="mb-3">
-                            <label for="productQuantity" class="form-label">Quantity (kg)</label>
-                            <div class="input-group">
-                                <button class="btn btn-outline-secondary" type="button" id="decreaseQty">-</button>
-                                <input type="number" id="productQuantity" class="form-control text-center" value="1" min="1">
-                                <button class="btn btn-outline-secondary" type="button" id="increaseQty">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Add to Cart Button -->
-                        <button class="btn btn-primary w-100" id="confirmAddToCart">
-                            <i class='bx bx-cart-add'></i> Add to Cart
-                        </button>
-                    </div>
+<!-- Product Cards -->
+<div class="row g-3">
+    <?php foreach ($products as $product): ?> 
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card product-card h-100 shadow-sm add-to-cart-card" 
+                data-id="<?= htmlspecialchars($product['id']) ?>" 
+                onclick="window.location.href='/customer/product_detail?id=<?= htmlspecialchars($product['id']) ?>'">
+                
+                <img src="<?= htmlspecialchars($product['image_path']) ?>" class="card-img-top product-img" alt="Product Image">
+                <div class="card-body text-center border border-top">
+                    <h5 class="card-title"><?= htmlspecialchars($product['product_name']) ?></h5>
+                    <p class="card-text text-success fw-bold">₱ <?= number_format($product['selling_price'], 2) ?> per kilo</p>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endforeach; ?>
+</div>
+
 </div>
 
 <script>
-// $(document).ready(function () {
-//     // Open modal and populate details
-//     $(".add-to-cart-card").click(function () {
-//         var id = $(this).data("id");
-//         var name = $(this).data("name");
-//         var price = $(this).data("price");
-//         var image = $(this).data("image");
+$(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+        let query = $(this).val().trim();
 
-//         // Populate modal fields
-//         $("#modalProductImage").attr("src", image);
-//         $("#modalProductName").text(name);
-//         $("#modalProductPrice").text(price);
-//         $("#confirmAddToCart").data("id", id).data("name", name).data("price", price);
-//     });
-
-//     // Add to cart button inside modal (AJAX request to store in database)
-//     $("#confirmAddToCart").click(function () {
-//         var productId = $(this).data("id");
-//         var productPrice = $(this).data("price");
-//         var quantity = parseInt($("#productQuantity").val());
-
-//         $.ajax({
-//             type: "POST",
-//             url: "/cart/store/",
-//             data: {
-//                 product_id: productId,
-//                 quantity: quantity,
-//                 price: productPrice,
-//                 total: productPrice * quantity,
-//                 status: "pending" // You can modify this if needed
-//             },
-//             success: function (response) {
-//                 $("#productModal").modal("hide");
-//                 alert("Added to cart successfully!");
-//             },
-//             error: function () {
-//                 alert("Error adding to cart. Please try again.");
-//             }
-//         });
-//     });
-// });
-
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".product-link").forEach(card => {
-        card.addEventListener("click", function () {
-            const productId = this.getAttribute("data-id");
-            window.location.href = `/customer/product_detail?id=${productId}`;
-        });
-    });
-});
-
-
-document.getElementById("decreaseQty").addEventListener("click", function () {
-        let quantityInput = document.getElementById("productQuantity");
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
+        if (query.length > 0) {
+            $.ajax({
+                type: "POST",
+                url: "/customer/search", // Fixed endpoint
+                data: { query: query },
+                success: function (response) {
+                    try {
+                        let result = JSON.parse(response);
+                        if (result.status === "success") {
+                            let resultHTML = '<ul class="list-group mb-3">';
+                            result.products.forEach(product => {
+                                resultHTML += `<li class="list-group-item">
+                                    <a href="/customer/product_detail?id=${product.id}" class="text-decoration-none">
+                                        ${product.product_name} - ${product.product_category}
+                                    </a>
+                                </li>`;
+                            });
+                            resultHTML += '</ul>';
+                            $("#searchResults").html(resultHTML);
+                        } else {
+                            $("#searchResults").html('<p class="text-danger">No products found</p>');
+                        }
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        $("#searchResults").html('<p class="text-danger">Error loading search results</p>');
+                    }
+                },
+                error: function () {
+                    $("#searchResults").html('<p class="text-danger">Server error. Try again later.</p>');
+                }
+            });
+        } else {
+            $("#searchResults").html("");
         }
     });
 
-    document.getElementById("increaseQty").addEventListener("click", function () {
-        let quantityInput = document.getElementById("productQuantity");
-        quantityInput.value = parseInt(quantityInput.value) + 1;
+    $(".add-to-cart-card").click(function () {
+        const productId = $(this).data("id");
+        window.location.href = `/customer/product_detail?id=${productId}`;
     });
+});
 
 
 </script>

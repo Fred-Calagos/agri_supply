@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\controllers;
 
 use App\Models\User;
 
-class AuthController 
+class AuthController
 {
     public function showLogin() 
     {

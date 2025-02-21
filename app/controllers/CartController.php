@@ -55,7 +55,28 @@ class CartController extends BaseController
         }
     }
     
+    public function updateQuantity($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 0;
+    
+            if ($id && $quantity > 0) {
+                // Update the quantity in the cart table
+                $data = ['quantity' => $quantity];
+                Cart::update($id, $data);
+    
+                echo json_encode(['status' => 'success', 'message' => 'Cart quantity updated successfully.']);
+                exit;
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Invalid cart ID or quantity.']);
+                exit;
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+            exit;
+        }
+    }
+    
     
 
-}
-
+    }

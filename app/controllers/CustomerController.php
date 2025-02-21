@@ -2,9 +2,13 @@
 
 namespace App\Controllers;
 
+use PDO;
+use App\Core\Database;
 use App\Core\BaseController;
-use App\models\ProductCategory;
 use App\Models\Products;
+use App\Models\ProductCategory;
+use App\Models\Cart;
+
 
 class CustomerController extends BaseController
 {
@@ -16,27 +20,47 @@ class CustomerController extends BaseController
 
     public function index()
     {
-        // Fetch all products
-        $products = Products::all();
 
-        // Fetch products by category
-        $fruitProducts = Products::getByCategory('Fruit');
-        $vegetableProducts = Products::getByCategory('Vegetable');
-
+            // Fetch all products
+            $products = Products::all();
+            $category = ProductCategory::all();
+    
         $data = [
             'title' => 'Customer Dashboard',
             'products' => $products,
-            'fruitProducts' => $fruitProducts,
-            'vegetableProducts' => $vegetableProducts,
+            'category'=> $category,
             'content' => $this->renderView('/customer/dashboard/index', [
                 'products' => $products,
-                'fruitProducts' => $fruitProducts,
-                'vegetableProducts' => $vegetableProducts
+                'categories' => $category
             ])
         ];
-
+    
         $this->view('layout/main', $data);
     }
+    public function search()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pdo = Database::connect();
+            $searchQuery = trim($_POST['query']) ?? '';
+
+            if (!empty($searchQuery)) {
+                $stmt = $pdo->prepare(
+                "SELECT p.*, pc.product_category FROM products p 
+                        JOIN product_category pc ON p.product_category_id = pc.id
+                        WHERE p.product_name LIKE :query OR pc.product_category LIKE :query");
+                $stmt->execute(['query' => '%' . $searchQuery . '%']);
+                $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                echo json_encode(["status" => "success", "products" => $products]);
+                exit;
+            } else {
+                echo json_encode(["status" => "error", "message" => "No products found"]);
+                exit;
+            }
+        }
+    }
+
+    
 
     public function profile()
     {
@@ -59,9 +83,17 @@ class CustomerController extends BaseController
     }
     public function cart()
     {
+
+        $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        $cartItems = Cart::totalItems($user['id']);
         $data = [
             'title' => 'My Cart',
-            'content' => $this->renderView('customer/cart')
+            'cartItems' => $cartItems,
+            'user' => $user,
+            'content' => $this->renderView('customer/cart/index', [
+                'cartItems' => $cartItems,
+                'user' => $user
+            ])
         ];
 
         $this->view('layout/main', $data);
@@ -83,14 +115,16 @@ class CustomerController extends BaseController
     
         // Fetch user data (assuming you store user data in session)
         $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-    
+        $cartCount = ($user) ? Cart::countItems($user['id']) : 0;
         $data = [
             'title' => 'Product Detail',
             'product' => $product,
             'user' => $user, // Pass user data to the view
+            'cartCount' => $cartCount,
             'content' => $this->renderView('/customer/product_detail/index', [
                 'product' => $product,
-                'user' => $user
+                'user' => $user,
+                'cartCount' => $cartCount
             ])
         ];
     

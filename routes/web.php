@@ -57,6 +57,8 @@ $router->get('/customer/orders', [CustomerController::class, 'orders']);
 $router->get('/customer/cart', [CustomerController::class, 'cart']);
 $router->get('/customer/product_detail', [CustomerController::class, 'viewProduct']);
 
-
+// Product Search Route (AJAX)
+$router->post('/customer/search', [CustomerController::class, 'search']);
 // CART ROUTES
 $router->post('/customer/cart/store',[CartController::class, 'store']);
+$router->post('/customer/cart/updateQuantity/{id}',[CartController::class, 'updateQuantity']);

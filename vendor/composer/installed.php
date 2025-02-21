@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'acer/agri_supply',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '8f0e0f2427444cb700100639b0bde82b387b1428',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'acer/agri_supply' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '8f0e0f2427444cb700100639b0bde82b387b1428',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -42,4 +42,19 @@ class Products extends Model {
         $stmt->execute(['category' => $category]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function search($keyword)
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("SELECT * FROM products WHERE product_name LIKE ?");
+        $stmt->execute(["%$keyword%"]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function searchByCategory($category, $keyword)
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("SELECT * FROM products WHERE product_category_id = ? AND product_name LIKE ?");
+        $stmt->execute([$category, "%$keyword%"]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

@@ -25,7 +25,7 @@
                              alt="Product Image"
                              style="width: 400px; height: 200px; object-fit: contain; ">
 
-                        <input type="file" class="form-control" id="productImage" name="image" accept="image/*" onchange="previewImage(event)">
+                        <input type="file" class="form-control" id="productImage" name="image" accept="image/*" onchange="previewImage(event)" value="<?=  htmlspecialchars($product['image_path'])?>">
                     </div>
 
                     <!-- Right Column: Product Details -->

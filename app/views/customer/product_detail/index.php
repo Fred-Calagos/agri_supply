@@ -9,9 +9,14 @@
                 <li class="breadcrumb-item active" aria-current="page">Product</li>
             </ol>
         </nav>
-        <a href="/cart" class="cart-container">
+        <a href="/customer/cart" class="cart-container">
             <i class='bx bx-cart-alt'></i>
-            <span class="cart-badge" id="cartCount">33</span>
+            <?php if (isset($cartCount) && $cartCount > 0): ?>
+                <span class="cart-badge"><?= $cartCount ?></span>
+            <?php else: ?>
+                <span class="cart-badge">0</span>
+            <?php endif; ?>
+
         </a>
 
     </div>
@@ -24,7 +29,7 @@
             <div class="me-md-4 mb-3 mb-md-0">
 
                 <img src="<?= htmlspecialchars($product['image_path']) ?>" class="img-fluid rounded" 
-                    alt="Product Image" style="max-width: 250px; height: 200px;">
+                    alt="Product Image" style="max-width: 250px; height: 250px;">
             </div>
 
             <!-- Product Information (Right) -->
@@ -89,7 +94,7 @@ $(document).ready(function () {
                     setTimeout(() => {
                         $(".message-container").fadeOut();
                         window.location.href = "/customer/product_detail?id=" + productId;
-                    }, 2000);
+                    }, 1000);
                 }
             },
             error: function () {
