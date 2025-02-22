@@ -87,7 +87,7 @@
             </div>
             <div>
                 <span>Total (<span id="totalItems">0</span> items): ₱ <span id="totalPrice">0.00</span></span>
-                <button class="btn btn-danger" id="checkoutSelectedBtn">Buy Now</button>
+                <input name="submit" type="submit" value="Order Now" id="submit" class="btn btn-secondary">  
             </div>
         </div>
     </form>
@@ -100,47 +100,13 @@
 </div>
 
 <script>
-    function updateCartQuantity(cartId, quantity) {
-    fetch(`/customer/cart/updateQuantity/${cartId}`, { 
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `quantity=${quantity}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "success") {
-            let subtotalElement = document.querySelector(`#subtotal-${cartId}`);
-
-            if (subtotalElement) {
-                let price = parseFloat(subtotalElement.getAttribute("data-price")) || 0;
-                let newSubtotal = price * quantity;
-                subtotalElement.innerText = "₱ " + newSubtotal.toFixed(2);
-            } else {
-                console.error("Subtotal element not found for cartId:", cartId);
-            }
-
-            // **Call updateTotal to recalculate total price**
-            updateTotal();
-        }
-    })
-    .catch(error => console.error("Error:", error));    
-}
-
-    
 document.addEventListener("DOMContentLoaded", function () {
-    const selectAllCheckbox = document.getElementById("selectAll");
-    const checkboxes = document.querySelectorAll(".cartCheckbox");
-    const deleteBtn = document.getElementById("deleteSelectedBtn");
-    const checkoutBtn = document.getElementById("checkoutSelectedBtn");
-    const totalItems = document.getElementById("totalItems");
-    const totalPrice = document.getElementById("totalPrice");
-
+    // Quantity increase and decrease buttons
     document.querySelectorAll(".decreaseQty, .increaseQty").forEach(button => {
         button.addEventListener("click", function () {
             let cartId = this.getAttribute("data-id");
             let input = document.querySelector(`.productQuantity[data-id='${cartId}']`);
             let action = this.classList.contains("decreaseQty") ? "decrease" : "increase";
-
             let currentValue = parseInt(input.value);
 
             if (action === "decrease" && currentValue > 1) {
@@ -150,103 +116,116 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             updateCartQuantity(cartId, input.value);
+            updateTotal(); // Update total price & items
         });
     });
 
-
-
-
-    // Select/Deselect All
-    selectAllCheckbox.addEventListener("change", function () {
-        checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
-        updateTotal();
+    // Checkbox listener for individual cart items
+    document.querySelectorAll(".cartCheckbox").forEach(checkbox => {
+        checkbox.addEventListener("change", function () {
+            updateTotal();
+        });
     });
 
-    // Update total items & price when selecting individual checkboxes
-    checkboxes.forEach(cb => cb.addEventListener("change", updateTotal));
+    // Select All Checkbox functionality
+    document.getElementById("selectAll").addEventListener("change", function () {
+        let isChecked = this.checked;
+        document.querySelectorAll(".cartCheckbox").forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+        updateTotal();
 
+    });
+
+    // Function to update the quantity in the backend
+    function updateCartQuantity(cartId, quantity) {
+        fetch(`/customer/cart/updateQuantity/${cartId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `quantity=${quantity}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                let subtotalElement = document.querySelector(`#subtotal-${cartId}`);
+                if (subtotalElement) {
+                    let price = parseFloat(subtotalElement.getAttribute("data-price")) || 0;
+                    let newSubtotal = price * quantity;
+                    subtotalElement.innerText = "₱ " + newSubtotal.toFixed(2);
+                }
+                updateTotal(); // Recalculate totals after updating the cart
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+    // Function to calculate and update total items and price
     function updateTotal() {
-    let totalItemCount = 0;
-    let totalPriceAmount = 0;
+        let totalItemCount = 0;
+        let totalPriceAmount = 0;
 
-    checkboxes.forEach(cb => {
-        if (cb.checked) {
-            totalItemCount++;
-
-            let priceElement = document.querySelector(`#subtotal-${cb.value}`);
-            let quantityInput = document.querySelector(`.productQuantity[data-id='${cb.value}']`);
+        document.querySelectorAll(".cartCheckbox:checked").forEach(checkbox => {
+            let cartId = checkbox.value;
+            let priceElement = document.querySelector(`#subtotal-${cartId}`);
+            let quantityInput = document.querySelector(`.productQuantity[data-id='${cartId}']`);
 
             if (priceElement && quantityInput) {
                 let price = parseFloat(priceElement.getAttribute("data-price")) || 0;
                 let quantity = parseInt(quantityInput.value) || 0;
 
+                totalItemCount++;
                 totalPriceAmount += price * quantity;
             }
-        }
-    });
+        });
+        console.log(document.querySelectorAll(".cartCheckbox:checked"));
 
-    totalItems.innerText = totalItemCount;
-    totalPrice.innerText = totalPriceAmount.toFixed(2); // Ensure 2 decimal places
-}
-
-    // Delete Selected Items
-    deleteBtn.addEventListener("click", function () {
-        let selectedIds = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
-
-        if (selectedIds.length === 0) {
-            alert("Please select items to delete.");
-            return;
-        }
-
-        if (confirm("Are you sure you want to delete the selected items?")) {
-            fetch("/customer/cart/deleteSelected", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `cartIds=${JSON.stringify(selectedIds)}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    selectedIds.forEach(id => document.querySelector(`input[value='${id}']`).closest(".row").remove());
-                    updateTotal();
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        }
-    });
-
-    
-    checkoutBtn.addEventListener("click", function () {
-    let selectedItems = {};
-    document.querySelectorAll(".cartCheckbox:checked").forEach(cb => {
-        let quantityInput = document.querySelector(`.productQuantity[data-id='${cb.value}']`);
-        selectedItems[cb.value] = quantityInput.value;
-    });
-
-    if (Object.keys(selectedItems).length === 0) {
-        alert("Please select items to checkout.");
-        return;
+        document.getElementById("totalItems").innerText = totalItemCount;
+        document.getElementById("totalPrice").innerText = totalPriceAmount.toFixed(2);
     }
 
-    fetch("/customer/cart/checkoutSelected", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItemss: selectedItems })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "success") {
-            alert("Checkout successful!");
-            location.reload();
+    $("#submit").click(function(e) {  
+    e.preventDefault(); // Prevents default form submission
+
+    var selectedItems = $("[name='cartIds[]']:checked").map(function() {
+        return $(this).val();
+    }).get(); // Get all checked cart item IDs
+
+    if (selectedItems.length === 0) {
+        alert("Please select a product(s) to order.");
+        return false;
+    }
+
+    var confirmMessage = selectedItems.length === 1 
+        ? "Are you sure you want to order this product?" 
+        : "Are you sure you want to order these products?";
+
+    if (!confirm(confirmMessage)) {
+        return false;
+    }
+    
+    // Send AJAX POST request
+    $.ajax({
+        url: "/customer/cart/checkoutSelected",
+        type: "POST",
+        data: { cartIds: selectedItems },  // Ensure it's sent as an array
+        dataType: "json",
+        success: function(response) {
+            if (response.status === "success") {
+                alert(response.message);
+                location.reload(); // Reload page to update cart
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            alert("An error occurred. Please try again.");
         }
-    })
-    .catch(error => console.error("Error:", error));
-});
-
+    });
 });
 
 
 
-
-
+});
 </script>
+

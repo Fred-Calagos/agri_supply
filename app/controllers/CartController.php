@@ -80,45 +80,43 @@ class CartController extends BaseController
     public function checkoutSelected()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $cartItems = isset($_POST['cartItems']) ? json_decode($_POST['cartItems'], true) : [];
+            // Retrieve and sanitize input
+            $cartItemIds = isset($_POST['cartIds']) ? $_POST['cartIds'] : [];
     
-            if (empty($cartItems)) {
+            if (!is_array($cartItemIds) || empty($cartItemIds)) {
                 echo json_encode(['status' => 'error', 'message' => 'No items selected.']);
                 exit;
             }
     
-            // Fetch cart items based on the received cart IDs
-            $cartIds = array_keys($cartItems);
-            $cartItemsData = Cart::whereIn($cartIds); 
+            // Fetch cart items using a model function
+            $cartModel = new Cart();
+            $cartItemsData = $cartModel->getItemsByIds($cartItemIds); // Ensure this method exists
     
-            if (empty($cartItemsData)) {
+            if (!$cartItemsData || count($cartItemsData) === 0) { // Check if array is empty
                 echo json_encode(['status' => 'error', 'message' => 'Cart items not found.']);
                 exit;
             }
     
-            // Insert into orders table
+            // Insert into the orders table
+            $orderModel = new Order();
             foreach ($cartItemsData as $item) {
-                Order::create([
-                    'user_id' => $item['user_id'],
-                    'product_id' => $item['product_id'],
-                    'product_quantity' => $cartItems[$item['id']],  // Use selected quantity
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
+                $orderModel->create([
+                    'user_id' => $item['user_id'], 
+                    'product_id' => $item['product_id'], 
+                    'product_quantity' => $item['quantity']
                 ]);
             }
     
             // Remove checked items from cart
-            Cart::whereIn($cartIds)->delete();
+            $cartModel->deleteItemsByIds($cartItemIds); // Ensure this method exists
     
             echo json_encode(['status' => 'success', 'message' => 'Checkout successful!']);
             exit;
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
-            exit;
         }
+    
+        echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+        exit;
     }
-    
-    
     
 
 }
