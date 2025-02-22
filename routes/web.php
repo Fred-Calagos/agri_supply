@@ -62,3 +62,4 @@ $router->post('/customer/search', [CustomerController::class, 'search']);
 // CART ROUTES
 $router->post('/customer/cart/store',[CartController::class, 'store']);
 $router->post('/customer/cart/updateQuantity/{id}',[CartController::class, 'updateQuantity']);
+$router->post('/customer/cart/checkoutSelected/{id}',[CartController::class, 'checkoutSelected']);

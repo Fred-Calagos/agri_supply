@@ -5,6 +5,7 @@ namespace App\controllers;
 use App\Core\Database;
 use App\Core\BaseController;
 use App\models\Cart;
+use App\models\Order;
 
 
 class CartController extends BaseController
@@ -75,8 +76,49 @@ class CartController extends BaseController
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
             exit;
         }
+    }   
+    public function checkoutSelected()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $cartItems = isset($_POST['cartItems']) ? json_decode($_POST['cartItems'], true) : [];
+    
+            if (empty($cartItems)) {
+                echo json_encode(['status' => 'error', 'message' => 'No items selected.']);
+                exit;
+            }
+    
+            // Fetch cart items based on the received cart IDs
+            $cartIds = array_keys($cartItems);
+            $cartItemsData = Cart::whereIn($cartIds); 
+    
+            if (empty($cartItemsData)) {
+                echo json_encode(['status' => 'error', 'message' => 'Cart items not found.']);
+                exit;
+            }
+    
+            // Insert into orders table
+            foreach ($cartItemsData as $item) {
+                Order::create([
+                    'user_id' => $item['user_id'],
+                    'product_id' => $item['product_id'],
+                    'product_quantity' => $cartItems[$item['id']],  // Use selected quantity
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]);
+            }
+    
+            // Remove checked items from cart
+            Cart::whereIn($cartIds)->delete();
+    
+            echo json_encode(['status' => 'success', 'message' => 'Checkout successful!']);
+            exit;
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+            exit;
+        }
     }
+    
     
     
 
-    }
+}

@@ -17,19 +17,17 @@
         <?php endforeach;?>
     </div>
 </div>
-
 <!-- Search Box -->
 <div class="p-3 border rounded bg-white mt-4">
 <!-- Header Section with Search Bar -->
-<div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-primary">
-    <div class="row">
-        <div class="col-md-8 mb-2">
+<div class="row g-3 border-bottom bottom-primary mb-3">
+    <div class="col-md-6 mb-2">
             <!-- Title on the Left -->
             <h4 class="mb-0">Agri-Supply Products</h4>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
         <!-- Search Bar with Icon -->
-        <div class="mb-2 position-relative" style="right:0; width: auto;">
+        <div class="mb-2 position-relative" style="right:0; width: 100%;">
             <!-- Search Icon -->
             <i class='bx bx-search-alt-2 position-absolute' style="left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: gray;"></i>
             <!-- Search Input -->
@@ -39,8 +37,8 @@
             <!-- Search Results (With High Z-Index) -->
             <div id="searchResults" class="position-absolute d-flex flex-column"></div>
         </div>
-        </div>
-    </div>
+</div>
+
     
 
 </div>

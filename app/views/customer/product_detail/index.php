@@ -43,15 +43,19 @@
                 <input type="hidden" id="productId" name="product_id" value="<?= $product['id'] ?>">
                 <input type="hidden" id="userId" name="user_id" value="<?= $user['id'] ?>">
                             <!-- Quantity Selector -->
-                <div class="mb-3">
-                    <label for="productQuantity" class="form-label small">Quantity (kg)</label>
-                    <div class="input-group">
-                        <button class="btn btn-outline-secondary btn-sm" type="button" id="decreaseQty">-</button>
-                        <input type="number" id="productQuantity" class="form-control text-center" name="quantity"
-                            value="1" min="1" style="max-width: 70px;">
-                        <button class="btn btn-outline-secondary btn-sm" type="button" id="increaseQty">+</button>
-                    </div>
-                </div>
+                            <div class="mb-3">
+                            <label for="productQuantity" class="form-label small">Quantity (kg)</label>
+                            <div class="d-flex align-items-center">
+                                <div class="input-group" style="width: auto;">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="decreaseQty">-</button>
+                                    <input type="number" id="productQuantity" class="form-control text-center" name="quantity"
+                                        value="1" min="1" style="max-width: 70px;">
+                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="increaseQty">+</button>
+                                </div>
+                                <span class="ms-2"><?= $product['stocks'] ?> kilo available</span>
+                            </div>
+                        </div>
+
 
                 <!-- Buttons -->
                 <div class="d-flex gap-2">
