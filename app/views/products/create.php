@@ -49,12 +49,13 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+
                                 <div class="col-md-4 mb-3">
-                                    <label for="productStatus" class="form-label">Status</label>
-                                    <select class="form-control" id="productStatus" name="product_status" required>
-                                        <option value="Available">Available</option>
-                                        <option value="Stock">In Stock</option>
-                                        <option value="Out of Stock">Out of Stock</option>
+                                    <label for="productStatus" class="form-label">Product Status</label>
+                                    <select class="form-control" id="productStatus" name="product_status_id" required>
+                                        <?php foreach ($productStatus as $prodStat): ?>
+                                            <option value="<?= $prodStat['id'] ?>"><?= $prodStat['product_status'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>

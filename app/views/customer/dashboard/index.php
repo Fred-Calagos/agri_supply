@@ -21,9 +21,9 @@
 <div class="p-3 border rounded bg-white mt-4">
 <!-- Header Section with Search Bar -->
 <div class="row g-3 border-bottom bottom-primary mb-3">
-    <div class="col-md-6 mb-2">
+        <div class="col-md-6 mb-2">
             <!-- Title on the Left -->
-            <h4 class="mb-0">Agri-Supply Products</h4>
+            <h4 class="section-title mb-0">Agri-Supply Products</h4>
         </div>
         <div class="col-md-6">
         <!-- Search Bar with Icon -->

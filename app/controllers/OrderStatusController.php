@@ -13,7 +13,7 @@ class OrderStatusController extends BaseController
         checkAdmin(); // Ensure only admins can access this controller
     }
     public function index() {
-        $orderStatus = OrderStatus::all();
+        $orderStatus = OrderStatus::all();  
         $data = [
             'title' => 'Order Status',
             'orderStatus'=> $orderStatus,
@@ -62,4 +62,24 @@ class OrderStatusController extends BaseController
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
         }
     }
+
+        // Method to delete an academic year
+        public function delete($id) {
+            if (!$id) {
+                echo json_encode(["status" => "error", "message" => "Invalid ID."]);
+                exit;
+            }
+        
+            // Debugging: Log the ID before deletion
+            error_log("Attempting to delete Academic Year with ID: " . $id);
+        
+            $deleted = OrderStatus::delete($id);
+        
+            if ($deleted) {
+                echo json_encode(["status" => "success", "message" => "Academic Year deleted successfully."]);
+            } else {
+                echo json_encode(["status" => "error", "message" => "Failed to delete record."]);
+            }
+            exit;
+        }
 }

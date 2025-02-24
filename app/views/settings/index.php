@@ -20,6 +20,15 @@
         </div>
         <div class="col-md-4 mt-4">
             <div class="card position-relative">
+                <a href="/product_status" class="stretched-link"></a> <!-- Adjusted URL -->
+                <div class="card-body text-center">
+                <i class="bx bx-info-circle"></i>
+                    <h5 class="card-title mt-2">PRODUCT STATUS</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mt-4">
+            <div class="card position-relative">
                 <a href="/product_category" class="stretched-link"></a> <!-- Adjusted URL -->
                 <div class="card-body text-center">
                     <i class='bx bxs-tag-alt' ></i>

@@ -11,6 +11,9 @@ use App\Controllers\DashboardController;
 use App\controllers\OrderStatusController;
 use App\controllers\ProductCategoryController;
 use App\controllers\CartController;
+use App\controllers\OrderController;
+use App\controllers\PdfController;
+use App\controllers\ProductStatusController;
 
 // LOGIN ROUTE
 $router->get('/login', [AuthController::class, 'showLogin']);
@@ -33,6 +36,15 @@ $router->post('/brand/store', [BrandController::class, 'store']);
 $router->get('/order_status', [OrderStatusController::class, 'index']);
 $router->post('/order_status/store', [OrderStatusController::class,'store']);
 $router->post('/order_status/update/{id}', [OrderStatusController::class,'update']);
+$router->get('/order_status/delete/{id}', [OrderStatusController::class,'delete']);
+
+
+// PRODUCT STATUS ROUTE 
+
+$router->get('/product_status', [ProductStatusController::class, 'index']);
+$router->post('/product_status/store', [ProductStatusController::class, 'store']);
+$router->post('/product_status/update/{id}', [ProductStatusController::class, 'update']);
+$router->get('/product_status/delete/{id}', [ProductStatusController::class, 'delete']);
 
 // PRODUCT ROUTES
 $router->get('/products', [ProductController::class, 'index']);
@@ -59,7 +71,23 @@ $router->get('/customer/product_detail', [CustomerController::class, 'viewProduc
 
 // Product Search Route (AJAX)
 $router->post('/customer/search', [CustomerController::class, 'search']);
+
 // CART ROUTES
 $router->post('/customer/cart/store',[CartController::class, 'store']);
 $router->post('/customer/cart/updateQuantity/{id}',[CartController::class, 'updateQuantity']);
-$router->post('/customer/cart/checkoutSelected', [CartController::class, 'checkoutSelected']);
+$router->post('/customer/cart/OrderSelected', [CartController::class, 'OrderSelected']);
+$router->get('/customer/cart/delete/{id}', [CartController::class, 'deleteCart']);
+
+
+// ORDER ROUTE 
+
+$router->get('/orders', [OrderController::class,'index']);
+$router->get('/orders/order_details', [OrderController::class,'edit']);
+
+
+$router->post('/orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
+
+
+// REPORT PDF ROUTE
+$router->get('/pdf/generateOrderPdf', [PdfController::class, 'generateOrderPdf']);
+$router->get('/pdf/viewPdfReport', [PdfController::class, 'viewPdfReport']);

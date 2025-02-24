@@ -36,12 +36,21 @@
     right: -15px;
     background: red;
     color: white;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 12px;
     border-radius: 50%;
-    padding: 4px 8px;
+    padding:8px;
     min-width: 20px;
     text-align: center;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
+/* Add this CSS */
+.filter-status {
+    text-decoration: none; /* Default state */
+    padding-bottom: 2px; /* Spacing for underline */
+}
+
+.filter-status.active {
+    text-decoration: underline; /* Underline when active */
+    font-weight: bold; /* Optional: Make it bold */
+}

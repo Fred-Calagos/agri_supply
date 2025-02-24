@@ -98,61 +98,163 @@
             </div>
         </div>
     </div>
+
+    <!-- Delete Order Status Modal -->
+<div class="modal fade" id="deleteOrderStatusModal" tabindex="-1" aria-labelledby="deleteOrderStatusLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteOrderStatusLabel">Delete Order Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this order status?</p>
+                <p id="orderStatusInfo"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteOrderStatus">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>
 
 <script>
-    $(document).ready(function() {
-        $("#saveOrderStatus").click(function() {
-            $('#orderStatModal').modal('hide');
-
-            $.ajax({
-                type: "POST",
-                url: "/order_status/store",
-                data: $("#addOrderStatusForm").serialize(),
-                success: function(response) {
-                    alert("Order Status Added Successfully!");
-                    location.reload();
-                },
-                error: function() {
-                    alert("Error adding Order Status.");
-                }
-            });
-        });
-
-        $(document).on('click', '.edit-order-status', function() {
-            var id = $(this).data('id');
-            var orderStatus = $(this).data('order-status');
-
-            $('#editOrderStatId').val(id);
-            $('#editOrderStatus').val(orderStatus);
-
-            $('#editOrderStatusModal').modal('show');
-        });
-
-        $('#editOrderStatusForm').submit(function(e) {
-        e.preventDefault(); // Prevent default form submission
-        $('#editOrderStatusModal').modal('hide');
-        var formData = $(this).serialize(); // Serialize form data
-        var order_stat_id = $('#editOrderStatId').val(); // Get category ID
+    $(document).ready(function () {
+    // Function to save Order Status
+    function saveOrderStatus() {
+        $('#orderStatModal').modal('hide');
 
         $.ajax({
             type: "POST",
-            url: "/order_status/update/" + order_stat_id, // Append ID to URL
-            data: formData,
-            dataType: "json",
-            success: function(response) {
-                var message = $('<div class="alert alert-success">Order Status Updated Successfully!</div>');
-
+            url: "/order_status/store",
+            data: $("#addOrderStatusForm").serialize(),
+            success: function (response) {
+                var message = $('<div class="alert alert-success">Order Status Added Successfully!</div>');
                 $('#message-container').html('').append(message);
+
+                setTimeout(function () {
+                    message.fadeOut();
+                    location.reload();
+                }, 1000);
+            },
+            error: function () {
+                var message = $('<div class="alert alert-danger">Error adding Order Status.</div>');
+                $('#message-container').html('').append(message);
+
+                setTimeout(function () {
+                    message.fadeOut();
+                }, 2000);
+            }
+        });
+    }
+
+    // Click event for Save button
+    $("#saveOrderStatus").click(function () {
+        saveOrderStatus();
+    });
+
+    // Enter key event in input field
+    $("#orderStatus").keypress(function (event) {
+        if (event.which === 13) { // Check if Enter key is pressed
+            event.preventDefault();
+            saveOrderStatus();
+        }
+    });
+
+    // Open Edit Modal and Pass Data
+    $(document).on('click', '.edit-order-status', function () {
+        var id = $(this).data('id');
+        var orderStatus = $(this).data('order-status');
+
+        $('#editOrderStatId').val(id);
+        $('#editOrderStatus').val(orderStatus);
+
+        $('#editOrderStatusModal').modal('show');
+    });
+
+    // Function to save edited Order Status
+    function saveEditedOrderStatus() {
+        var order_stat_id = $('#editOrderStatId').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/order_status/update/" + order_stat_id,
+            data: $("#editOrderStatusForm").serialize(),
+            dataType: "json",
+            success: function (response) {
+                var message = $('<div class="alert alert-success">Order Status Updated Successfully!</div>');
+                $('#message-container').html('').append(message);
+
+                $('#editOrderStatusModal').modal('hide');
 
                 setTimeout(function () {
                     message.fadeOut();
                     location.reload();
                 }, 2000);
             },
-            error: function() {
+            error: function () {
                 var message = $('<div class="alert alert-danger">Error updating Order Status.</div>');
+                $('#message-container').html('').append(message);
 
+                setTimeout(function () {
+                    message.fadeOut();
+                }, 2000);
+            }
+        });
+    }
+
+    // Click event for Save Changes button
+    $("#saveEditedOrderStatus").click(function (event) {
+        event.preventDefault();
+        saveEditedOrderStatus();
+    });
+
+    // Enter key event in Edit Modal input
+    $("#editOrderStatus").keypress(function (event) {
+        if (event.which === 13) { // Check if Enter key is pressed
+            event.preventDefault();
+            saveEditedOrderStatus();
+        }
+    });
+
+    // Open Delete Modal and Pass Data
+    $(document).on('click', '.delete-order-status', function () {
+        var orderStatusId = $(this).data('id');
+        var orderStatusText = $(this).closest('tr').find('td:nth-child(2)').text();
+
+        $('#orderStatusInfo').text('Order Status: ' + orderStatusText);
+        $('#confirmDeleteOrderStatus').data('id', orderStatusId);
+
+        $('#deleteOrderStatusModal').modal('show');
+    });
+
+    // Confirm Deletion
+    $('#confirmDeleteOrderStatus').click(function () {
+        var orderStatusId = $(this).data('id');
+
+        if (!orderStatusId) {
+            alert("Error: No Order Status ID found.");
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "/order_status/delete/" + orderStatusId,
+            success: function (response) {
+                var message = $('<div class="alert alert-success">Order Status Deleted Successfully!</div>');
+                $('#message-container').html('').append(message);
+                $('#deleteOrderStatusModal').modal('hide');
+
+                setTimeout(function () {
+                    message.fadeOut();
+                    location.reload();
+                }, 2000);
+            },
+            error: function () {
+                var message = $('<div class="alert alert-danger">Error deleting Order Status.</div>');
                 $('#message-container').html('').append(message);
 
                 setTimeout(function () {
@@ -161,23 +263,6 @@
             }
         });
     });
-    
+});
 
-        $(document).on('click', '.delete-order-status', function() {
-            if (confirm("Are you sure you want to delete this Order Status?")) {
-                var id = $(this).data('id');
-                $.ajax({
-                    type: "GET",
-                    url: "/order_status/delete/" + id,
-                    success: function(response) {
-                        alert("Order Status  Deleted Successfully!");
-                        location.reload();
-                    },
-                    error: function(xhr) {
-                        alert("Error deleting Order Status.");
-                    }
-                });
-            }
-        });
-    });
 </script>

@@ -25,26 +25,29 @@ class AuthController
         $userModel = new User();
         $user = $userModel->getUserByEmail($email);
 
-        if (!$user & !$user['password']) { // Use password hashing
+        if (!$user && $password !== $user['password']) { // Use password hashing
             $_SESSION['error'] = "Invalid email or password";
             header("Location: /login");
-            exit;
+        }else{
+                        // Store user details in session
+            $_SESSION['user'] = [
+                'id'    => $user['id'],
+                'email' => $user['email'],
+                'role'  => $user['role'], 
+            ];
+
+            // Redirect based on role
+            if ($user['role'] === 'Admin' && $user && $password == $user['password'] ) {
+                header("Location: /admin");
+            } elseif($user['role'] === 'User' && $user && $password == $user['password']) {
+                header("Location: /customer/dashboard");
+            }else{
+                $_SESSION['error'] = "Invalid email or password";
+                header("Location: /login");
+            }
+
         }
 
-        // Store user details in session
-        $_SESSION['user'] = [
-            'id'    => $user['id'],
-            'email' => $user['email'],
-            'role'  => $user['role'], 
-        ];
-
-        // Redirect based on role
-        if ($user['role'] === 'Admin') {
-            header("Location: /admin");
-        } else {
-            header("Location: /customer/dashboard");
-        }
-        exit;
     }
 
     public function logout() 

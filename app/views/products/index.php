@@ -27,8 +27,7 @@
                 <td>
                     <img src="<?= htmlspecialchars( $product['image_path']) ?>"
                         alt="Product Image"
-                        class="img-thumbnail"
-                        style="width: 50px; height: 50px; object-fit: cover;">
+                        class="img-thumbnail product-img-tbl">
                 </td>
                 <td><?= htmlspecialchars($product['product_name']) ?></td>
                 <td><?= htmlspecialchars($product['product_description']) ?></td>

@@ -2,10 +2,11 @@
 
 namespace App\controllers;
 
-use App\Core\Database;
-use App\Core\BaseController;
 use App\models\Cart;
 use App\models\Order;
+use App\Core\Database;
+use App\models\OrderStatus;
+use App\Core\BaseController;
 
 
 class CartController extends BaseController
@@ -77,46 +78,81 @@ class CartController extends BaseController
             exit;
         }
     }   
-    public function checkoutSelected()
+    public function OrderSelected()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Retrieve and sanitize input
+            error_log("POST Data: " . print_r($_POST, true)); // Debugging
+        
             $cartItemIds = isset($_POST['cartIds']) ? $_POST['cartIds'] : [];
-    
+            
             if (!is_array($cartItemIds) || empty($cartItemIds)) {
+                error_log("Error: No items selected.");
                 echo json_encode(['status' => 'error', 'message' => 'No items selected.']);
                 exit;
             }
-    
-            // Fetch cart items using a model function
+        
             $cartModel = new Cart();
-            $cartItemsData = $cartModel->getItemsByIds($cartItemIds); // Ensure this method exists
-    
-            if (!$cartItemsData || count($cartItemsData) === 0) { // Check if array is empty
+            $cartItemsData = $cartModel->getItemsByIds($cartItemIds);
+        
+            if (!$cartItemsData || count($cartItemsData) === 0) {
+                error_log("Error: Cart items not found.");
                 echo json_encode(['status' => 'error', 'message' => 'Cart items not found.']);
                 exit;
             }
-    
-            // Insert into the orders table
+            
+            function generateOrderTrack() {
+                return 'ORD-' . date('Ymd') . '-' . rand(1000, 9999);
+            }
+        
+            // Generate tracking number once per submission
+            $orderTrack = generateOrderTrack(); 
+            $orderStatusId = OrderStatus::getPendingId() ?? 0;
+
+            
             $orderModel = new Order();
+            
             foreach ($cartItemsData as $item) {
+                
                 $orderModel->create([
                     'user_id' => $item['user_id'], 
                     'product_id' => $item['product_id'], 
-                    'product_quantity' => $item['quantity']
+                    'product_quantity' => $item['quantity'],
+                    'order_status' => $orderStatusId,
+                    'order_track' => $orderTrack
                 ]);
             }
-    
-            // Remove checked items from cart
-            $cartModel->deleteItemsByIds($cartItemIds); // Ensure this method exists
-    
+        
+            $cartModel->deleteItemsByIds($cartItemIds);
+        
+            error_log("Checkout successful!");
             echo json_encode(['status' => 'success', 'message' => 'Checkout successful!']);
             exit;
         }
-    
+        
+        error_log("Error: Invalid request method.");
         echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
         exit;
+        
     }
+
+    // Method to delete an academic year
+    public function deleteCart($id) {
+        if (!$id) {
+            echo json_encode(["status" => "error", "message" => "Invalid ID."]);
+            exit;
+        }
     
+        // Debugging: Log the ID before deletion
+        error_log("Attempting to delete Academic Year with ID: " . $id);
+    
+        $deleted = Cart::delete($id);
+    
+        if ($deleted) {
+            echo json_encode(["status" => "success", "message" => "Academic Year deleted successfully."]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Failed to delete record."]);
+        }
+        exit;
+    }
 
 }

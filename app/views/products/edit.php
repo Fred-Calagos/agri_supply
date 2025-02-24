@@ -53,9 +53,11 @@
                             <div class="col-md-4 mb-3">
                                 <label for="productStatus" class="form-label">Status</label>
                                 <select class="form-control" id="productStatus" name="product_status" required>
-                                    <option value="Available" <?= ($product['product_status'] == 'Available') ? 'selected' : '' ?>>Available</option>
-                                    <option value="Stock" <?= ($product['product_status'] == 'Stock') ? 'selected' : '' ?>>In Stock</option>
-                                    <option value="Out of Stock" <?= ($product['product_status'] == 'Out of Stock') ? 'selected' : '' ?>>Out of Stock</option>
+                                    <?php foreach ($productStatus as $prodStatus): ?>
+                                        <option value="<?= $prodStatus['id'] ?>" <?= ($prodStatus['id'] == $product['product_status_id']) ? 'selected' : '' ?>>
+                                            <?= $prodStatus['product_status'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>

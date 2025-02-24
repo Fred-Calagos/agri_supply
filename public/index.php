@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../app/helper/auth_helper.php';
+require_once __DIR__ . '/../app/libraries/tcpdf/tcpdf.php';
+
 
 
 use App\Core\Router;

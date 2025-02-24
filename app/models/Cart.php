@@ -51,7 +51,7 @@ class Cart extends Model
         return $stmt->execute($values);
     }
 
-    // ✅ Updated these methods to match the static method pattern
+    //  Updated these methods to match the static method pattern
     public static function getItemsByIds($ids)
     {
         if (empty($ids)) return []; // Avoid empty queries

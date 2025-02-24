@@ -2,9 +2,10 @@
 
 namespace App\controllers;
 
-use App\Core\BaseController;
-use App\models\ProductCategory;
 use App\models\Products;
+use App\Core\BaseController;
+use App\models\ProductStatus;
+use App\models\ProductCategory;
 
 class ProductController extends BaseController
 {
@@ -16,13 +17,17 @@ class ProductController extends BaseController
     {
         $categories = ProductCategory::all();
         $products = Products::all();
+        $productStatus = ProductStatus::all();
         $data = [
             'title' => 'Products',
             'products'=> $products,
             'categories'=> $categories,
+            'productStatus'=> $productStatus,
             'content' => $this->renderView('products/index', [
                 'products' => $products,
-                'categories' => $categories])
+                'categories' => $categories,
+                'productStatus'=> $productStatus
+                ])
         ];
 
         $this->view('layout/main', $data);
@@ -31,10 +36,16 @@ class ProductController extends BaseController
 
     public function create() {
         $categories = ProductCategory::all();
+        $productStatus = ProductStatus::all();
         $data = [
             'title' => 'Add Product',
             'categories' => $categories,
-            'content' => $this->renderView('/products/create', ['categories' => $categories])
+            'productStatus'=> $productStatus,
+            'content' => $this->renderView('/products/create', [
+                'categories' => $categories,
+                'productStatus'=> $productStatus
+                
+                ])
         ];
 
         $this->view('layout/main', $data);
@@ -45,7 +56,7 @@ class ProductController extends BaseController
             // Get the form data
             $product_name = $_POST['product_name'] ?? '';
             $product_category_id = $_POST['product_category_id'] ?? '';
-            $product_status = $_POST['product_status'] ?? '';
+            $product_status = $_POST['product_status_id'] ?? '';
             $product_description = $_POST['product_description'] ?? '';
             $cost_price = $_POST['cost_price'] ?? 0;
             $profit_margin = $_POST['profit_margin'] ?? 0;
@@ -68,7 +79,7 @@ class ProductController extends BaseController
             $productData = [
                 'product_name' => $product_name,
                 'product_category_id' => $product_category_id,
-                'product_status' => $product_status,
+                'product_status_id' => $product_status,
                 'product_description' => $product_description,
                 'cost_price' => $cost_price,
                 'profit_margin' => $profit_margin,
@@ -91,11 +102,14 @@ class ProductController extends BaseController
     public function edit($id) {
         $product = Products::find($id);
         $categories = ProductCategory::all();
+        $productStatus = ProductStatus::all();
+
         $data = [
             'title' => 'Edit Product',
             'product' => $product,
             'categories' => $categories,
-            'content' => $this->renderView('/products/edit', ['product' => $product, 'categories' => $categories])
+            'productStatus'=> $productStatus,
+            'content' => $this->renderView('/products/edit', ['product' => $product, 'categories' => $categories, 'productStatus'=> $productStatus])
         ];
 
         $this->view('layout/main', $data);

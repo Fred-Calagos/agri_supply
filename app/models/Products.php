@@ -12,9 +12,10 @@ class Products extends Model {
     // Function to get all products with category name
     public static function all() {
         $stmt = Database::connect()->query("
-            SELECT p.*, pc.product_category 
+            SELECT p.*, pc.product_category, ps.product_status
             FROM products p
             JOIN product_category pc ON p.product_category_id = pc.id
+            JOIN product_status ps ON p.product_status_id = ps.id
             ORDER BY pc.product_category ASC
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -40,6 +41,17 @@ class Products extends Model {
             ORDER BY p.product_name ASC
         ");
         $stmt->execute(['category' => $category]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public static function getByProductStatus($productStatus) {
+        $stmt = Database::connect()->prepare("
+            SELECT p.*, ps.product_status 
+            FROM products p
+            JOIN product_status ps ON p.product_status_id = ps.id
+            WHERE ps.product_status = :product_status
+            ORDER BY p.product_name ASC
+        ");
+        $stmt->execute(['product_status' => $productStatus]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public static function search($keyword)

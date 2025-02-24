@@ -70,7 +70,7 @@
 
                         <!-- Remove Button -->
                         <div class="col-md-2 text-center">
-                            <button class="btn btn-danger btn-sm removeFromCartBtn" data-id="<?= $item['id'] ?>">
+                            <button class="btn btn-danger btn-sm removeFromCartBtn" data-id="<?= $item['id'] ?>" data-product-name="<?= $item['product_name'] ?>">
                                 <i class="bx bx-trash"></i>
                             </button>
                         </div>
@@ -83,7 +83,6 @@
         <div class="d-flex justify-content-between p-3 mt-4">
             <div>
                 <input type="checkbox" id="selectAll"> Select All
-                <button class="btn text-danger" id="deleteSelectedBtn">Delete</button>
             </div>
             <div>
                 <span>Total (<span id="totalItems">0</span> items): ₱ <span id="totalPrice">0.00</span></span>
@@ -99,7 +98,27 @@
 
 </div>
 
-<script>
+<!-- Delete Cart Item Modal -->
+<div class="modal fade" id="deleteCartItemModal" tabindex="-1" aria-labelledby="deleteCartItemLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCartItemLabel">Delete Cart Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to remove this item from your cart?</p>
+                <p id="productInfo"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteCartItem">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>    
 document.addEventListener("DOMContentLoaded", function () {
     // Quantity increase and decrease buttons
     document.querySelectorAll(".decreaseQty, .increaseQty").forEach(button => {
@@ -205,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // Send AJAX POST request
     $.ajax({
-        url: "/customer/cart/checkoutSelected",
+        url: "/customer/cart/OrderSelected",
         type: "POST",
         data: { cartIds: selectedItems },  // Ensure it's sent as an array
         dataType: "json",
@@ -224,7 +243,50 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Delete Cart Item Modal
+$(document).on('click', '.removeFromCartBtn', function (e) {
+    e.preventDefault();
+    var cartId = $(this).data('id'); // Get the cart item ID
+    var productName = $(this).data('product-name'); // Get the cart item ID
+    var productCategory = $(this).data('product-category'); // Get the cart item ID
 
+    if (!cartId) {
+        alert("Error: No item ID found.");
+        return;
+    }
+    // Display the selected product in the Delete Modal
+    $('#productInfo').text('Product: ' + productName );
+    // Store the cart item ID in the delete confirmation button
+    $('#confirmDeleteCartItem').data('id', cartId);
+
+    // Show the delete confirmation modal
+    $('#deleteCartItemModal').modal('show');
+});
+
+// Confirm Deletion
+$('#confirmDeleteCartItem').click(function () {
+    var cartId = $(this).data('id');
+
+    if (!cartId) {
+        alert("Error: No item ID found.");
+        return;
+    }
+
+
+    $.ajax({
+        type: "GET",
+        url: "/customer/cart/delete/" + cartId,  // Ensure ID is included
+        success: function(response) {
+            console.log("Delete successful:", response); // Debugging
+            $('#deleteCartItemModal').modal('hide');
+            location.reload();
+        },
+        error: function(xhr) {
+            console.log("Server Error:", xhr.responseText); // Debugging: Log any server errors
+            alert("Error deleting the academic year.");
+        }
+    });
+});
 
 });
 </script>

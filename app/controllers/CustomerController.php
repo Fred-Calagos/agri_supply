@@ -3,11 +3,13 @@
 namespace App\Controllers;
 
 use PDO;
-use App\Core\Database;
-use App\Core\BaseController;
-use App\Models\Products;
-use App\Models\ProductCategory;
 use App\Models\Cart;
+use App\models\Order;
+use App\Core\Database;
+use App\Models\Products;
+use App\Core\BaseController;
+use App\Models\ProductCategory;
+use App\models\OrderStatus;
 
 
 class CustomerController extends BaseController
@@ -74,23 +76,29 @@ class CustomerController extends BaseController
 
     public function orders()
     {
+       
+        $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        $customerOrder = Order::customerOrder($user['id']);
+        $orderStatus = OrderStatus::all();
         $data = [
             'title' => 'My Orders',
-            'content' => $this->renderView('customer/orders')
+            'customerOrder' => $customerOrder,
+            'orderStatus' => $orderStatus,
+            'content' => $this->renderView('/customer/orders/index', ['customerOrder' => $customerOrder, 'orderStatus' => $orderStatus])
         ];
 
         $this->view('layout/main', $data);
     }
     public function cart()
     {
-
+       
         $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
         $cartItems = Cart::totalItems($user['id']);
         $data = [
             'title' => 'My Cart',
             'cartItems' => $cartItems,
             'user' => $user,
-            'content' => $this->renderView('customer/cart/index', [
+            'content' => $this->renderView('/customer/cart/index', [
                 'cartItems' => $cartItems,
                 'user' => $user
             ])

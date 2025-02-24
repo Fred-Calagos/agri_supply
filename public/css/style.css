@@ -1,9 +1,7 @@
-@import 'node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css';
-@import 'node_modules/datatables.net-autofill-bs5/css/autoFill.bootstrap5.min.css';
-@import 'node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css';
 @import 'button.css';
 @import 'responsive.css';
 @import 'input.css';
+@import 'image.css';
 
 
 .form-container {

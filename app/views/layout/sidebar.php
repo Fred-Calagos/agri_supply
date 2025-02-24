@@ -30,13 +30,13 @@
       </li>
 
           <!-- ORDERS -->
-          <li>
+        <li>
             <a href="/orders">
               <i class='bx bx-cart'></i>
               <span class="link_name">Orders</span>
             </a>
             <ul class="sub-menu blank">
-              <li><a href="link_name" href="/orders">Orders</a></li>
+              <li><a class="link_name" href="/orders">Orders</a></li>
             </ul>
         </li>
 
