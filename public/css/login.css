@@ -1,0 +1,46 @@
+body {
+    background-image: url("paper.gif");
+    background-color: #093400;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-container {
+    width: auto;
+    margin-right: 10%;
+    max-width: 600px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    right:0; /* Move sidebar to the right side */
+    left: auto; /* Reset left positioning */
+}
+.login-banner {
+    background-color:aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.prod-details{
+    width: auto;
+    text-align: center;
+    color: aliceblue;
+}
+@media (max-width: 480px) {
+    .login-container {
+        width: auto;
+        max-width: 400px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: fixed;
+    }
+}

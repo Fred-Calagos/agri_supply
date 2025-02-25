@@ -12,9 +12,10 @@
         </nav>
 
         <!-- Add Brand Button -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#brandModal">
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/brand/create'">
             <i class="bx bx-plus-circle"></i> Add Brand
         </button>
+
     </div>
 
     <!-- Message Container -->
@@ -46,15 +47,7 @@
                         <a href="<?= $brand['instagram'] ?>" target="_blank">Instagram</a>
                     </td>
                     <td>    
-                        <button class="edit-brand btn btn-warning" 
-                                data-id="<?= $brand['id'] ?>" 
-                                data-brand-name="<?= $brand['brand_name'] ?>"
-                                data-tagline="<?= $brand['tagline'] ?>"
-                                data-about="<?= $brand['about'] ?>"
-                                data-contact="<?= $brand['contact'] ?>"
-                                data-email="<?= $brand['email'] ?>"
-                                data-facebook="<?= $brand['facebook'] ?>"
-                                data-instagram="<?= $brand['instagram'] ?>">
+                        <button class="edit-brand btn btn-warning" href="/settings/brand_edit/<?= $brand['id'] ?>">
                             <i class="bx bxs-edit"></i> Edit
                         </button>
                         <button class="delete-brand btn btn-danger" 
@@ -157,7 +150,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <script>
 $(document).ready(function () {
@@ -203,8 +195,6 @@ $(document).ready(function () {
         });
     }
 });
-
-
     // Preview Image
     function previewImage(event) {
         const imagePreview = document.getElementById('productImagePreview');

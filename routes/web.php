@@ -30,6 +30,7 @@ $router->get('/settings', [SettingController::class, 'index']);
 
 // BRAND ROUTES
 $router->get('/brand', [BrandController::class, 'index']);
+$router->get('/brand/create', [BrandController::class, 'create']);
 $router->post('/brand/store', [BrandController::class, 'store']);
 
 // ORDER STATUS ROUTES

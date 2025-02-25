@@ -3,12 +3,15 @@
 namespace App\controllers;
 
 use App\Models\User;
+use App\models\Brand;
 
 class AuthController
 {
     public function showLogin() 
     {
+        $brands = Brand::all();
         include_once __DIR__ . '/../Views/auth/login.php';
+
     }
 
     public function login() 

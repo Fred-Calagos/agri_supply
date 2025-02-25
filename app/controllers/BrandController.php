@@ -20,6 +20,21 @@ class BrandController extends BaseController
         $this->view('layout/main', $data);
     }
 
+    
+    public function create() {
+        $brand = Brand::all();
+        $data = [
+            'title' => 'Add Brand',
+            'categories' => $brand,
+            'content' => $this->renderView('/settings/brand_create', [
+                'brand' => $brand
+                ])
+        ];
+
+        $this->view('layout/main', $data);
+    }
+    
+
     public function store() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Get form data
@@ -33,12 +48,12 @@ class BrandController extends BaseController
     
             // File upload handling for brand logo
             // File upload handling
-            $image = null;
-            if (!empty($_FILES['image']['name'])) {
-                $image_name = time() . '_' . $_FILES['image']['name'];
+            $image_path = null;
+            if (!empty($_FILES['logo']['name'])) {
+                $image_name = time() . '_' . $_FILES['logo']['name'];
                 $upload_dir = __DIR__ . '/../../public/uploads/';
-                if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $image_name)) {
-                    $image = '/uploads/' . $image_name; // Save the relative path
+                if (move_uploaded_file($_FILES['logo']['tmp_name'], $upload_dir . $image_name)) {
+                    $image_path = '/uploads/' . $image_name; // Save the relative path
                 }
             }
     
@@ -52,7 +67,7 @@ class BrandController extends BaseController
                 'email' => $email,
                 'facebook' => $facebook,
                 'instagram' => $instagram,
-                'brand_logo' => $image
+                'brand_logo' => $image_path
             ];
     
             if ($brandModel->create($brandData)) {

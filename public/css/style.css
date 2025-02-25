@@ -2,6 +2,11 @@
 @import 'responsive.css';
 @import 'input.css';
 @import 'image.css';
+@import 'boxicon.css';
+@import 'sidebar.css';
+@import 'card.css';
+@import 'bootstrap.min.css';
+@import 'boxicons.min.css';
 
 
 .form-container {

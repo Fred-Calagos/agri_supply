@@ -85,22 +85,25 @@ class Order extends Model
     public static function getAllOrdersByTrack($orderTrack = null) {
         $pdo = Database::connect();
         $stmt = $pdo->prepare("SELECT po.*, po.order_status as poStat,
-        p.product_name, p.image_path, p.shipping_fee, p.stocks, p.product_description, p.selling_price, 
-        pc.product_category,
-        os.order_status as orderStatName,
-        CONCAT(u.firstname,' ', u.lastname) as full_name
-        FROM " . self::$table . " po
+            p.product_name, p.image_path, p.shipping_fee, p.stocks, p.product_description, p.selling_price, 
+            pc.product_category,
+            os.order_status as orderStatName,
+            CONCAT(u.firstname, ' ', u.lastname) as fullName,
+            u.address, u.email  -- Add user address and email
+            
+            FROM " . self::$table . " po
+            
+            JOIN products p ON po.product_id = p.id
+            JOIN product_category pc ON p.product_category_id = pc.id
+            JOIN order_status os ON po.order_status = os.id
+            JOIN users u ON po.user_id = u.id
+    
+            WHERE po.order_track = ?");
         
-        JOIN products p ON po.product_id = p.id
-        JOIN product_category pc ON p.product_category_id = pc.id
-        JOIN order_status os ON po.order_status = os.id
-        JOIN users u ON po.user_id = u.id
-
-        WHERE po.order_track = ?");
         $stmt->execute([$orderTrack]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
     }
+    
     public static function updateByTrack($orderTrack, $data) {
         $pdo = Database::connect();
         $stmt = $pdo->prepare("UPDATE product_ordered SET order_status = ? WHERE order_track = ?");

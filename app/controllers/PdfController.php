@@ -2,9 +2,10 @@
 
 namespace App\controllers;
 
-use App\Core\BaseController;
-use App\models\Order;
 use TCPDF;
+use App\models\Brand;
+use App\models\Order;
+use App\Core\BaseController;
 
 class PdfController extends BaseController{
     public function generateOrderPdf() {
@@ -70,15 +71,23 @@ class PdfController extends BaseController{
         $trackNumber = $_GET['track']; // Get track number from URL
 
         $orderTracks = Order::getAllOrdersByTrack($trackNumber); // Fetch orders by track number
+       
 
         if (empty($orderTracks)) {
             die("No orders found for Track #: " . htmlspecialchars($trackNumber));
         }
-// Store Information
-$storeName = "Agri Supply Store"; 
-$storeAddress = "123 Farm Road, City, Country";
-$storeContact = "+63 912 345 6789";
-$storeEmail = "contact@agrisupply.com";
+        $brand = Brand::displayBrandReceipt();
+
+        if ($brand) {
+            $storeName = $brand['brand_name'];
+            $storeContact = $brand['contact'];
+            $storeEmail = $brand['email'];
+        } else {
+            $storeName = "Default Store Name";
+            $storeContact = "N/A";
+            $storeEmail = "N/A";
+        }
+        
 
 // Order Information
 $orderTrack = htmlspecialchars($trackNumber);
@@ -95,27 +104,33 @@ $pdf->AddPage();
 
 // Set column width (50% each)
 $colWidth = 48; // A6 width = 105mm, keeping margin space
-
 // Store Details (Left Column)
 $pdf->SetFont('dejavusans', 'B', 7);
 $pdf->Cell($colWidth, 5, $storeName, 0, 0, 'L'); // Name
-$pdf->SetFont('dejavusans', '', 7);
-$pdf->Ln(); // Move to next line
-$pdf->Cell($colWidth, 5, $storeAddress, 0, 0, 'L'); // Address
-$pdf->Ln();
-$pdf->Cell($colWidth, 5, "Contact: " . $storeContact, 0, 0, 'L'); // Contact
-$pdf->Ln();
-$pdf->Cell($colWidth, 5, "Email: " . $storeEmail, 0, 0, 'L'); // Email
-
-// Move cursor to next column (Order Details)
-$pdf->SetXY($colWidth + 10, 15); // Adjust position
-
-// Order Details (Right Column)
-$pdf->SetFont('dejavusans', 'B', 7);
 $pdf->Cell($colWidth, 5, "Order Details", 0, 1, 'L'); // Header
 $pdf->SetFont('dejavusans', '', 7);
+$pdf->Cell($colWidth, 5, "Contact: " . $storeContact, 0, 0, 'L'); // Contact
 $pdf->Cell($colWidth, 5, "Order #: " . $orderTrack, 0, 1, 'L'); // Order Track #
+$pdf->Cell($colWidth, 5, "Email: " . $storeEmail, 0, 0, 'L'); // Email
 $pdf->Cell($colWidth, 5, "Date: " . $orderDate, 0, 1, 'L'); // Order Date
+$pdf->Ln();
+$pdf->SetFont('dejavusans', 'B', 7);
+$pdf->Cell($colWidth, 5, "Invoice To:", 0, 1, 'L'); // Name
+$pdf->SetFont('dejavusans', '', 7);
+
+if (!empty($orderTracks)) {
+    $customerName = $orderTracks[0]['fullName'];
+    $customerAddress = $orderTracks[0]['address'];
+    $customerEmail = $orderTracks[0]['email'];
+} else {
+    $customerName = "N/A";
+    $customerAddress = "N/A";
+    $customerEmail = "N/A";
+}
+
+$pdf->Cell($colWidth, 5, "Name: " . $customerName, 0, 1, 'L');
+$pdf->Cell($colWidth, 5, "Address: " . $customerAddress, 0, 1, 'L');
+$pdf->Cell($colWidth, 5, "Email: " . $customerEmail, 0, 1, 'L');
 
 $pdf->Ln(5); // Space after header
 
@@ -157,9 +172,9 @@ $pdf->Cell(72, 6, 'Grand Total:', 1, 0, 'R', true);
 $pdf->Cell(24, 6, '₱ ' . number_format($grandTotal, 2), 1, 1, 'R');
 
 // Footer Message
-$pdf->Ln(10);
+$pdf->Ln(1);
 $pdf->SetFont('dejavusans', '', 8);
-$pdf->Cell(0, 10, 'Thank you for your purchase!', 0, 1, 'C');
+$pdf->Cell(0, 5, 'Thank you for your purchase!', 0, 1, 'C');
 $pdf->Cell(0, 5, 'For any inquiries, contact us at ' . $storeEmail, 0, 1, 'C');
 
 // Output PDF file
