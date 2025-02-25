@@ -9,7 +9,7 @@ class AuthController
 {
     public function showLogin() 
     {
-        $brands = Brand::all();
+        $brand = Brand::all();
         include_once __DIR__ . '/../Views/auth/login.php';
 
     }

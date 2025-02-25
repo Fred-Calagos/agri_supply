@@ -1,3 +1,15 @@
+<?php
+require_once __DIR__ . '/../../Core/Database.php';
+
+use App\Core\Database;
+
+// Connect to the database
+$pdo = Database::connect();
+
+// Fetch brands from the database
+$stmt = $pdo->query("SELECT * FROM brands");
+$brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,11 +21,42 @@
     <link href="/css/login.css" rel="stylesheet">
 </head>
 <body>
-<div class="container prod-details p-4">
-    <img src="path_to_product_image.jpg" alt="Product Image" class="img-fluid rounded">
-    <h2 class="mt-3">Product Tagline</h2>
-    <p class="text">This is a short description about the product, highlighting its key features and benefits.</p>
+<div class="container prod-details p-2 text-center">
+    <?php if (!empty($brands)): ?>
+        <?php foreach ($brands as $brand): ?>
+            <div class="row p-3 d-flex align-items-center">
+                <!-- Logo Column -->
+                <div class="col-md-6 d-flex justify-content-center">
+                    <img src="<?= htmlspecialchars($brand['brand_logo']); ?>" 
+                        alt="<?= htmlspecialchars($brand['brand_name']); ?>" 
+                        class="img-fluid rounded login-logo" 
+                        style="max-width: 200px; height: auto;">
+                </div>
+
+                <!-- Brand Info Column -->
+                <div class="col-md-6 text-center text-md-start mt-5">
+                    <div class="row">
+                    <h2 class="mt-3 brand-name"><?= htmlspecialchars($brand['brand_name']) ?? 'Brand Name'; ?></h2>
+                    </div>
+                    <div class="row mt-5">
+                        <p><i><q><?= htmlspecialchars($brand['tagline']) ?? 'Brand Tagline'; ?></q></i></p>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="row p-3">
+            <h3 style="text-align: left;">About</h3>
+            <p class="text-about"><?= htmlspecialchars($brand['about']) ?? 'brand tagline'; ?></p>
+            </div>
+           
+           
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No brands available.</p>
+    <?php endif; ?>
 </div>
+
 
     <div class="container login-container p-4">
         <div class="row g-0">
