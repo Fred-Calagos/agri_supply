@@ -1,0 +1,72 @@
+.register-page {
+    margin:0;
+    padding:0;
+    background-color: #f5fcff;
+}
+.register-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.register-container input{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.798);
+    background-color: rgb(255, 255, 245);
+}
+
+.section-divider {
+    background-color: #7a7a7a; /* Bootstrap Primary Color (Blue) */
+    color: white; /* White text for contrast */
+    padding: 10px; /* Add padding inside */
+    border-radius: 5px; /* Rounded edges */
+    text-align: center; /* Center text */
+    font-weight: bold; /* Make text bold */
+  }
+  .sub-section-divider {
+      color: rgb(0, 0, 0);
+      padding: 10px;
+      border-radius: 5px;
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  
+  /* ALLERTS */
+  
+  .alert {
+      margin-bottom: 20px;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      width: 100%;
+  }
+  
+  .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+  }
+  
+  .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+  }
+  
+  /* FORM TITLE */
+  .section-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+      padding: 10px 0;
+      border-bottom: 2px solid #007bff;
+      margin-bottom: 15px;
+  }
+  .input-group-text{
+    background-color: #000137;
+  }
+  i{
+    color: #d4edda;
+  }
+  .register-container label{
+    font-weight: 400;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+  }

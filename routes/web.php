@@ -14,6 +14,7 @@ use App\controllers\CartController;
 use App\controllers\OrderController;
 use App\controllers\PdfController;
 use App\controllers\ProductStatusController;
+use App\controllers\RegisterController;
 
 // LOGIN ROUTE
 $router->get('/login', [AuthController::class, 'showLogin']);
@@ -23,6 +24,8 @@ $router->get('/logout', [AuthController::class, 'logout']);
 
 // Admin Routes (Protected)
 $router->get('/admin', [AdminController::class, 'index']);
+$router->get('/register', [RegisterController::class, 'index']);
+$router->post('/register/store', [RegisterController::class, 'store']);
 
 
 // SETTINGS ROUTES
@@ -62,6 +65,7 @@ $router->post('/product_category/update/{id}', [ProductCategoryController::class
 
 // USER 
 $router->get('/user', [UserController::class, 'index']);
+
 
 // CUSTOMER DASHBOARD ROUTES (Protected)
 $router->get('/customer/dashboard', [CustomerController::class, 'index']);

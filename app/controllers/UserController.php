@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\Models\User;
 use App\Core\BaseController;
+use App\Core\Database;
 
 class UserController extends BaseController
 {
@@ -22,4 +23,5 @@ class UserController extends BaseController
 
         $this->view('layout/main', $data);
     }
+
 }
