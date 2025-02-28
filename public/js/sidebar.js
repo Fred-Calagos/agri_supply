@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let sidebar = document.querySelector(".sidebar");
     let sidebarBtn = document.querySelector(".bx-menu");
     let homeContent = document.querySelector(".home-content");
+    let mainContent = document.querySelector(".home-section");
     let dropdownMenu = document.querySelector(".dropdown-menu");
 
     function adjustSidebar() {
@@ -11,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
             sidebar.classList.add("close");
             homeContent.style.left = "0";
             homeContent.style.width = "100%";
+            mainContent.style.left = "0";
+            mainContent.style.width = "100%";
         } else {
             // Desktop view: Sidebar closed by default with 78px width
             sidebar.classList.add("close");
@@ -30,9 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (window.innerWidth <= 768) {
             // Mobile: Sidebar opens full screen
             if (sidebar.classList.contains("close")) {
+                sidebar.style.width = "0"
                 homeContent.style.left = "0";
                 homeContent.style.width = "100%";
+                mainContent.style.left = "0";
+                mainContent.style.width = "100%";
             } else {
+                sidebar.style.width = "0"
                 homeContent.style.left = "260px";
                 homeContent.style.width = "calc(100% - 260px)";
             }
@@ -73,17 +80,4 @@ document.addEventListener("DOMContentLoaded", function () {
             adjustDropdownPosition();
         }
     });
-
-    // Adjust dropdown position dynamically
-    function adjustDropdownPosition() {
-        if (sidebar.classList.contains("close")) {
-            dropdownMenu.style.right = "20px"; 
-            dropdownMenu.style.left = "auto";
-        } else {
-            dropdownMenu.style.right = "100px";
-            dropdownMenu.style.left = "auto";
-        }
-    }
-
-    adjustDropdownPosition();
 });

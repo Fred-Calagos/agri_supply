@@ -37,7 +37,7 @@
                         <?php endforeach; ?>
                     </select>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary  btn-sm">
                         <i class="bx bx-plus-circle me-1"></i> Update Status
                     </button>
                 </div>
@@ -48,19 +48,19 @@
 
 <div class="p-3 border rounded bg-white mt-4">
     <div class="d-flex gap-2 mb-2">
-        <button class="btn btn-secondary" onclick="printTable()">
+        <button class="btn btn-secondary btn-sm" onclick="printTable()">
             <i class='bx bxs-printer'></i> Print
         </button>
-        <button class="btn btn-danger" 
+        <button class="btn btn-danger btn-sm" 
                 onclick="window.location.href='/pdf/generateOrderPdf?track=<?= urlencode($orderTrackNumber) ?>'">
             <i class='bx bxs-file-pdf'></i> DOWNLOAD PDF
         </button>
-        <button class="btn btn-danger" 
+        <button class="btn btn-danger btn-sm" 
                 onclick="window.location.href='/pdf/viewPdfReport?track=<?= urlencode($orderTrackNumber) ?>'">
             <i class='bx bxs-file-pdf'></i> VIEW PDF
         </button>
 
-        <button class="btn btn-success" onclick="window.location.href='/excel/generateOrderExcel'">
+        <button class="btn btn-success btn-sm" onclick="window.location.href='/excel/generateOrderExcel'">
             <i class='bx bxs-file-export'></i> EXCEL
         </button>
     </div>

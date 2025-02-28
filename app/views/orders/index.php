@@ -17,12 +17,12 @@
                     <td><?= htmlspecialchars($item['order_statuses']) ?></td>
                     <td>
                             <!-- View Button -->
-                            <a href="/orders/order_details?track_order=<?= urlencode($item['order_track']); ?>" class="btn btn-success" title="View">  
+                            <a href="/orders/order_details?track_order=<?= urlencode($item['order_track']); ?>" class="btn btn-success btn-sm" title="View">  
                                 <i class='bx bx-show'></i>
                             </a>
 
                     <!-- Delete Button -->
-                    <a href="delete_order.php?id=<?= $item['order_track']; ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this order?');">
+                    <a href="delete_order.php?id=<?= $item['order_track']; ?>" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm('Are you sure you want to delete this order?');">
                         <i class='bx bx-trash'></i>
                     </a>
                     </td>

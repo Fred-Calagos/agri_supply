@@ -86,7 +86,7 @@
             </div>
             <div>
                 <span>Total (<span id="totalItems">0</span> items): ₱ <span id="totalPrice">0.00</span></span>
-                <input name="submit" type="submit" value="Order Now" id="submit" class="btn btn-secondary">  
+                <input name="submit" type="submit" value="Order Now" id="submit" class="btn btn-secondary btn-sm">  
             </div>
         </div>
     </form>
@@ -111,8 +111,8 @@
                 <p id="productInfo"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteCartItem">Delete</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger btn-sm" id="confirmDeleteCartItem">Delete</button>
             </div>
         </div>
     </div>

@@ -139,7 +139,46 @@ class CustomerController extends BaseController
         $this->view('layout/main', $data);
     }
     
-
+    public function viewCategory() {
+    
+        // Check if the product ID is set in the URL
+        if (!isset($_GET['category'])) {
+            die("Invalid Category.");
+        }
+    
+        // Fetch product details
+        $category = Products::getProductCategory($_GET['category']);
+    
+        // Fetch user data (assuming you store user data in session)
+        $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        $data = [
+            'title' => 'Product Detail',
+            'productCategory' => $category,
+            'user' => $user, // Pass user data to the view
+            'content' => $this->renderView('/customer/category/index', [
+                'productCategory' => $category,
+                'user' => $user
+            ])
+        ];
+    
+        $this->view('layout/main', $data);
+    }
+    
+    public function openCategory() {
+    
+            $category = ProductCategory::all();
+    
+        $data = [
+            'title' => 'Product Category',
+            'categories'=> $category,
+            'content' => $this->renderView('/customer/category/view_category', [
+                'categories' => $category
+            ])
+        ];
+    
+        $this->view('layout/main', $data);
+    }
+    
     private function checkAuth()
     {
         if (!isset($_SESSION['user'])) {

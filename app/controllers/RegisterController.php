@@ -2,15 +2,30 @@
 
 namespace App\controllers;
 
-use App\Core\BaseController;
 use App\Core\Database;
+use App\Core\LoginController;
+use App\models\refProvince;
+use App\models\refRegion;
 use App\Models\User;
 
-class RegisterController extends BaseController
+class RegisterController extends LoginController
 {   
-    public function index()
+    public function showRegister() 
     {
-        include_once __DIR__ . '/../Views/register/index.php';
+        $refProvince = refProvince::all();
+        $refRegion = refRegion::all();
+        $data = [
+            'title' => 'Login',
+            'refProvince' => $refProvince,
+            'refRegion' => $refRegion,
+            'content' => $this->renderView('register/index', [
+                'refProvince' => $refProvince,
+                'refRegion' => $refRegion
+                ])
+        ];
+
+        $this->view('layout/login-main', $data);
+
     }
     
     public function store(){
@@ -28,7 +43,7 @@ class RegisterController extends BaseController
                 'reg' => $_POST['reg'],
                 'prov' => $_POST['prov'],
                 'citymun' => $_POST['citymun'],
-                'brgy' => $_POST['brgy'],
+                'brgy' => $_POST['brgy'],   
                 'zipcode' => $_POST['zipcode'],
                 'place_desc' => $_POST['place_desc'],
                 'role' => 'User'
@@ -43,7 +58,7 @@ class RegisterController extends BaseController
     
             // Return the new product status data as JSON
             echo json_encode(["status" => "success", "newProductStatus" => $newProductStatus]);
-            header("/register");
+            header("/register/index");
             exit;
         }
     }

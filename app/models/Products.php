@@ -69,4 +69,11 @@ class Products extends Model {
         $stmt->execute([$category, "%$keyword%"]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function getProductCategory($category){
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("SELECT * FROM " . self::$table . " WHERE product_category_id = ?");
+        $stmt->execute([$category]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

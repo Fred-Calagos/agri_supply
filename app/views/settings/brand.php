@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid container-sm">
     <!-- Navigation and Button Container -->
     <div class="d-flex align-items-center justify-content-between mb-3">
         <!-- Breadcrumb Navigation -->
@@ -12,7 +12,7 @@
         </nav>
 
         <!-- Add Brand Button -->
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/brand/create'">
+        <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/brand/create'">
             <i class="bx bx-plus-circle"></i> Add Brand
         </button>
 
@@ -47,10 +47,10 @@
                         <a href="<?= $brand['instagram'] ?>" target="_blank">Instagram</a>
                     </td>
                     <td>    
-                        <button class="edit-brand btn btn-warning" href="/settings/brand_edit/<?= $brand['id'] ?>">
+                        <button class="edit-brand btn btn-warning btn-sm" href="/settings/brand_edit/<?= $brand['id'] ?>">
                             <i class="bx bxs-edit"></i> Edit
                         </button>
-                        <button class="delete-brand btn btn-danger" 
+                        <button class="delete-brand btn btn-danger btn-sm" 
                                 data-id="<?= $brand['id'] ?>">
                             <i class="bx bxs-trash"></i> Delete
                         </button>
@@ -142,8 +142,8 @@
 
                 <!-- Modal Footer -->
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" id="saveBrand">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success btn-sm" id="saveBrand">
                         <i class="bx bx-save"></i> Save
                     </button>
                 </div>

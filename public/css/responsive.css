@@ -1,5 +1,68 @@
 /* Small screens (Phones) */
 @media only screen and (max-width: 600px) {
+  .sidebar {
+    display: none;
+    width: 0;
+  }
+  #sidebar-toggle{
+    display: none;
+  }
+  .sidebar.close ~ .home-section{
+    width: 100%;
+  }
+  .sidebar.close {
+    display: none;
+    width: 0;
+  }
+  .home-section {
+    position: relative;
+    background: #f7f8fc;
+    height: 100vh;
+    left: 0;
+    width: 100%;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+  }
+  .main-content{
+    left: 0;
+    width: 100%;
+  }
+  .category-filter{
+    font-size: 10px;
+    padding: 1px;
+  }
+  img.img-fluid {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+/* Prevent content from being hidden under the bottom nav */
+.content  {
+  padding-bottom: 60px; /* Adjust this based on the nav height */
+}
+.breadcrumb {
+  font-size: .5em;
+  ; /* Center breadcrumbs for better mobile display */
+  padding: 5px;
+}
+
+.breadcrumb-item {
+  font-size: 12px;
+}
+
+.bread-icon {
+  font-size: 12px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  padding: 0 3px; /* Further reduce spacing on very small screens */
+}
+button{
+font-size: 10px;
+}
+.breadcrumb .breadcrumb-item, .breadcrumb .breadcrumb-item a, .breadcrumb .breadcrumb-item i {
+  font-size: 10px;
+}
   }
   
   /* Medium screens (Tablets) */
@@ -13,30 +76,210 @@
   }
 
   /* Extra small devices (Phones) */
-@media (max-width: 575px) {}
+@media (max-width: 575px) {
+  .sidebar {
+    display: none;
+    width: 0;
+  }
+  .sidebar.close {
+    display: none;
+    width: 0;
+  }
+  #sidebar-toggle{
+    display: none;
+  }
+  .sidebar.close ~ .home-section{
+    width: 100%;
+  }
+  .home-section {
+    position: relative;
+    background: #f7f8fc;
+    height: 100vh;
+    left: 0;
+    width: 100%;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+  }
+  .main-content{
+    left: 0;
+    width: 100%;
+  }
+  .category-filter{
+    font-size: 10px;
+    padding: 1px;
+  }
+  img.img-fluid {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+/* Prevent content from being hidden under the bottom nav */
+.content  {
+  padding-bottom: 60px; /* Adjust this based on the nav height */
+}
+.breadcrumb {
+  font-size: .5em;
+  ; /* Center breadcrumbs for better mobile display */
+  padding: 5px;
+}
+
+.breadcrumb-item {
+  font-size: 12px;
+}
+
+.bread-icon {
+  font-size: 12px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  padding: 0 3px; /* Further reduce spacing on very small screens */
+}
+button{
+font-size: 10px;
+}
+.breadcrumb .breadcrumb-item a{
+  font-size: 12px;
+}
+}
 
 /* Small devices (Tablets) */
-@media (min-width: 576px) and (max-width: 767px) {}
+@media (min-width: 576px) and (max-width: 767px) {
+  .sidebar {
+    display: none;
+    width: 0;
+  }
+  .sidebar.close {
+    display: none;
+    width: 0;
+  }
+  .sidebar.close ~ .home-section{
+    width: 100%;
+  }
+  #sidebar-toggle{
+    display: none;
+  }
+  .home-section {
+    position: relative;
+    background: #f7f8fc;
+    height: 100vh;
+    left: 0;
+    width: 100%;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+  }
+  .main-content{
+    left: 0;
+    width: 100%;
+  }
+  .category-filter{
+    font-size: 10px;
+    padding: 1px;
+  }
+  img.img-fluid {
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: cover;
+
+}
+/* Prevent content from being hidden under the bottom nav */
+.content  {
+  padding-bottom: 60px; /* Adjust this based on the nav height */
+}
+button{
+  font-size: 2px;
+}
+.breadcrumb .breadcrumb-item a{
+  font-size: 12px;
+}
+}
 
 /* Medium devices (Laptops) */
-@media (min-width: 768px) and (max-width: 991px) {}
+@media (min-width: 768px) and (max-width: 991px) {
+  .sidebar {
+    display: none;
+    width: 0;
+  }
+  .sidebar.close {
+    display: none;
+    width: 0;
+  }
+  .sidebar.close ~ .home-section{
+    width: 100%;
+  }
+  #sidebar-toggle{
+    display: none;
+  }
+  .home-section {
+    position: relative;
+    background: #f7f8fc;
+    height: 100vh;
+    left: 0;
+    width: 100%;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+  }
+  .main-content{
+    left: 0;
+    width: 100%;
+  }
+  .category-filter{
+    font-size: 10px;
+    padding: 1px;
+  }
+  img.img-fluid {
+    width: 80px !important;
+    height: 80px !important;
+}
+.breadcrumb {
+  font-size: .5em;
+  ; /* Center breadcrumbs for better mobile display */
+  padding: 5px;
+}
+
+.breadcrumb-item {
+  font-size: 12px;
+}
+
+.bread-icon {
+  font-size: 12px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  padding: 0 3px; /* Further reduce spacing on very small screens */
+}
+button{
+font-size: 10px;
+}
+/* Prevent content from being hidden under the bottom nav */
+.content  {
+  padding-bottom: 60px; /* Adjust this based on the nav height */
+}
+}
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
     .sidebar {
-      width: 260px; /* Slightly smaller for compact screens */
-      font-size: 10px;
-      transition: all 0.5s ease;
-    }
-  
-    .sidebar.close {
+      display: none;
       width: 0;
-      overflow: hidden;
     }
-  
+    .sidebar.close {
+      display: none;
+      width: 0;
+    }
+    .sidebar.close ~ .home-section{
+      width: 100%;
+    }
+    #sidebar-toggle{
+      display: none;
+      width: 0;
+    }
     .home-section {
+      position: relative;
+      background: #f7f8fc;
+      height: 100vh;
       left: 0;
       width: 100%;
-      transition: all 0.4s ease;
+      transition: all 0.5s ease;
+      overflow-y: auto;
     }
   
     .sidebar.close ~ .home-section {
@@ -48,15 +291,6 @@
     .dropdown-menu {
       right: 15px; 
       left: auto;
-    }
-  
-    /* Adjustments for smaller icons and text */
-    .sidebar .nav-links li i {
-      font-size: 18px; 
-    }
-  
-    .sidebar .logo-details .logo_name {
-      font-size: 18px;
     }
   
     .profile-details {
@@ -74,11 +308,49 @@
       left: 0;
       width: 100%;
     }
+    .main-content{
+      left: 0;
+      width: 100%;
+    }
   
     .main-title {
       font-size: 18px;
     }
-    
+    .category-filter{
+      font-size: 7px;
+      padding: 1px;
+    }
+    img.img-fluid {
+      width: 80px !important;
+      height: 80px !important;
+    }
+
+  /* Prevent content from being hidden under the bottom nav */
+  .content  {
+      padding-bottom: 60px; /* Adjust this based on the nav height */
+      margin-bottom: 60px;
+      overflow-y: auto; /* Adjust this based on the nav height */
+  }
+  .breadcrumb {
+    font-size: .5em;
+    ; /* Center breadcrumbs for better mobile display */
+    padding: 5px;
+}
+
+.breadcrumb-item {
+    font-size: 12px;
+}
+
+.bread-icon {
+    font-size: 12px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    padding: 0 3px; /* Further reduce spacing on very small screens */
+}
+button{
+  font-size: 10px;
+}
   }
 /* Large devices (Desktops) */
 @media (min-width: 992px) and (max-width: 1199px) {}

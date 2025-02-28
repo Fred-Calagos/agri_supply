@@ -1,31 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/boxicons.min.css" rel="stylesheet">
-    <link href="/css/register.css" rel="stylesheet">
-</head>
-<body class="register-page">
-<div class="container register-container bg-dark-50">
+<div class="container-fluid container-sm register-container bg-dark-50">
 
     <form id="registerUserForm" class="needs-validation" action="/register/store" method="POST" enctype="multipart/form-data" novalidate>
-
     <div class="row mb-1">
-            <div class="p-3 border rounded bg-white">
-            <a href="/login" class="btn btn-primary">Back</a> 
+            <div class="p-3 border rounded bg-white mx-2 my-2">
+                <a href="/login" class="btn btn-primary btn-sm">Back</a> 
                 <div class="row p-3">
-                    <div class="col-md-12">
+                    <div class="col-12 col-sm-12 col-md-12">
                         <div class="section-title mb-2">User Information</div>
                         <div class="row mt-2">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-12 col-sm-12 col-md-6 mb-3">
                                 <label for="firstName" class="form-label">First Name</label>
                                 <input type="text" class="form-control" id="firstName" name="firstname" required>
                                 <div class="invalid-feedback">Please enter a valid first name.</div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-12 col-sm-12 col-md-6 mb-3">
                                 <label for="lastName" class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="lastName" name="lastname" required>
                                 <div class="invalid-feedback">Please enter a valid last name.</div>
@@ -33,7 +21,7 @@
                         </div>
                         <div class="row mt-2">
                             <!-- Email -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-12 col-sm-12 col-md-6 mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class='bx bx-envelope'></i></span>
@@ -43,7 +31,7 @@
                             </div>
 
                             <!-- Password -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-12 col-sm-12 col-md-6 mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class='bx bx-lock-alt'></i></span>
@@ -54,7 +42,7 @@
                         </div>
 
                         <div class="row mt-2">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-12 col-sm-12 col-md-6 mb-3">
                                 <label for="contact" class="form-label">Contact Number</label>
                                 <input type="text" class="form-control" id="contact" name="contact" pattern="\d{10,11}" required>
                                 <div class="invalid-feedback">Please provide a valid contact number (10-11 digits).</div>
@@ -64,47 +52,123 @@
                 </div>
                     <div class="row p-3">
                     <div class="section-title">Address Information</div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <label for="region" class="form-label">Region</label>
-                        <input type="text" class="form-control" id="region" name="reg" required>
+                        <select class="form-control" id="region" name="region_id" required>
+                            <option value="" selected disabled hidden>Select a Region</option>
+                            <?php foreach ($refRegion as $region): ?>
+                                <option value="<?= $region['regCode'] ?>"><?= $region['regDesc'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <div class="invalid-feedback">Please enter your region.</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <label for="province" class="form-label">Province</label>
-                        <input type="text" class="form-control" id="province" name="prov" required>
+                        <select class="form-control" id="province" name="province">
+                            <option value="">Select a province</option>
+                        </select>
                         <div class="invalid-feedback">Please enter your province.</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <label for="municipality" class="form-label">Municipality</label>
-                        <input type="text" class="form-control" id="municipality" name="citymun" required>
+                        <select class="form-control" id="citymun" name="citymun">
+                            <option value="">Select a City/Municipality</option>
+                        </select>
                         <div class="invalid-feedback">Please enter your municipality.</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <label for="barangay" class="form-label">Barangay</label>
-                        <input type="text" class="form-control" id="barangay" name="brgy" required>
+                        <select class="form-control" id="brgy" name="brgy">
+                            <option value="">Select a Barangay</option>
+                        </select>
                         <div class="invalid-feedback">Please enter your barangay.</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <label for="zipcode" class="form-label">Zip Code</label>
                         <input type="text" class="form-control" id="zipcode" name="zipcode" pattern="\d{4}" required>
                         <div class="invalid-feedback">Please enter a valid 4-digit zip code.</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-sm-12 col-md-4">
                         <label for="placeDescription" class="form-label">Place Description</label>
                         <textarea class="form-control" id="placeDescription" name="place_desc" rows="2"></textarea>
                         <div class="invalid-feedback">Please enter a place description</div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end md-3">
-                    <button type="submit" class="btn btn-success"><i class="bx bx-save"></i> Register User</button>
+                    <button type="submit" class="btn btn-success btn-sm"><i class="bx bx-save"></i> Register User</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $('#region').change(function() {
+            var regionId = $(this).val();
+            if (regionId !== '') {
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-provinces',
+                    data: { region_id: regionId },
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#province').html('<option value="">Select a province</option>');
+                        $.each(response, function(index, province) {
+                            $('#province').append('<option value="'+ province.provCode +'">'+ province.provDesc +'</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#province').html('<option value="">Select a province</option>');
+            }
+        });
+    });
+   
+    $(document).ready(function() {
+        $('#province').change(function() {
+            var provId = $(this).val();
+            if (provId !== '') {
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-citymun',
+                    data: { prov_id: provId },
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#citymun').html('<option value="">Select a City/Municipality</option>');
+                        $.each(response, function(index, citymun) {
+                            $('#citymun').append('<option value="'+ citymun.citymunCode +'">'+ citymun.citymunDesc +'</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#province').html('<option value="">Select a province</option>');
+            }
+        });
+    });
+    
+    $(document).ready(function() {
+        $('#citymun').change(function() {
+            var citymunId = $(this).val();
+            if (citymunId !== '') {
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-brgy',
+                    data: { citymun_Id: citymunId },
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#brgy').html('<option value="">Select a Barangay</option>');
+                        $.each(response, function(index, brgy) {
+                            $('#brgy').append('<option value="'+ brgy.brgyCode +'">'+ brgy.brgyDesc +'</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#brgy').html('<option value="">Select a Barangay</option>');
+            }
+        });
+    });
+
 (function () {
   'use strict';
   var forms = document.querySelectorAll('.needs-validation');
@@ -119,5 +183,3 @@
   });
 })();
 </script>
-</body>
-</html>

@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-4 mt-4">
+        <div class="col-12 col-sm-12 col-md-4 mt-4">
             <div class="card position-relative">
                 <a href="/user_role" class="stretched-link"></a> <!-- Adjusted URL -->
                 <div class="card-body text-center">
@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mt-4">
+        <div class="col-12 col-sm-12 col-md-4 mt-4">
             <div class="card position-relative">
                 <a href="/order_status" class="stretched-link"></a> <!-- Adjusted URL -->
                 <div class="card-body text-center">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mt-4">
+        <div class="col-12 col-sm-12 col-md-4 mt-4">
             <div class="card position-relative">
                 <a href="/product_status" class="stretched-link"></a> <!-- Adjusted URL -->
                 <div class="card-body text-center">
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mt-4">
+        <div class="col-12 col-sm-12 col-md-4 mt-4">
             <div class="card position-relative">
                 <a href="/product_category" class="stretched-link"></a> <!-- Adjusted URL -->
                 <div class="card-body text-center">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mt-4">
+        <div class="col-12 col-sm-12 col-md-4 mt-4">
             <div class="card position-relative">
                 <a href="/brand" class="stretched-link"></a> <!-- Adjusted URL -->
                 <div class="card-body text-center">

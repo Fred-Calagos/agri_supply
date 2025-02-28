@@ -12,7 +12,7 @@
         </nav>
 
         <!-- Add User Button -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userModal">
             <i class="bx bx-plus-circle"></i> Add User
         </button>
     </div>
@@ -39,7 +39,7 @@
                     <td><?= $user['email'] ?></td>
                     <td><?= $user['role'] ?></td>
                     <td>    
-                        <button class="edit-user btn btn-warning" 
+                        <button class="edit-user btn btn-warning btn-sm" 
                                 data-id="<?= $user['id'] ?>" 
                                 data-firstname="<?= $user['firstname'] ?>" 
                                 data-lastname="<?= $user['lastname'] ?>" 
@@ -47,7 +47,7 @@
                                 data-role="<?= $user['role'] ?>">
                             <i class="bx bxs-edit"></i> Edit
                         </button>
-                        <button class="delete-user btn btn-danger" 
+                        <button class="delete-user btn btn-danger btn-sm" 
                                 data-id="<?= $user['id'] ?>">
                             <i class="bx bxs-trash"></i> Delete
                         </button>
@@ -85,8 +85,8 @@
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" id="saveUser"><i class="bx bx-save"></i> Save</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success btn-sm" id="saveUser"><i class="bx bx-save"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -121,8 +121,8 @@
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveEditedUser"><i class="bx bx-save"></i> Save Changes</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="saveEditedUser"><i class="bx bx-save"></i> Save Changes</button>
                 </div>
             </div>
         </div>

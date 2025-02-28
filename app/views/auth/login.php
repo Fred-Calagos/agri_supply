@@ -1,26 +1,4 @@
-<?php
-require_once __DIR__ . '/../../Core/Database.php';
-
-use App\Core\Database;
-
-// Connect to the database
-$pdo = Database::connect();
-
-// Fetch brands from the database
-$stmt = $pdo->query("SELECT * FROM brands");
-$brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/login.css" rel="stylesheet">
-</head>
-<body>
+<div class="login">
 <div class="container prod-details p-2 text-center">
     <?php if (!empty($brands)): ?>
         <?php foreach ($brands as $brand): ?>
@@ -58,9 +36,9 @@ $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 
-    <div class="container login-container p-4">
+    <div class="container container-fluid container-sm login-container p-3">
         <div class="row g-0">
-            <div class="col-md-12 p-4">
+            <div class="col-12 col-sm-12 col-md-12 p-4">
                 <h3 class="text-center mb-3">Login</h3>
                 <?php if (isset($_SESSION['error'])): ?>
                     <p class="text-danger text-center"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></p>
@@ -74,7 +52,7 @@ $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label for="password" class="form-label">Password:</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-success w-100 btn-login">Login</button>
+                    <button type="submit" class="btn btn-success btn-sm w-100 btn-login">Login</button>
                 </form>
                 <div class="text-center mt-3">
                     <small>Don't have an account? <a href="/register">Sign up</a></small>
@@ -82,6 +60,5 @@ $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-    <script src="/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+</div>

@@ -89,7 +89,7 @@ class Order extends Model
             pc.product_category,
             os.order_status as orderStatName,
             CONCAT(u.firstname, ' ', u.lastname) as fullName,
-            u.address, u.email  -- Add user address and email
+            u.prov, u.reg, u.citymun, u.brgy, u.contact, u.email  -- Add user address and email
             
             FROM " . self::$table . " po
             

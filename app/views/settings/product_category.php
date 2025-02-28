@@ -12,7 +12,7 @@
         </nav>
 
         <!-- Add Product Category Button -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productCategoryModal">
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productCategoryModal">
             <i class="bx bx-plus-circle"></i> Add Product Category
         </button>
     </div>
@@ -35,12 +35,12 @@
                     <td><?= $index + 1 ?></td>
                     <td><?= $category['product_category'] ?></td>
                     <td>    
-                        <button class="edit-product-category btn btn-warning" 
+                        <button class="edit-product-category btn btn-warning btn-sm" 
                                 data-id="<?= $category['id'] ?>" 
                                 data-product-category="<?= $category['product_category'] ?>">
                             <i class="bx bxs-edit"></i> Edit
                         </button>
-                        <button class="delete-category btn btn-danger" 
+                        <button class="delete-category  btn-sm" 
                                 data-id="<?= $category['id'] ?>">
                             <i class="bx bxs-trash"></i> Delete
                         </button>
@@ -67,8 +67,8 @@
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" id="saveCategory"><i class="bx bx-save"></i> Save</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success btn-sm" id="saveCategory"><i class="bx bx-save"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -90,8 +90,8 @@
                             <input type="text" class="form-control" id="editProductCategoryName" name="product_category" required>
                         </div>
                         <div class="modal-footer d-flex justify-content-between">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="saveEditedCategory"><i class="bx bx-save"></i> Save Changes</button>
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-sm" id="saveEditedCategory"><i class="bx bx-save"></i> Save Changes</button>
                         </div>
                     </form>
                 </div>

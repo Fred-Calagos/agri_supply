@@ -120,8 +120,11 @@ $pdf->SetFont('dejavusans', '', 7);
 
 if (!empty($orderTracks)) {
     $customerName = $orderTracks[0]['fullName'];
-    $customerAddress = $orderTracks[0]['address'];
+    $customerprov = $orderTracks[0]['prov'];
+    $customercitymun = $orderTracks[0]['citymun'];
+    $customerbrgy = $orderTracks[0]['brgy'];
     $customerEmail = $orderTracks[0]['email'];
+    $shippingFee =  $orderTracks[0]['shipping_fee']; 
 } else {
     $customerName = "N/A";
     $customerAddress = "N/A";
@@ -129,7 +132,7 @@ if (!empty($orderTracks)) {
 }
 
 $pdf->Cell($colWidth, 5, "Name: " . $customerName, 0, 1, 'L');
-$pdf->Cell($colWidth, 5, "Address: " . $customerAddress, 0, 1, 'L');
+$pdf->Cell($colWidth, 5, "Address: " . $customerbrgy . ', ' . $customercitymun . ', ' . $customerprov , 0, 1, 'L');
 $pdf->Cell($colWidth, 5, "Email: " . $customerEmail, 0, 1, 'L');
 
 $pdf->Ln(5); // Space after header
@@ -158,7 +161,7 @@ foreach ($orderTracks as $item) {
 }
 
 // Footer Totals
-$shippingFee = 50; 
+
 $grandTotal = $subTotal + $shippingFee;
 
 $pdf->SetFont('dejavusans', 'B', 7);

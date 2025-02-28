@@ -2,18 +2,23 @@
 
 namespace App\controllers;
 
-use App\Models\User;
+use App\Core\LoginController;
 use App\models\Brand;
+use App\Models\User;
 
-class AuthController
+class AuthController extends LoginController
 {
     public function showLogin() 
     {
-        $brand = Brand::all();
-        include_once __DIR__ . '/../Views/auth/login.php';
+        $brands = Brand::all();
+        $data = [
+            'title' => 'Login',
+            'brands' => $brands,
+            'content' => $this->renderView('auth/login', ['brands' => $brands])
+        ];
 
+        $this->view('layout/login-main', $data);
     }
-
     public function login() 
     {
         $email = $_POST['email'] ?? '';

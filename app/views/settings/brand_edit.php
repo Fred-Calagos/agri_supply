@@ -101,8 +101,8 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-3">
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-success"><i class="bx bx-save"></i> Update Product</button>
+                    <button type="reset" class="btn btn-secondary btn-sm">Reset</button>
+                    <button type="submit" class="btn btn-success btn-sm"><i class="bx bx-save"></i> Update Product</button>
                 </div>
             </div>
         </div>

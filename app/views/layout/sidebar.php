@@ -1,5 +1,5 @@
 <div class="sidebar close">
-<?php if (isAdmin()): ?>
+  <?php if (isAdmin()): ?>
     <div class="logo-details">
       <i class='bx bxl-c-plus-plus'></i>
       <span class="logo_name">ADMIN</span>
@@ -65,7 +65,7 @@
 
        <!-- REPORTS  -->
 
-      <li>
+      <!-- <li>
         <a href="#">
           <i class='bx bx-file'></i>
           <span class="link_name">Reports</span>
@@ -82,7 +82,7 @@
         <ul class="sub-menu blank">
           <li><a class="link_name" href="#">History</a></li>
         </ul>
-      </li>
+      </li> -->
       <li>
         <a href="/settings">
           <i class='bx bx-cog' ></i>
@@ -113,6 +113,15 @@
           </ul>
         </li>
         
+        <li>
+          <a href="/customer/viewCategory">
+          <i class="bx bx-category"></i>
+            <span class="link_name">Cart</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="/customer/viewCategory">Category</a></li>
+          </ul>
+        </li>
         <li>
           <a href="/customer/cart">
             <i class='bx bx-cart'></i>

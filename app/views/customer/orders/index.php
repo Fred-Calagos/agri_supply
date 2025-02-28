@@ -1,74 +1,99 @@
+<style>
+    .category-filter {
+        display: flex;
+        flex-wrap: nowrap; /* Prevents wrapping */
+        overflow-x: auto; /* Enables horizontal scrolling if needed */
+        white-space: nowrap; /* Ensures text stays in one line */
+        justify-content: center; /* Centers the items */
+        gap: 10px; /* Adds spacing between items */
+    }
+
+    .filter-status {
+        font-size: 14px; /* Default size */
+        padding: 5px 10px;
+        text-align: center;
+        flex-shrink: 0; /* Prevents shrinking */
+        cursor: pointer;
+    }
+
+    @media (max-width: 576px) {
+        .filter-status {
+            font-size: 10px; /* Smaller font for mobile */
+            padding: 3px 6px; /* Adjust padding */
+        }
+    }
+</style>
+
 <div class="container mt-4">
-    <div class="p-3 border rounded bg-white mt-4">
-        <div class="row g-3">
-                <div class="col-md-2">
-                    <a class="card-title text-center filter-status"
-                        data-status="All"
-                        style="cursor: pointer;">All
-                    </a>
-                </div>
+    <div class="p-2 border rounded bg-white mt-4">
+        <div class="row text-center category-filter d-flex flex-wrap">
+            <div class="col-2 col-sm-2 col-md-2 d-flex justify-content-center">
+                <a class="card-title filter-status" data-status="All">
+                    All
+                </a>
+            </div>
             <?php foreach($orderStatus as $orderStat): ?>
-                <div class="col-md-2">
-                    <a class="card-title text-center filter-status"
-                        data-status="<?= htmlspecialchars($orderStat['id']) ?>"
-                        style="cursor: pointer;">
-                        <?= htmlspecialchars($orderStat['order_status']) ?>
+                <div class="col-2 col-sm-2 col-md-2 d-flex justify-content-center">
+                    <a class="card-title filter-status" 
+                    data-status="<?= htmlspecialchars($orderStat['id']) ?>">
+                    <?= htmlspecialchars($orderStat['order_status']) ?>
                     </a>
                 </div>
-            <?php endforeach;?>
+            <?php endforeach; ?>
         </div>
     </div>
+</div>
 
+<div class="container mt-4">
     <div class="p-3 border rounded bg-white mt-4">
         <div class="row">
             <div class="col-md-12">
-            <?php foreach ($customerOrder as $item): ?>
-                <div class="row">
-                <div class="p-3 border-bottom bg-white">
-                    <div class="row align-items-center">
-                        <input type="hidden" class="cartId" value="<?= htmlspecialchars($item['id']) ?>">
-                        <input type="hidden" class="order" id="orderStatus" value="<?= htmlspecialchars($item['order_status']) ?>">
+                <?php foreach ($customerOrder as $item): ?>
+                    <div class="row">
+                        <div class="p-3 border-bottom bg-white">
+                            <div class="row align-items-center">
+                                <input type="hidden" class="cartId" value="<?= htmlspecialchars($item['id']) ?>">
+                                <input type="hidden" class="order" id="orderStatus" value="<?= htmlspecialchars($item['order_status']) ?>">
 
-                        <div class="col-md-3 d-flex align-items-center justify-content-center text-center">
-                            <div class="row w-100">
-                                <!-- Product Image -->
-                                <div class="col-md-6 d-flex justify-content-center">
-                                    <img src="<?= htmlspecialchars($item['image_path']) ?>" class="img-fluid border rounded" style="width: 80px; height: 80px; object-fit: cover;">
-                                </div>
-                                <!-- Product Name -->
-                                <div class="col-md-4 justify-content-center">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                        <h5><?= htmlspecialchars($item['product_name']) ?></h5>
-                                        </div>
+                                <!-- Product Image & Details -->
+                                <div class="col-12 col-sm-6 d-flex align-items-center">
+                                    <!-- Product Image -->
+                                    <div class="me-3">
+                                        <img src="<?= htmlspecialchars($item['image_path']) ?>" 
+                                            class="img-fluid border rounded"
+                                            style="width: 60px; height: 60px; object-fit: cover;">
+                                    </div> 
+                                    <!-- Product Info -->
+                                    <div>
+                                        <h6 class="mb-0"><?= htmlspecialchars($item['product_name']) ?></h6>
+                                        <small class="text-muted"><?= htmlspecialchars($item['product_category']) ?></small>
+                                        <p class="mb-0">x<?= htmlspecialchars($item['product_quantity']) ?></p>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                        <p><?= htmlspecialchars($item['product_category']) ?></p>
-                                        </div>
-                                    </div>                                
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                        <p>x<?= htmlspecialchars($item['product_quantity']) ?></p>
-                                        </div>
-                                    </div>                                
+                                </div>
+
+                                <!-- Subtotal -->
+                                <div class="col-12 col-sm-6 text-center text-sm-end text-success fw-bold mt-2 mt-sm-0"> 
+                                    ₱ <?= number_format($item['selling_price'] * $item['product_quantity'], 2) ?>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Subtotal -->
-                        <div class="col-md-6 text-center text-success justify-content-end"> 
-                            ₱ <?= number_format($item['selling_price'] * $item['product_quantity'], 2) ?>
-                        </div>
                     </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Responsive Image Size */
+@media (max-width: 576px) { 
+    img.img-fluid {
+        width: 80px !important;
+        height: 80px !important;
+    }
+}
+</style>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const filterLinks = document.querySelectorAll(".filter-status");

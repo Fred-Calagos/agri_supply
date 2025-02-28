@@ -7,14 +7,26 @@ use App\controllers\BrandController;
 use App\controllers\ProductController;
 use App\controllers\SettingController;
 use App\Controllers\CustomerController;
-use App\Controllers\DashboardController;
 use App\controllers\OrderStatusController;
 use App\controllers\ProductCategoryController;
 use App\controllers\CartController;
+use App\controllers\LocationController;
 use App\controllers\OrderController;
 use App\controllers\PdfController;
 use App\controllers\ProductStatusController;
 use App\controllers\RegisterController;
+
+
+
+// REGISTER ROUTE
+$router->get('/register', [RegisterController::class, 'showRegister']);
+$router->post('/register/store', [RegisterController::class, 'store']);
+
+// LOCATION ROUTE
+$router->post('/get-provinces', [LocationController::class, 'getProvinces']);
+$router->post('/get-citymun', [LocationController::class, 'getCityMun']);
+$router->post('/get-brgy', [LocationController::class, 'getBrgy']);
+
 
 // LOGIN ROUTE
 $router->get('/login', [AuthController::class, 'showLogin']);
@@ -22,10 +34,10 @@ $router->post('/login', [AuthController::class, 'login']);
 $router->get('/logout', [AuthController::class, 'logout']);
 
 
+
 // Admin Routes (Protected)
 $router->get('/admin', [AdminController::class, 'index']);
-$router->get('/register', [RegisterController::class, 'index']);
-$router->post('/register/store', [RegisterController::class, 'store']);
+
 
 
 // SETTINGS ROUTES
@@ -82,6 +94,9 @@ $router->post('/customer/cart/store',[CartController::class, 'store']);
 $router->post('/customer/cart/updateQuantity/{id}',[CartController::class, 'updateQuantity']);
 $router->post('/customer/cart/OrderSelected', [CartController::class, 'OrderSelected']);
 $router->get('/customer/cart/delete/{id}', [CartController::class, 'deleteCart']);
+
+$router->get('/customer/category', [CustomerController::class, 'viewCategory']);
+$router->get('/customer/viewCategory', [CustomerController::class, 'OpenCategory']);
 
 
 // ORDER ROUTE 

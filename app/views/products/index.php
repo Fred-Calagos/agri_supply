@@ -2,7 +2,7 @@
     <div class="d-flex align-items-center justify-content-between mb-3">
 
         <div>
-        <a href="/products/create" class="btn btn-primary">+ Add Product</a>
+        <a href="/products/create" class="btn btn-primary btn-sm">+ Add Product</a>
         </div>
     </div>
 
@@ -36,15 +36,15 @@
                 <td>
                     <div class="d-flex justify-content-between">
                         <!-- Edit Button (Left) -->
-                        <a href="/products/edit/<?= $product['id'] ?>" class="btn btn-warning">
+                        <a href="/products/edit/<?= $product['id'] ?>" class="btn btn-warning btn-sm">
                             <i class="bx bxs-edit"></i>
                         </a>
 
-                        <a href="/products/batch/<?= $product['id'] ?>" class="btn btn-success">
+                        <a href="/products/batch/<?= $product['id'] ?>" class="btn btn-success btn-sm">
                             <i class='bx bx-list-plus'></i>
                         </a>
                         <!-- Delete Button (Right) -->
-                        <button class="delete-product btn btn-danger" data-id="<?= $product['id'] ?>">
+                        <button class="delete-product btn btn-danger btn-sm" data-id="<?= $product['id'] ?>">
                             <i class="bx bxs-trash"></i>
                         </button>
                     </div>
@@ -75,8 +75,8 @@
                         <input type="text" id="editProductName" name="name" class="form-control" required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success" id="saveEditedProduct"><i class="bx bx-save"></i> Save Changes</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success btn-sm" id="saveEditedProduct"><i class="bx bx-save"></i> Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -97,8 +97,8 @@
                 <div class="modal-footer">
                     <form id="deleteProductForm">
                         <input type="hidden" name="id" id="delete_product_id">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger" id="confirmDeleteProduct"><i class="bx bxs-trash"></i> Delete</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger btn-sm" id="confirmDeleteProduct"><i class="bx bxs-trash"></i> Delete</button>
                     </form>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-3 col-sm-6 mt-3">
+            <div class="col-12 col-md-3 col-sm-12 mt-3">
                 <div class="custom-card">
                     <i class="bx bx-pencil icon-box"></i>
                     <div class="text-box">
@@ -10,7 +10,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mt-3">
+            <div class="col-12 col-md-3 col-sm-12 mt-3">
                 <div class="custom-card">
                     <i class="bx bx-pencil icon-box"></i>
                     <div class="text-box">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 mt-3">
+            <div class="col-12 col-md-3 col-sm-12 mt-3">
                 <div class="custom-card">
                     <i class="bx bx-pencil icon-box"></i>
                     <div class="text-box">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 mt-3">
+            <div class="col-12 col-md-3 col-sm-12 mt-3">
                 <div class="custom-card">
                     <i class="bx bx-pencil icon-box"></i>
                     <div class="text-box">

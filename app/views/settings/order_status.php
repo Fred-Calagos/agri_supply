@@ -12,7 +12,7 @@
         </nav>
 
         <!-- Add Order Status  Button -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#orderStatModal">
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#orderStatModal">
             <i class="bx bx-plus-circle"></i> Add Order Status
         </button>
     </div>
@@ -35,12 +35,12 @@
                     <td><?= $index + 1 ?></td>
                     <td><?= $orderStat['order_status'] ?></td>
                     <td>    
-                        <button class="edit-order-status btn btn-warning" 
+                        <button class="edit-order-status btn btn-warning btn-sm" 
                                 data-id="<?= $orderStat['id'] ?>" 
                                 data-order-status="<?= $orderStat['order_status'] ?>">
                             <i class="bx bxs-edit"></i> Edit
                         </button>
-                        <button class="delete-order-status btn btn-danger" 
+                        <button class="delete-order-status btn btn-danger btn-sm" 
                                 data-id="<?= $orderStat['id'] ?>">
                             <i class="bx bxs-trash"></i> Delete
                         </button>
@@ -67,8 +67,8 @@
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success" id="saveOrderStatus"><i class="bx bx-save"></i> Save</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success btn-sm" id="saveOrderStatus"><i class="bx bx-save"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -92,8 +92,8 @@
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveEditedOrderStatus"><i class="bx bx-save"></i> Save Changes</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="saveEditedOrderStatus"><i class="bx bx-save"></i> Save Changes</button>
                 </div>
             </div>
         </div>
@@ -112,8 +112,8 @@
                 <p id="orderStatusInfo"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteOrderStatus">Delete</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger btn-sm" id="confirmDeleteOrderStatus">Delete</button>
             </div>
         </div>
     </div>
