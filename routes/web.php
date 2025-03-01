@@ -37,6 +37,8 @@ $router->get('/logout', [AuthController::class, 'logout']);
 
 // Admin Routes (Protected)
 $router->get('/admin', [AdminController::class, 'index']);
+$router->get('/report', [AdminController::class, 'reportPage']);
+$router->get('/report-orders', [AdminController::class, 'reportOrderPage']);
 
 
 
@@ -111,3 +113,5 @@ $router->post('/orders/updateOrderStatus', [OrderController::class, 'updateOrder
 // REPORT PDF ROUTE
 $router->get('/pdf/generateOrderPdf', [PdfController::class, 'generateOrderPdf']);
 $router->get('/pdf/viewPdfReport', [PdfController::class, 'viewPdfReport']);
+$router->get('/pdf/viewPdfReport', [PdfController::class, 'viewPdfReport']);
+$router->get('/pdf/generateExcel', [PdfController::class, 'generateExcel']);

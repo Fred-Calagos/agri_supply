@@ -4,6 +4,7 @@ namespace App\Models;
 
 use PDO;
 use App\Core\Model;
+use App\Core\Database;
 
 class User extends Model {
 
@@ -18,5 +19,12 @@ class User extends Model {
         $stmt->execute([$email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+    public static function totalUser()
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM " . self::$table . " WHERE role ='User'");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0; // Return 0 if no result found
+    }
 }

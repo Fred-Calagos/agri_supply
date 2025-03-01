@@ -40,9 +40,9 @@
                             <i class="bx bxs-edit"></i>
                         </a>
 
-                        <a href="/products/batch/<?= $product['id'] ?>" class="btn btn-success btn-sm">
+                        <!-- <a href="/products/batch/<?= $product['id'] ?>" class="btn btn-success btn-sm">
                             <i class='bx bx-list-plus'></i>
-                        </a>
+                        </a> -->
                         <!-- Delete Button (Right) -->
                         <button class="delete-product btn btn-danger btn-sm" data-id="<?= $product['id'] ?>">
                             <i class="bx bxs-trash"></i>

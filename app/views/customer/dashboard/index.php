@@ -2,7 +2,7 @@
     <!-- Left Arrow -->
     <button class="scroll-btn left-btn d-none d-md-block" onclick="autoScroll(-1)">&#10094;</button>
 
-    <div class="scroll-container">
+    <div class="scroll-container container-fluid w-75">
         <?php foreach($categories as $category): ?>
             <div class="scroll-item">
                 <div class="card shadow-sm card-category">
@@ -70,16 +70,19 @@
 /* Scroll buttons (arrows) */
 .scroll-btn {
     position: absolute;
-    top: 50%;
+    top: 25%;
     transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 10px 10px;
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 12px;
     transition: background 0.3s ease-in-out;
+    z-index: inherit;
 }
 
 .scroll-btn:hover {
@@ -87,11 +90,11 @@
 }
 
 .left-btn {
-    left: -30px;
+    left: 10%;
 }
 
 .right-btn {
-    right: -30px;
+    right: 10%;
 }
 
 /* Hide arrows on small screens */

@@ -116,5 +116,31 @@ class Order extends Model
         $stmt->execute([$trackNumber]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
+    public static function totalOrders()
+        {
+            $pdo = Database::connect();
+            $stmt = $pdo->prepare("
+                SELECT COUNT(*) as total 
+                FROM " . self::$table . " 
+                WHERE order_status = (SELECT id FROM order_status WHERE order_status = 'Received')
+            ");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'] ?? 0; // Return 0 if no result found
+        }
+        public static function OrderReport(){
+            $pdo = Database::connect();
+            $stmt = $pdo->prepare("SELECT po.*, 
+                p.product_name,p.shipping_fee, p.stocks, p.product_description, p.selling_price, p.cost_price, p.profit_margin,
+                pc.product_category
+                FROM " . self::$table . " po
+                JOIN products p ON po.product_id = p.id
+                JOIN product_category pc ON p.product_category_id = pc.id
+                ORDER BY po.ordered_date ASC
+            ");
+            
+            $stmt->execute(); // Execute the query before fetching results
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch results as an associative array
+        }
+        
 }

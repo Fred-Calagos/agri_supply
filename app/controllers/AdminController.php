@@ -2,6 +2,9 @@
 
 namespace App\controllers;
 
+use App\Models\User;
+use App\models\Order;
+use App\models\Products;
 use App\Core\BaseController;
 
 class AdminController extends BaseController
@@ -14,14 +17,42 @@ class AdminController extends BaseController
 
     public function index()
     {
+        $products = Products::totalProducts();
+        $orders = Order::totalOrders();
+        $user = User::totalUser();
         $data = [
             'title' => 'Admin Dashboard',
-            'content' => $this->renderView('dashboard/index')
+            'products' => $products,
+            'content' => $this->renderView('dashboard/index', [
+                'products' => $products,
+                'orders' => $orders,
+                'user' => $user
+            ])
         ];
 
         $this->view('layout/main', $data);
     }
 
+    public function reportPage(){
+        $data = [
+            'title' => 'Report',
+            'content' => $this->renderView('report/index')
+        ];
+
+        $this->view('layout/main', $data);
+    }
+    public function reportOrderPage(){
+        $orderReport = Order::OrderReport();
+        $data = [
+            'title' => 'Generate Orders Report',
+            'content' => $this->renderView('report/report_orders', [
+                'orderReport' => $orderReport
+
+            ])
+        ];
+
+        $this->view('layout/main', $data);
+    }
     private function checkAuth()
     {
         if (!isset($_SESSION['user'])) {

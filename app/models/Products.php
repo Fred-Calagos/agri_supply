@@ -76,4 +76,14 @@ class Products extends Model {
         $stmt->execute([$category]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function totalProducts()
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM products");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0; // Return 0 if no result found
+    }
+    
+    
 }

@@ -13,5 +13,7 @@
             "email": "frederickcalagos7@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpoffice/phpspreadsheet": "^4.0"
+    }
 }

@@ -13,7 +13,7 @@
 
         <!-- Add Product Status  Button -->
         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productStatModal">
-            <i class="bx bx-plus-circle"></i> Add Product Status
+            <i class="bx bx-plus-circle"></i> Product Status
         </button>
     </div>
 

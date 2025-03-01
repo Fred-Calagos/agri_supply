@@ -65,16 +65,16 @@
 
        <!-- REPORTS  -->
 
-      <!-- <li>
-        <a href="#">
+      <li>
+        <a href="/report">
           <i class='bx bx-file'></i>
           <span class="link_name">Reports</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Reports</a></li>
+          <li><a class="link_name" href="/report">Reports</a></li>
         </ul>
       </li>
-      <li>
+      <!-- <li>
         <a href="#">
           <i class='bx bx-history'></i>
           <span class="link_name">History</span>
@@ -105,7 +105,7 @@
         
       <li>
           <a href="/customer/dashboard">
-            <i class='bx bx-grid-alt' ></i>
+          <i class='bx bx-home-alt'></i>
             <span class="link_name">Dashboard</span>
           </a>
           <ul class="sub-menu blank">
@@ -143,16 +143,6 @@
           </ul>
         </li>
 
-        <!-- USER ACCOUNT -->
-        <li>
-            <a href="customer/account">
-                <i class='bx bxs-user-account'></i>
-                <span class="link_name">User Account</span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="customer/account">User Account</a></li>
-            </ul>
-        </li>
       </ul>
 
 
