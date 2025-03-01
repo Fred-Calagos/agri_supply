@@ -59,21 +59,21 @@
                     <span class="text main-title ms-2"><?php echo $title ?? 'Dashboard'; ?></span>
                 </div>
                 <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center justify-content-center border rounded-circle bg-light p-2"
+                    <a href="" class="d-flex align-items-center justify-content-center border rounded-circle bg-light p-2"
                     style="height: 40px; width: 40px;" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bx bx-user fs-4 text-dark"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-2" aria-labelledby="dropdownUser1">
                         <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2" href="#">
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="/customer/account">
                                 <i class='bx bxs-user-circle fs-5 text-primary'></i> My Account
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" href="#">
                                 <i class='bx bx-history fs-5 text-secondary'></i> Logs
                             </a>
-                        </li>
+                        </li> -->
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2 text-danger" href="/logout">

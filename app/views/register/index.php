@@ -1,3 +1,4 @@
+<body class="reg-body">
 <div class="container-fluid container-sm register-container bg-dark-50">
 
     <form id="registerUserForm" class="needs-validation" action="/register/store" method="POST" enctype="multipart/form-data" novalidate>
@@ -101,6 +102,8 @@
         </div>
     </form>
 </div>
+</body>
+
 
 <script>
     $(document).ready(function() {

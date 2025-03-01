@@ -1,27 +1,6 @@
-<div class="container mt-4 p-3 border rounded bg-white">
-    <h3 class="mb-4">Shopping Cart</h3>
-        <div class="row">
-            <div class="p-3 border-bottom border-primary bg-white">
-                <div class="row align-items-center">
-                    <div class="col-md-3 text-left">
-                        <h6>Product</h6>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <h6>Unit Price (kg)</h6>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <h6>Quantity</h6>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <h6>Total Price</h6>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <h6>Action</h6>
-                    </div>
+<div class="container shadowmt-4 p-3 border rounded bg-white">
+    <h3 class="mb-4 border-bottom p-3 border-primary">Shopping Cart</h3>
 
-                </div>
-            </div>
-        </div>
 <?php if (!empty($cartItems)): ?>
     <form id="cartForm">
         <?php foreach ($cartItems as $item): ?>
@@ -30,46 +9,37 @@
                     <div class="row align-items-center">
                         <input type="hidden" class="cartId" value="<?= htmlspecialchars($item['id']) ?>">
 
-                        <div class="col-md-3 d-flex align-items-center justify-content-center text-center">
-                            <div class="row w-100">
-                                <!-- Checkbox -->
-                                <div class="col-md-2 d-flex justify-content-center">
-                                    <input type="checkbox" class="cartCheckbox" value="<?= htmlspecialchars($item['id']) ?>" name="cartIds[]">
-                                </div>
-                                <!-- Product Image -->
-                                <div class="col-md-6 d-flex justify-content-center">
-                                    <img src="<?= htmlspecialchars($item['image_path']) ?>" class="img-fluid border rounded" style="width: 80px; height: 80px; object-fit: cover;">
-                                </div>
-                                <!-- Product Name -->
-                                <div class="col-md-4 d-flex align-items-center justify-content-center">
-                                    <h6><?= htmlspecialchars($item['product_name']) ?></h6>                                    
+                        <div class="col-5 col-sm-5 col-md-5 d-flex align-items-center gap-1">
+                            <!-- Checkbox -->
+                            <input type="checkbox" class="cartCheckbox" value="<?= htmlspecialchars($item['id']) ?>" name="cartIds[]">
+                            <!-- Product Image -->
+                            <img src="<?= htmlspecialchars($item['image_path']) ?>" class="img-fluid border rounded cart" style="width: 80px; height: 80px; object-fit: cover;">
+                        </div>
+                        <div class="col-5 col-sm-5 col-md-5 d-flex flex-column flex-md-row align-items-center justify-content-between text-center text-sm-start">
+                            <!-- Product Name -->
+                            <div class="w-100 mb-1 mb-md-0">
+                                <p class="m-0"><?= htmlspecialchars($item['product_name']) ?></p>
+                            </div>
+                            <!-- Subtotal -->
+                            <div class="w-100 text-success">
+                                <span id="subtotal-<?= $item['id'] ?>" data-price="<?= htmlspecialchars($item['selling_price']) ?>">
+                                    ₱ <?= number_format($item['selling_price'] * $item['quantity'], 2) ?>
+                                </span>
+                            </div>
+                            <div class="w-100 mb-2 mb-md-0 d-flex justify-content-start">
+                                <div class="input-group" style="width: auto;">
+                                    <button class="btn btn-outline-secondary btn-sm decreaseQty" type="button" data-id="<?= $item['id'] ?>">-</button>
+                                    <input type="number" class="form-control text-center productQuantity" name="quantity" min="1" style="max-width: 70px;" value="<?= $item['quantity'] ?>" data-id="<?= $item['id'] ?>">
+                                    <button class="btn btn-outline-secondary btn-sm increaseQty" type="button" data-id="<?= $item['id'] ?>">+</button>
                                 </div>
                             </div>
                         </div>
+                        
+                            <!-- Quantity -->
 
-                        <!-- Price -->
-                        <div class="col-md-2 text-center"> 
-                            <?= htmlspecialchars($item['selling_price']) ?>
-                        </div>
-
-                        <!-- Quantity -->
-                        <div class="col-md-2 d-flex justify-content-center align-items-center">
-                            <div class="input-group" style="width: auto;">
-                                <button class="btn btn-outline-secondary btn-sm decreaseQty" type="button" data-id="<?= $item['id'] ?>">-</button>
-                                <input type="number" class="form-control text-center productQuantity" name="quantity" min="1" style="max-width: 70px;" value="<?= $item['quantity'] ?>" data-id="<?= $item['id'] ?>">
-                                <button class="btn btn-outline-secondary btn-sm increaseQty" type="button" data-id="<?= $item['id'] ?>">+</button>
-                            </div>
-                        </div>
-
-                        <!-- Subtotal -->
-                        <div class="col-md-2 text-center text-success" 
-                            id="subtotal-<?= $item['id'] ?>" 
-                            data-price="<?= htmlspecialchars($item['selling_price']) ?>">
-                            ₱ <?= number_format($item['selling_price'] * $item['quantity'], 2) ?>
-                        </div>
 
                         <!-- Remove Button -->
-                        <div class="col-md-2 text-center">
+                        <div class="col-2 col-sm-2 col-md-2 text-center">
                             <button class="btn btn-danger btn-sm removeFromCartBtn" data-id="<?= $item['id'] ?>" data-product-name="<?= $item['product_name'] ?>">
                                 <i class="bx bx-trash"></i>
                             </button>
@@ -79,16 +49,20 @@
             </div>
         <?php endforeach; ?>
 
-        <!-- Bulk Actions -->
-        <div class="d-flex justify-content-between p-3 mt-4">
-            <div>
-                <input type="checkbox" id="selectAll"> Select All
+        <div class="row p-3 mt-4">
+            <!-- Select All Checkbox -->
+            <div class="col-12 col-sm-12 col-md-6 d-flex align-items-center mb-2 mb-md-0">
+                <input type="checkbox" id="selectAll" class="me-2"> <span>Select All</span>
             </div>
-            <div>
+
+            <!-- Total Price & Order Button -->
+            <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-md-end align-items-center gap-2">
                 <span>Total (<span id="totalItems">0</span> items): ₱ <span id="totalPrice">0.00</span></span>
-                <input name="submit" type="submit" value="Order Now" id="submit" class="btn btn-secondary btn-sm">  
+                <input name="submit" type="submit" value="Order Now" id="submit" class="btn btn-secondary btn-sm">
             </div>
         </div>
+
+
     </form>
 <?php else: ?>
     <div class="text-center p-4">

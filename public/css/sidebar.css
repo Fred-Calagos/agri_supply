@@ -294,6 +294,8 @@ body {
   margin-top: 60px; /* Adjust to prevent overlapping */
   padding: 12px;
   width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
 }
 #sidebar-toggle {
   font-size: 28px; /* Adjust the icon size */

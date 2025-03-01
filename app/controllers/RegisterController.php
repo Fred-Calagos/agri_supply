@@ -40,8 +40,8 @@ class RegisterController extends LoginController
                 'email' => $_POST['email'],
                 'password' => $_POST['password'], // Hashing for security
                 'contact' => $_POST['contact'],
-                'reg' => $_POST['reg'],
-                'prov' => $_POST['prov'],
+                'reg' => $_POST['region_id'],
+                'prov' => $_POST['province'],
                 'citymun' => $_POST['citymun'],
                 'brgy' => $_POST['brgy'],   
                 'zipcode' => $_POST['zipcode'],
@@ -51,15 +51,15 @@ class RegisterController extends LoginController
             
             // Create a new user
             User::create($data);
-            
     
             // Get the latest product status data using the last inserted ID
             $newProductStatus = User::find($pdo->lastInsertId());
     
             // Return the new product status data as JSON
             echo json_encode(["status" => "success", "newProductStatus" => $newProductStatus]);
-            header("/register/index");
+
             exit;
         }
+        header("/register/index");
     }
 }

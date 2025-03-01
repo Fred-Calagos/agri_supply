@@ -1,4 +1,4 @@
-<div class="container mt-4 position-relative">
+<div class="container mt-4">
     <!-- Left Arrow -->
     <button class="scroll-btn left-btn d-none d-md-block" onclick="autoScroll(-1)">&#10094;</button>
 

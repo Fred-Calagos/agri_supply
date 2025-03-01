@@ -81,7 +81,7 @@ $router->get('/user', [UserController::class, 'index']);
 
 // CUSTOMER DASHBOARD ROUTES (Protected)
 $router->get('/customer/dashboard', [CustomerController::class, 'index']);
-$router->get('/customer/profile', [CustomerController::class, 'profile']);
+$router->get('/customer/account', [CustomerController::class, 'profile']);
 $router->get('/customer/orders', [CustomerController::class, 'orders']);
 $router->get('/customer/cart', [CustomerController::class, 'cart']);
 $router->get('/customer/product_detail', [CustomerController::class, 'viewProduct']);

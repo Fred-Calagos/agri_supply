@@ -68,7 +68,7 @@ class CustomerController extends BaseController
     {
         $data = [
             'title' => 'My Profile',
-            'content' => $this->renderView('customer/profile')
+            'content' => $this->renderView('/customer/account/index')
         ];
 
         $this->view('layout/main', $data);
