@@ -10,13 +10,13 @@ use App\Controllers\CustomerController;
 use App\controllers\OrderStatusController;
 use App\controllers\ProductCategoryController;
 use App\controllers\CartController;
+use App\controllers\ExcelController;
 use App\controllers\LocationController;
 use App\controllers\OrderController;
 use App\controllers\PdfController;
 use App\controllers\ProductStatusController;
 use App\controllers\RegisterController;
-
-
+use App\controllers\ReportController;
 
 // REGISTER ROUTE
 $router->get('/register', [RegisterController::class, 'showRegister']);
@@ -37,8 +37,7 @@ $router->get('/logout', [AuthController::class, 'logout']);
 
 // Admin Routes (Protected)
 $router->get('/admin', [AdminController::class, 'index']);
-$router->get('/report', [AdminController::class, 'reportPage']);
-$router->get('/report-orders', [AdminController::class, 'reportOrderPage']);
+
 
 
 
@@ -114,4 +113,12 @@ $router->post('/orders/updateOrderStatus', [OrderController::class, 'updateOrder
 $router->get('/pdf/generateOrderPdf', [PdfController::class, 'generateOrderPdf']);
 $router->get('/pdf/viewPdfReport', [PdfController::class, 'viewPdfReport']);
 $router->get('/pdf/viewPdfReport', [PdfController::class, 'viewPdfReport']);
-$router->get('/pdf/generateExcel', [PdfController::class, 'generateExcel']);
+$router->get('/pdf/ProductSalesReport', [PdfController::class, 'viewSalesPdfReport']);
+
+//REPORT EXCEL ROUTE
+$router->get('/excel/generateExcel', [ExcelController::class, 'generateExcel']);
+$router->get('/excel/ProductSalesReport', [ExcelController::class, 'generateSalesExcel']);
+// REPORT PAGE ROUTE
+$router->get('/report', [ReportController::class, 'reportPage']);
+$router->get('/report-orders', [ReportController::class, 'reportOrderPage']);
+$router->get('/sales', [ReportController::class, 'reportProductSales']);

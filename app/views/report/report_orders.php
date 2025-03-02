@@ -46,7 +46,7 @@ $orderReport = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/orders"><i class='bx bx-store-alt bread-icon'></i> Orders</a>
+                    <a href="/report"><i class='bx bx-store-alt bread-icon'></i> Report</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Update Orders</li>
             </ol>

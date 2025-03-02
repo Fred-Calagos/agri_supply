@@ -143,4 +143,40 @@ class Order extends Model
             return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch results as an associative array
         }
         
+        public static function getProductSales($year = null, $category = null) {
+            $pdo = Database::connect();
+        
+            $sql = "SELECT po.product_id, p.product_name, 
+                           SUM(po.product_quantity) as total_quantity, 
+                           SUM(po.product_quantity * p.selling_price) as total_sales
+                    FROM " . self::$table . " po
+                    JOIN products p ON po.product_id = p.id";
+        
+            $conditions = ["po.order_status = 4"]; // ✅ Default condition
+            $params = [];
+        
+            if ($year) {
+                $conditions[] = "YEAR(po.ordered_date) = :year";
+                $params['year'] = $year;
+            }
+            if ($category) {
+                $conditions[] = "p.product_category_id = :category";
+                $params['category'] = $category;
+            }
+        
+            if (!empty($conditions)) {
+                $sql .= " WHERE " . implode(' AND ', $conditions);
+            }
+            
+            $sql .= " GROUP BY po.product_id
+                      ORDER BY total_sales DESC";
+        
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+        
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+        
+        
 }

@@ -11,10 +11,10 @@
         </div>
         <div class="col-12 col-sm-12 col-md-4 mt-4">
             <div class="card position-relative">
-                <a href="/order_status" class="stretched-link"></a> <!-- Adjusted URL -->
+                <a href="/sales" class="stretched-link"></a> <!-- Adjusted URL -->
                 <div class="card-body text-center">
-                    <i class='bx bxs-cart bx-lg'></i> <!-- Shopping cart for orders -->
-                    <h5 class="card-title mt-2">ORDER STATUS</h5>
+                    <i class='bx bxs-dollar-circle bx-lg'></i> <!-- Dollar circle icon for sales -->
+                    <h5 class="card-title mt-2">Sales</h5>
                 </div>
             </div>
         </div>

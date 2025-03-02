@@ -33,26 +33,8 @@ class AdminController extends BaseController
         $this->view('layout/main', $data);
     }
 
-    public function reportPage(){
-        $data = [
-            'title' => 'Report',
-            'content' => $this->renderView('report/index')
-        ];
 
-        $this->view('layout/main', $data);
-    }
-    public function reportOrderPage(){
-        $orderReport = Order::OrderReport();
-        $data = [
-            'title' => 'Generate Orders Report',
-            'content' => $this->renderView('report/report_orders', [
-                'orderReport' => $orderReport
 
-            ])
-        ];
-
-        $this->view('layout/main', $data);
-    }
     private function checkAuth()
     {
         if (!isset($_SESSION['user'])) {
