@@ -99,12 +99,16 @@ class PdfController extends BaseController{
 
             // Generate PDF
     $pdf = new TCPDF('P', 'mm', 'A6', true, 'UTF-8', false);
+    
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->setMargins(5,5,5);
     $pdf->SetFont('dejavusans', '', 10);
     $pdf->SetTitle('Order Summary - ' . $trackNumber);
+    
     $pdf->AddPage();
-
+    // Add Store Logo (Adjust path & position as needed)
+    $pdf->Image('brand_images/logo.jpg', 5, 5, 10, 10, 'JPG');
+    $pdf->Ln(10);
     // Set column width (50% each)
     $colWidth = 48; // A6 width = 105mm, keeping margin space
     // Store Details (Left Column)

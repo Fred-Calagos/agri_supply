@@ -3,14 +3,14 @@
 namespace App\Controllers;
 
 use PDO;
-use App\Models\Cart;
+use App\models\Cart;
 use App\models\Order;
 use App\Core\Database;
-use App\Models\Products;
+use App\models\Products;
 use App\Core\BaseController;
-use App\Models\ProductCategory;
+use App\models\ProductCategory;
 use App\models\OrderStatus;
-
+use App\models\User;
 
 class CustomerController extends BaseController
 {
@@ -62,17 +62,33 @@ class CustomerController extends BaseController
         }
     }
 
-    
-
     public function profile()
-    {
-        $data = [
-            'title' => 'My Profile',
-            'content' => $this->renderView('/customer/account/index')
-        ];
-
-        $this->view('layout/main', $data);
+{
+    if (!isset($_SESSION['user'])) {
+        die('User session not set.');
     }
+    $user = $_SESSION['user'];
+    if (!isset($user['id'])) {
+        die('User ID is missing.');
+    }
+
+    $userAccount = User::getUserAccount($user['id']);
+
+    if (!$userAccount) {
+        die('User account not found.');
+    }
+
+    $data = [
+        'title' => 'My Profile',
+        'content' => $this->renderView('/customer/account/index', [
+            'userAccount' => $userAccount
+        ])
+    ];
+
+    $this->view('layout/main', $data);
+}
+
+    
 
     public function orders()
     {

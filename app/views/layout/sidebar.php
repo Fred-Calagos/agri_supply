@@ -116,7 +116,7 @@
         <li>
           <a href="/customer/viewCategory">
           <i class="bx bx-category"></i>
-            <span class="link_name">Cart</span>
+            <span class="link_name">Category</span>
           </a>
           <ul class="sub-menu blank">
             <li><a class="link_name" href="/customer/viewCategory">Category</a></li>
