@@ -20,14 +20,24 @@
 
       <!-- PRODUCTS -->
       <li>
-        <a href="/products">
-        <i class='bx bxs-leaf'></i>
-          <span class="link_name">Products</span>
-        </a>
-        <ul class="sub-menu blank">
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-box'></i>
+            <span class="link_name">Products</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
           <li><a class="link_name" href="/products">Products</a></li>
+          <li><a href="/products/create">Add New Product</a></li>
+          <li><a href="/product_category">Product Category</a></li>
+          <li><a href="/product/varieties">Varieties</a></li>
+          <li><a href="/product/stock-units">Stock Units</a></li>
+          <li><a href="/product/batches">Batches</a></li>
+          <li><a href="/product/inventory-adjustments">Inventory Adjustment</a></li>
         </ul>
       </li>
+
 
           <!-- ORDERS -->
         <li>
@@ -43,7 +53,7 @@
 
       <!-- CATEGORY LIST -->
       <li>
-          <a href="/categroy">
+          <a href="/category">
           <i class='bx bx-category-alt'></i>
               <span class="link_name">Category</span>
           </a>

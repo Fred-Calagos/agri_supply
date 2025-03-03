@@ -56,6 +56,7 @@ class ProductController extends BaseController
             // Get the form data
             $product_name = $_POST['product_name'] ?? '';
             $product_category_id = $_POST['product_category_id'] ?? '';
+            $variety = $_POST['variety'] ?? '';
             $product_status = $_POST['product_status_id'] ?? '';
             $product_description = $_POST['product_description'] ?? '';
             $cost_price = $_POST['cost_price'] ?? 0;
@@ -63,6 +64,7 @@ class ProductController extends BaseController
             $selling_price = $_POST['selling_price'] ?? 0;
             $shipping_fee = $_POST['shipping_fee'] ?? 0;
             $stocks = $_POST['stocks'] ?? 0;
+            $stock_unit = $_POST['stock_unit'] ?? '';
     
             // File upload handling
             $image = null;
@@ -79,6 +81,7 @@ class ProductController extends BaseController
             $productData = [
                 'product_name' => $product_name,
                 'product_category_id' => $product_category_id,
+                'variety' => $variety,
                 'product_status_id' => $product_status,
                 'product_description' => $product_description,
                 'cost_price' => $cost_price,
@@ -86,6 +89,7 @@ class ProductController extends BaseController
                 'selling_price' => $selling_price,
                 'shipping_fee' => $shipping_fee,
                 'stocks' => $stocks,
+                'stock_unit' => $stock_unit,
                 'image_path' => $image
             ];
     
@@ -120,37 +124,31 @@ class ProductController extends BaseController
             // Get the form data
             $product_name = $_POST['product_name'] ?? '';
             $product_category_id = $_POST['product_category_id'] ?? '';
-            $product_status = $_POST['product_status'] ?? '';
+            $variety = $_POST['variety'] ?? '';
+            $product_status_id = $_POST['product_status_id'] ?? '';
             $product_description = $_POST['product_description'] ?? '';
             $cost_price = $_POST['cost_price'] ?? 0;
             $profit_margin = $_POST['profit_margin'] ?? 0;
             $selling_price = $_POST['selling_price'] ?? 0;
             $shipping_fee = $_POST['shipping_fee'] ?? 0;
             $stocks = $_POST['stocks'] ?? 0;
+            $stock_unit = $_POST['stock_unit'] ?? '';
     
-            // File upload handling
-            $image = null;
-            if (!empty($_FILES['image']['name'])) {
-                $image_name = time() . '_' . $_FILES['image']['name'];
-                $upload_dir = __DIR__ . '/../../public/uploads/';
-                if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $image_name)) {
-                    $image = '/uploads/' . $image_name; // Save the relative path
-                }
-            }
     
             // Save to database (assuming you have a Product model)
             $productModel = new Products();
             $productData = [
                 'product_name' => $product_name,
                 'product_category_id' => $product_category_id,
-                'product_status' => $product_status,
+                'variety' => $variety,
+                'product_status_id' => $product_status_id,
                 'product_description' => $product_description,
                 'cost_price' => $cost_price,
                 'profit_margin' => $profit_margin,
                 'selling_price' => $selling_price,
                 'shipping_fee' => $shipping_fee,
                 'stocks' => $stocks,
-                'image_path' => $image
+                'stock_unit' => $stock_unit
             ];
     
             if ($productModel->update($id, $productData)) {

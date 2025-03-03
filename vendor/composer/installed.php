@@ -3,7 +3,7 @@
         'name' => 'acer/agri_supply',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '009b8bd62879b1cfefaa99327624a6cd4d8f8afa',
+        'reference' => 'ac08d8db16e0afa5e9c928037f2504c9c4aa72c1',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'acer/agri_supply' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '009b8bd62879b1cfefaa99327624a6cd4d8f8afa',
+            'reference' => 'ac08d8db16e0afa5e9c928037f2504c9c4aa72c1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

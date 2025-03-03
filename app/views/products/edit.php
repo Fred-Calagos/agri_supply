@@ -33,12 +33,16 @@
                         <div class="section-title mb-2">Product Details</div>
 
                         <div class="row mt-2">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="productName" class="form-label">Product Name</label>
                                 <input type="text" class="form-control" id="productName" name="product_name" value="<?= htmlspecialchars($product['product_name']) ?>" required>
                             </div>
+                            <div class="col-md-3 mb-3">
+                                    <label for="variety" class="form-label">Variety</label>
+                                    <input type="text" class="form-control" id="variety" name="variety" value="<?= htmlspecialchars($product['variety']) ?? '' ?>" required>
+                            </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="productCategory" class="form-label">Category</label>
                                 <select class="form-control" id="productCategory" name="product_category_id" required>
                                     <option value="" hidden disabled>Select a Category</option>
@@ -49,12 +53,12 @@
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-
-                            <div class="col-md-4 mb-3">
+        
+                            <div class="col-md-3 mb-3">
                                 <label for="productStatus" class="form-label">Status</label>
-                                <select class="form-control" id="productStatus" name="product_status" required>
+                                <select class="form-control" id="productStatus" name="product_status_id" required>
                                     <?php foreach ($productStatus as $prodStatus): ?>
-                                        <option value="<?= $prodStatus['id'] ?>" <?= ($prodStatus['id'] == $product['product_status_id']) ? 'selected' : '' ?>>
+                                        <option value="<?= $prodStatus['id'] ?>" <?= ($prodStatus['id'] == $product['product_status_id']) ? 'selected' : '' ?> required>
                                             <?= $prodStatus['product_status'] ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -97,6 +101,10 @@
                     <div class="col-md-3">
                         <label for="stocks" class="form-label">Stocks</label>
                         <input type="number" class="form-control" id="stocks" name="stocks" min="0" step="0.01" value="<?= htmlspecialchars($product['stocks']) ?>">
+                    </div>
+                    <div class="col-md-3">
+                            <label for="stock_unit" class="form-label">Stock Units</label>
+                            <input type="text" class="form-control" id="stock_unit" name="stock_unit" value="<?= htmlspecialchars($product['stock_unit']) ?? ''?>" required>
                     </div>
                 </div>
 

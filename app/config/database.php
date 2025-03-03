@@ -1,9 +1,14 @@
 <?php
 
-$host = 'localhost';
-$db = 'bsab_db';
-$user = 'root';
-$pass = 'root';
+// $host = 'localhost';
+// $db = 'bsab_db';
+// $user = 'root';
+// $pass = 'root';
+//for website database
+$host = 'sql102.infinityfree.com';
+$db = 'if0_38379224_agti_supply';
+$user = 'if0_38379224';
+$pass = 'agriSupply2025 ';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 $pdo = new PDO($dsn, $user, $pass, [

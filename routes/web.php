@@ -17,6 +17,7 @@ use App\controllers\PdfController;
 use App\controllers\ProductStatusController;
 use App\controllers\RegisterController;
 use App\controllers\ReportController;
+use App\controllers\VarietyController;
 
 // REGISTER ROUTE
 $router->get('/register', [RegisterController::class, 'showRegister']);
@@ -65,10 +66,20 @@ $router->get('/product_status/delete/{id}', [ProductStatusController::class, 'de
 
 // PRODUCT ROUTES
 $router->get('/products', [ProductController::class, 'index']);
+
 $router->get('/products/create', [ProductController::class, 'create']);
 $router->post('/products/store', [ProductController::class, 'store']);
 $router->get('/products/edit/{id}', [ProductController::class, 'edit']);
 $router->post('/products/update/{id}', [ProductController::class, 'update']);
+
+// VARIETY ROUTE
+
+$router->get('/product/varieties', [VarietyController::class, 'index']);
+$router->post('/variety/store', [VarietyController::class, 'store']);
+$router->post('/product_suggest', [VarietyController::class, 'search']);
+$router->post('/variety_suggest', [VarietyController::class, 'suggest']);
+
+
 
 // PRODUCT CATEGORY ROUTES
 $router->get('/product_category', [ProductCategoryController::class, 'index']);

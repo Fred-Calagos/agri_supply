@@ -18,7 +18,7 @@ class ProductCategoryController extends BaseController
         $data = [
             'title' => 'Product Categories',
             'productCategories'=> $productCategories,
-            'content' => $this->renderView('/settings/product_category', ['productCategories' => $productCategories])
+            'content' => $this->renderView('/products/product_category', ['productCategories' => $productCategories])
         ];
         $this->view('layout/main', $data);
     }

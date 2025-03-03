@@ -16,6 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `assets`
+--
+
+DROP TABLE IF EXISTS `assets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `assets` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `year` int DEFAULT NULL,
+  `cash` decimal(15,2) DEFAULT NULL,
+  `office_supplies` decimal(15,2) DEFAULT NULL,
+  `total_current_assets` decimal(15,2) DEFAULT NULL,
+  `equipment` decimal(15,2) DEFAULT NULL,
+  `accumulated_depreciation` decimal(15,2) DEFAULT NULL,
+  `vehicle` decimal(15,2) DEFAULT NULL,
+  `accumulated_depreciation_vehicle` decimal(15,2) DEFAULT NULL,
+  `total_noncurrent_assets` decimal(15,2) DEFAULT NULL,
+  `total_assets` decimal(15,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `assets`
+--
+
+LOCK TABLES `assets` WRITE;
+/*!40000 ALTER TABLE `assets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `assets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `brands`
 --
 
@@ -35,7 +67,7 @@ CREATE TABLE `brands` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +94,7 @@ CREATE TABLE `business_permit` (
   `description` text,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +104,35 @@ CREATE TABLE `business_permit` (
 LOCK TABLES `business_permit` WRITE;
 /*!40000 ALTER TABLE `business_permit` DISABLE KEYS */;
 /*!40000 ALTER TABLE `business_permit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cashflow_statement`
+--
+
+DROP TABLE IF EXISTS `cashflow_statement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cashflow_statement` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `description` varchar(100) DEFAULT NULL,
+  `year_0` decimal(15,2) DEFAULT NULL,
+  `year_1` decimal(15,2) DEFAULT NULL,
+  `year_2` decimal(15,2) DEFAULT NULL,
+  `year_3` decimal(15,2) DEFAULT NULL,
+  `year_4` decimal(15,2) DEFAULT NULL,
+  `year_5` decimal(15,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cashflow_statement`
+--
+
+LOCK TABLES `cashflow_statement` WRITE;
+/*!40000 ALTER TABLE `cashflow_statement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cashflow_statement` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -90,7 +151,7 @@ CREATE TABLE `cleaning_supplies` (
   `total_cost` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +178,7 @@ CREATE TABLE `cost_of_goods_sold` (
   `cogs` decimal(12,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,29 +191,31 @@ LOCK TABLES `cost_of_goods_sold` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `equipment_costs`
+-- Table structure for table `equipments`
 --
 
-DROP TABLE IF EXISTS `equipment_costs`;
+DROP TABLE IF EXISTS `equipments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `equipment_costs` (
+CREATE TABLE `equipments` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `item` varchar(100) NOT NULL,
-  `units` int NOT NULL,
-  `cost_per_unit` decimal(10,2) NOT NULL,
-  `total_cost` decimal(10,2) NOT NULL,
+  `quantity` int DEFAULT NULL,
+  `cost_per_unit` decimal(15,2) DEFAULT NULL,
+  `total_cost` decimal(15,2) DEFAULT NULL,
+  `salvage_value` decimal(15,2) DEFAULT NULL,
+  `useful_years` int DEFAULT NULL,
+  `depreciation` decimal(15,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `equipment_costs`
+-- Dumping data for table `equipments`
 --
 
-LOCK TABLES `equipment_costs` WRITE;
-/*!40000 ALTER TABLE `equipment_costs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `equipment_costs` ENABLE KEYS */;
+LOCK TABLES `equipments` WRITE;
+/*!40000 ALTER TABLE `equipments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `equipments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -171,7 +234,7 @@ CREATE TABLE `investors` (
   `ownership_percentage` decimal(5,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +244,62 @@ CREATE TABLE `investors` (
 LOCK TABLES `investors` WRITE;
 /*!40000 ALTER TABLE `investors` DISABLE KEYS */;
 /*!40000 ALTER TABLE `investors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `liabilities_and_equity`
+--
+
+DROP TABLE IF EXISTS `liabilities_and_equity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `liabilities_and_equity` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `year` int DEFAULT NULL,
+  `account_payable` decimal(15,2) DEFAULT NULL,
+  `loans_payable` decimal(15,2) DEFAULT NULL,
+  `contingent_liability` decimal(15,2) DEFAULT NULL,
+  `l_capital` decimal(15,2) DEFAULT NULL,
+  `b_capital` decimal(15,2) DEFAULT NULL,
+  `d_capital` decimal(15,2) DEFAULT NULL,
+  `total_owners_equity` decimal(15,2) DEFAULT NULL,
+  `total_liability_and_equity` decimal(15,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `liabilities_and_equity`
+--
+
+LOCK TABLES `liabilities_and_equity` WRITE;
+/*!40000 ALTER TABLE `liabilities_and_equity` DISABLE KEYS */;
+/*!40000 ALTER TABLE `liabilities_and_equity` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `market_segmentation`
+--
+
+DROP TABLE IF EXISTS `market_segmentation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `market_segmentation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `category` varchar(50) DEFAULT NULL,
+  `value` decimal(10,2) DEFAULT NULL,
+  `percentage` decimal(5,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `market_segmentation`
+--
+
+LOCK TABLES `market_segmentation` WRITE;
+/*!40000 ALTER TABLE `market_segmentation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `market_segmentation` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -199,7 +318,7 @@ CREATE TABLE `office_supplies` (
   `annual_cost` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +344,7 @@ CREATE TABLE `operational_costs` (
   `annual_cost` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +369,7 @@ CREATE TABLE `order_status` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +393,7 @@ CREATE TABLE `payment_method` (
   `id` int NOT NULL AUTO_INCREMENT,
   `payment_method` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +423,7 @@ CREATE TABLE `product_cart` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `product_cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +432,6 @@ CREATE TABLE `product_cart` (
 
 LOCK TABLES `product_cart` WRITE;
 /*!40000 ALTER TABLE `product_cart` DISABLE KEYS */;
-INSERT INTO `product_cart` VALUES (37,2,6,4,'2025-03-02 07:34:15');
 /*!40000 ALTER TABLE `product_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,7 +448,7 @@ CREATE TABLE `product_category` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -363,7 +481,7 @@ CREATE TABLE `product_ordered` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_ordered_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `product_ordered_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -372,7 +490,7 @@ CREATE TABLE `product_ordered` (
 
 LOCK TABLES `product_ordered` WRITE;
 /*!40000 ALTER TABLE `product_ordered` DISABLE KEYS */;
-INSERT INTO `product_ordered` VALUES (1,2,14,2,'3','2025-02-23 10:57:21','ORD-20250223-8834'),(2,2,8,2,'3','2025-02-23 11:08:37','ORD-20250223-8834'),(3,2,11,1,'3','2025-02-23 11:11:23','ORD-20250223-8834'),(4,2,13,1,'3','2025-02-23 11:12:13','ORD-20250223-8834'),(5,2,10,6,'3','2025-02-23 11:52:13','ORD-20250223-8834'),(6,2,6,1,'4','2025-02-23 11:56:01','ORD-20250223-8251'),(7,2,10,1,'1','2025-02-23 11:58:41','ORD-20250223-5508'),(8,2,8,1,'1','2025-02-23 12:00:52','ORD-20250223-5774'),(9,2,13,1,'1','2025-02-23 12:00:52','ORD-20250223-9558'),(10,3,6,1,'1','2025-02-23 13:10:14','ORD-20250223-7786'),(11,3,12,1,'2','2025-02-23 14:11:07','ORD-20250223-8525'),(12,3,10,1,'2','2025-02-23 14:11:07','ORD-20250223-8525'),(13,2,6,1,'1','2025-02-26 11:33:36','ORD-20250226-9287'),(14,2,6,1,'1','2025-02-26 11:34:35','ORD-20250226-1443'),(15,2,5,1,'1','2025-02-26 11:34:35','ORD-20250226-1443'),(16,2,5,2,'1','2025-03-01 09:21:35','ORD-20250301-8874'),(17,2,8,1,'1','2025-03-01 09:21:35','ORD-20250301-8874'),(18,2,6,5,'1','2025-03-02 02:27:02','ORD-20250302-4370');
+INSERT INTO `product_ordered` VALUES (1,2,14,2,'4','2025-02-23 10:57:21','ORD-20250223-8834'),(2,2,8,2,'4','2025-02-23 11:08:37','ORD-20250223-8834'),(3,2,11,1,'4','2025-02-23 11:11:23','ORD-20250223-8834'),(4,2,13,1,'4','2025-02-23 11:12:13','ORD-20250223-8834'),(5,2,10,6,'4','2025-02-23 11:52:13','ORD-20250223-8834'),(6,2,6,1,'4','2025-02-23 11:56:01','ORD-20250223-8251'),(7,2,10,1,'4','2025-02-23 11:58:41','ORD-20250223-5508'),(8,2,8,1,'1','2025-02-23 12:00:52','ORD-20250223-5774'),(9,2,13,1,'1','2025-02-23 12:00:52','ORD-20250223-9558'),(10,3,6,1,'1','2025-02-23 13:10:14','ORD-20250223-7786'),(11,3,12,1,'2','2025-02-23 14:11:07','ORD-20250223-8525'),(12,3,10,1,'2','2025-02-23 14:11:07','ORD-20250223-8525'),(13,2,6,1,'1','2025-02-26 11:33:36','ORD-20250226-9287'),(14,2,6,1,'1','2025-02-26 11:34:35','ORD-20250226-1443'),(15,2,5,1,'1','2025-02-26 11:34:35','ORD-20250226-1443'),(16,2,5,2,'1','2025-03-01 09:21:35','ORD-20250301-8874'),(17,2,8,1,'1','2025-03-01 09:21:35','ORD-20250301-8874'),(18,2,6,5,'1','2025-03-02 02:27:02','ORD-20250302-4370');
 /*!40000 ALTER TABLE `product_ordered` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -389,7 +507,7 @@ CREATE TABLE `product_status` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -426,7 +544,7 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id`),
   KEY `product_category_id` (`product_category_id`),
   CONSTRAINT `products_ibfk_1` FOREIGN KEY (`product_category_id`) REFERENCES `product_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -564,7 +682,7 @@ CREATE TABLE `role` (
   `role_name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -592,7 +710,7 @@ CREATE TABLE `salary_wages` (
   `thirteenth_month_pay` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -620,7 +738,7 @@ CREATE TABLE `supplies` (
   `annual_cost` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -650,7 +768,7 @@ CREATE TABLE `system_setting` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -685,7 +803,7 @@ CREATE TABLE `users` (
   `role` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -707,4 +825,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-02 17:17:38
+-- Dump completed on 2025-03-03 12:17:27

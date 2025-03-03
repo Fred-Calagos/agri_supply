@@ -10,6 +10,7 @@
             </ol>
         </nav>
     </div>
+    
     <form id="addProductForm" action="/products/store" method="POST" enctype="multipart/form-data">
 
             <div class="row mb-1">
@@ -19,7 +20,7 @@
                         <!-- Left Column: Image Upload & Preview -->
                         <div class="col-md-3 text-center">
                             <div class="section-title mb-1">Product Image</div>
-                            <img src="/assets/images/placeholder-image.jpg" 
+                            <img src="" 
                                     class="img-fluid img-thumbnail mb-1" 
                                     id="productImagePreview" 
                                     alt="Product Image"
@@ -34,13 +35,19 @@
 
                             <div class="row mt-2">
                                 <!-- Product Name -->
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="productName" class="form-label">Product Name</label>
                                     <input type="text" class="form-control" id="productName" name="product_name" required>
                                 </div>
+                                <div class="col-md-3 mb-3 position-relative">
+                                    <label for="variety" class="form-label">Variety</label>
+                                    <input type="text" class="form-control" id="variety" name="variety" placeholder="Search Variety..." autocomplete="off" required>
+                                    <div id="varietyList" class="list-group position-absolute w-100" style="z-index:1000;"></div>
+                                </div>
+
 
                                 <!-- Product Category -->
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="productCategory" class="form-label">Category</label>
                                     <select class="form-control" id="productCategory" name="product_category_id" required>
                                         <option value="" selected hidden disabled>Select a Category</option>
@@ -50,7 +57,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="productStatus" class="form-label">Product Status</label>
                                     <select class="form-control" id="productStatus" name="product_status_id" required>
                                         <?php foreach ($productStatus as $prodStat): ?>
@@ -89,23 +96,57 @@
                             <label for="shippingFee" class="form-label">Shipping Fee (₱)</label>
                             <input type="number" class="form-control" id="shippingFee" name="shipping_fee" min="0" step="0.01">
                         </div>
+                    </div>
+                    <div class="row p-3 mb-3">
                         <div class="col-md-3">
                             <label for="stocks" class="form-label">Stocks</label>
                             <input type="number" class="form-control" id="stocks" name="stocks" min="0" step="0.01">
                         </div>
+                        <div class="col-md-3">
+                            <label for="stock_unit" class="form-label">Stock Units</label>
+                            <input type="text" class="form-control" id="stock_unit" name="stock_unit">
+                        </div>
                     </div>
-                        <div class="d-flex justify-content-between md-3">
-                            <button type="reset" class="btn btn-secondary btn-sm">Reset</button>
-                            <button type="submit" class="btn btn-success btn-sm"><i class="bx bx-save"></i> Save Product</button>
+                        <div class="d-flex justify-content-between md-3 mb-3 p-3">
+                            <button type="reset" class="btn btn-secondary btn-lg  btn-sm ">Reset</button>
+                            <button type="submit" class="btn btn-success btn-lg btn-sm"><i class="bx bx-save"></i> Save Product</button>
                         </div>
                 </div>
             </div>
             
         </form>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        $(document).ready(function() {
+    $('#variety').keyup(function() {
+        let query = $(this).val();
+        if (query.length > 1) {
+            $.ajax({
+                url: '/variety_suggest', // Route for fetching varieties
+                method: 'POST',
+                data: { query: query },
+                success: function(data) {
+                    $('#varietyList').fadeIn();
+                    $('#varietyList').html(data);
+                }
+            });
+        } else {
+            $('#varietyList').fadeOut();
+        }
+    });
+
+    $(document).on('click', '.variety-item', function() {
+        $('#variety').val($(this).text());
+        $('#varietyList').fadeOut();
+    });
+
+    $(document).click(function(event) {
+        if (!$(event.target).closest('#variety, #varietyList').length) {
+            $('#varietyList').fadeOut();
+        }
+    });
+});
+
         // Auto-calculate product price based on cost price & profit margin
         document.getElementById('profitMargin').addEventListener('keyup', function () {
             const costPrice = parseFloat(document.getElementById('costPrice').value) || 0;

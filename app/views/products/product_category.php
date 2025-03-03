@@ -5,7 +5,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/settings"><i class='bx bx-cog bread-icon'></i> Settings</a>
+                    <a href="/products"><i class='bx bx-box bread-icon'></i> Products</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page"> Product Category</li>
             </ol>
@@ -26,6 +26,7 @@
             <tr>
                 <th>No.</th>
                 <th>Category Name</th>
+                <th>Description</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@
                 <tr>
                     <td><?= $index + 1 ?></td>
                     <td><?= $category['product_category'] ?></td>
+                    <td><?= $category['description'] ?></td>
                     <td>    
                         <button class="edit-product-category btn btn-warning btn-sm" 
                                 data-id="<?= $category['id'] ?>" 

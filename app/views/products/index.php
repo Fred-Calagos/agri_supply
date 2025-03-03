@@ -1,107 +1,91 @@
 <div class="container">
-    <div class="d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex align-items-center justify-content-end mb-3">
 
         <div>
         <a href="/products/create" class="btn btn-primary btn-sm">+ Add Product</a>
         </div>
     </div>
-
-    <div id="message-container"></div>
-
-    <table class="table table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>No.</th>
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Product Description</th>
-                <th>Selling Price</th>
-                <th>Stocks</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($products as $index => $product): ?>
-            <tr>
-                <td><?= $index + 1 ?></td>
-                <td>
-                    <img src="<?= htmlspecialchars( $product['image_path']) ?>"
-                        alt="Product Image"
-                        class="img-thumbnail product-img-tbl">
-                </td>
-                <td><?= htmlspecialchars($product['product_name']) ?></td>
-                <td><?= htmlspecialchars($product['product_description']) ?></td>
-                <td>₱<?= number_format($product['selling_price'], 2) ?></td>
-                <td><?= htmlspecialchars($product['stocks']) ?></td>
-                <td>
-                    <div class="d-flex justify-content-between">
-                        <!-- Edit Button (Left) -->
-                        <a href="/products/edit/<?= $product['id'] ?>" class="btn btn-warning btn-sm">
-                            <i class="bx bxs-edit"></i>
-                        </a>
-
-                        <!-- <a href="/products/batch/<?= $product['id'] ?>" class="btn btn-success btn-sm">
-                            <i class='bx bx-list-plus'></i>
-                        </a> -->
-                        <!-- Delete Button (Right) -->
-                        <button class="delete-product btn btn-danger btn-sm" data-id="<?= $product['id'] ?>">
-                            <i class="bx bxs-trash"></i>
-                        </button>
-                    </div>
-                </td>
-
-            </tr>
-        <?php endforeach; ?>
-
-        </tbody>
-    </table>
-
-
-
-
-
-    <!-- Edit Product Modal -->
-    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="editProductForm">
-                    <div class="modal-body">
-                        <input type="hidden" name="id" id="editProductId">
-                        <label for="editProductName">Product Name:</label>
-                        <input type="text" id="editProductName" name="name" class="form-control" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success btn-sm" id="saveEditedProduct"><i class="bx bx-save"></i> Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <!-- Search and Filters -->
+<div class="container mt-4 bg-white p-3 mb-3 rounded">
+    <h6>Search and Filter Products</h6>
+  <form method="GET" action="/products/filter" class="row g-2">
+    
+    <!-- Search Input -->
+    <div class="col-md-4">
+      <input type="text" name="search" class="form-control" placeholder="Search product, variety, or category..." id="searchInput" autocomplete="off">
+      <div id="searchResults" class="list-group"></div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteProductModalLabel">Confirm Deletion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete <strong id="delete_product_name"></strong>?</p>
-                </div>
-                <div class="modal-footer">
-                    <form id="deleteProductForm">
-                        <input type="hidden" name="id" id="delete_product_id">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger btn-sm" id="confirmDeleteProduct"><i class="bx bxs-trash"></i> Delete</button>
-                    </form>
-                </div>
-            </div>
+    <!-- Category Filter -->
+    <div class="col-md-3">
+      <select name="category_id" class="form-select">
+        <option value="">All Categories</option>
+        <?php foreach($categories as $category): ?>
+          <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+
+    <!-- Variety Filter -->
+    <div class="col-md-3">
+      <select name="variety" class="form-select">
+        <option value="">All Varieties</option>
+        <?php foreach($varieties as $variety): ?>
+          <option value="<?= $variety ?>"><?= $variety ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+
+  </form>
+</div>
+
+    <div id="message-container"></div>
+    <div class="container-fluid mt-4 bg-white rounded p-3">
+    <div class="table-responsive table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
+
+            <table class="table table-hover text-center">
+                <thead class="table-light p-3 ">
+                    <tr>
+                        <th>No.</th>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Selling Price</th>
+                        <th>Stocks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <?php foreach ($products as $index => $product): ?>
+                        <tr class="text-center">
+                            <td><?= $index + 1 ?></td>
+                            <td>
+                                <img src="<?= htmlspecialchars($product['image_path']) ?>"
+                                    alt="Product Image"
+                                    class="img-thumbnail product-img-tbl">
+                            </td>
+                            <td class="text-start"><?= htmlspecialchars($product['product_name']) ?></td>
+                            <td>₱<?= number_format($product['selling_price'], 2) ?></td>
+                            <td><?= htmlspecialchars($product['stocks']) ?></td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="/products/edit/<?= $product['id'] ?>" class="btn btn-warning btn-sm">
+                                        <i class="bx bxs-edit"></i>
+                                    </a>
+                                    <button class="delete-product btn btn-danger btn-sm" data-id="<?= $product['id'] ?>">
+                                        <i class="bx bxs-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+
+            </table>   
         </div>
     </div>
 </div>

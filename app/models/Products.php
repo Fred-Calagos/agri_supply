@@ -16,7 +16,7 @@ class Products extends Model {
             FROM products p
             JOIN product_category pc ON p.product_category_id = pc.id
             JOIN product_status ps ON p.product_status_id = ps.id
-            ORDER BY pc.product_category ASC
+            ORDER BY p.product_name ASC
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -59,6 +59,13 @@ class Products extends Model {
         $pdo = Database::connect();
         $stmt = $pdo->prepare("SELECT * FROM products WHERE product_name LIKE ?");
         $stmt->execute(["%$keyword%"]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public static function searchProducts($query)
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("SELECT id, product_name FROM products WHERE product_name LIKE :query LIMIT 10");
+        $stmt->execute(['query' => "%$query%"]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

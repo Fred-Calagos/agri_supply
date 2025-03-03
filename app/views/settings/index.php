@@ -29,15 +29,6 @@
         </div>
         <div class="col-12 col-sm-12 col-md-4 mt-4">
             <div class="card position-relative">
-                <a href="/product_category" class="stretched-link"></a> <!-- Adjusted URL -->
-                <div class="card-body text-center">
-                    <i class='bx bxs-tag-alt' ></i>
-                    <h5 class="card-title mt-2">Product Category</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-12 col-md-4 mt-4">
-            <div class="card position-relative">
                 <a href="/brand" class="stretched-link"></a> <!-- Adjusted URL -->
                 <div class="card-body text-center">
                     <i class='bx bxs-store bx-lg'></i> <!-- Store icon for brands -->

@@ -30,8 +30,8 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2" href="#">
-                                <i class='bx bx-history fs-5 text-secondary'></i> Logs
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="/report">
+                                <i class='bx bx-history fs-5 text-secondary'></i> Reports
                             </a>
                         </li>
                         <li>
