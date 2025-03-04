@@ -124,36 +124,43 @@ class CustomerController extends BaseController
     }
 
     public function viewProduct() {
+        // Validate and sanitize product ID
+        $productId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
     
-        // Check if the product ID is set in the URL
-        if (!isset($_GET['id'])) {
+        if ($productId <= 0) {
             die("Invalid Product ID.");
         }
     
         // Fetch product details
-        $product = Products::find($_GET['id']);
-    
+        $product = Products::find($productId);
+        $soldProduct = Order::soldProducts($productId);
         if (!$product) {
             die("Product not found.");
         }
     
-        // Fetch user data (assuming you store user data in session)
-        $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        // Fetch user data from session
+        $user = $_SESSION['user'] ?? null;
         $cartCount = ($user) ? Cart::countItems($user['id']) : 0;
+    
+        // Prepare data for the view
         $data = [
             'title' => 'Product Detail',
             'product' => $product,
-            'user' => $user, // Pass user data to the view
+            'user' => $user,
             'cartCount' => $cartCount,
+            'soldProduct' => $soldProduct,
             'content' => $this->renderView('/customer/product_detail/index', [
                 'product' => $product,
                 'user' => $user,
+                'soldProduct' => $soldProduct,
                 'cartCount' => $cartCount
             ])
         ];
     
+        // Load the main layout with data
         $this->view('layout/main', $data);
     }
+    
     
     public function viewCategory() {
     

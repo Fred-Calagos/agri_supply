@@ -5,6 +5,7 @@ namespace App\controllers;
 use App\models\Cart;
 use App\models\Order;
 use App\Core\Database;
+use App\models\Products;
 use App\models\OrderStatus;
 use App\Core\BaseController;
 
@@ -77,8 +78,80 @@ class CartController extends BaseController
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
             exit;
         }
-    }   
+    }  
+
     public function OrderSelected()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $cartItemIds = $_POST['cartIds'] ?? [];
+    
+            if (empty($cartItemIds)) {
+                echo json_encode(['status' => 'error', 'message' => 'No items selected.']);
+                exit;
+            }
+    
+            $cartModel = new Cart();
+            $cartItemsData = $cartModel->getItemsByIds($cartItemIds);
+    
+            if (empty($cartItemsData)) {
+                echo json_encode(['status' => 'error', 'message' => 'Cart items not found.']);
+                exit;
+            }
+    
+            function generateOrderTrack() {
+                return 'ORD-' . date('Ymd') . '-' . rand(1000, 9999);
+            }
+    
+            $orderTrack = generateOrderTrack();
+            $orderStatusId = OrderStatus::getPendingId() ?? 0;
+    
+            $orderModel = new Order();
+            $productModel = new Products();
+    
+            foreach ($cartItemsData as $item) {
+                $productId = $item['product_id'];
+                $orderedQty = $item['quantity']; // ✅ Correct field
+    
+                // Fetch current product stock
+                $product = $productModel->find($productId);
+                if ($product) {
+                    $currentStock = $product['stocks'];
+    
+                    if ($currentStock >= $orderedQty) {
+                        $newStock = $currentStock - $orderedQty;
+                        $productModel->update($productId, ['stocks' => $newStock]);
+                    } else {
+                        echo json_encode(['status' => 'error', 'message' => "Insufficient stock for {$product['product_name']}"]);
+                        exit;
+                    }
+                } else {
+                    echo json_encode(['status' => 'error', 'message' => 'Product not found.']);
+                    exit;
+                }
+    
+                // Create the order
+                $orderModel->create([
+                    'user_id' => $item['user_id'],
+                    'product_id' => $productId,
+                    'product_quantity' => $orderedQty,
+                    'order_status' => $orderStatusId,
+                    'order_track' => $orderTrack
+                ]);
+            }
+    
+            // Remove ordered items from the cart
+            $cartModel->deleteItemsByIds($cartItemIds);
+    
+            echo json_encode(['status' => 'success', 'message' => 'Checkout successful!']);
+            exit;
+        }
+    
+        echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+        exit;
+    }
+    
+
+    public function OrderSelected1()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             error_log("POST Data: " . print_r($_POST, true)); // Debugging

@@ -12,27 +12,27 @@ class Order extends Model
 
 
     public static function getAllOrders() {
-        $pdo = Database::connect();
-        $stmt = $pdo->query("SELECT 
-        po.order_track, 
-        GROUP_CONCAT(DISTINCT p.product_name SEPARATOR ', ') AS ordered_products,
-        GROUP_CONCAT(DISTINCT p.image_path SEPARATOR ', ') AS image_paths,
-        GROUP_CONCAT(DISTINCT p.selling_price SEPARATOR ', ') AS selling_prices,
-        GROUP_CONCAT(DISTINCT p.stocks SEPARATOR ', ') AS stocks,
-        GROUP_CONCAT(DISTINCT p.product_description SEPARATOR ' | ') AS product_descriptions,
-        GROUP_CONCAT(DISTINCT pc.product_category SEPARATOR ', ') AS product_categories,
-        GROUP_CONCAT(DISTINCT os.order_status) AS order_statuses,
-        MAX(CONCAT(u.firstname, ' ', u.lastname)) AS full_name, -- Using MAX() to avoid GROUP BY issues
-        MAX(po.ordered_date) AS ordered_date -- Using MAX() to select the latest order date
-    FROM " . self::$table . " po 
-    JOIN products p ON po.product_id = p.id
-    JOIN product_category pc ON p.product_category_id = pc.id
-    JOIN order_status os ON po.order_status = os.id
-    JOIN users u ON po.user_id = u.id
-    WHERE u.role = 'User'
-    GROUP BY po.order_track
-    ORDER BY ordered_date ASC
-");
+            $pdo = Database::connect();
+            $stmt = $pdo->query("SELECT 
+            po.order_track, 
+            GROUP_CONCAT(DISTINCT p.product_name SEPARATOR ', ') AS ordered_products,
+            GROUP_CONCAT(DISTINCT p.image_path SEPARATOR ', ') AS image_paths,
+            GROUP_CONCAT(DISTINCT p.selling_price SEPARATOR ', ') AS selling_prices,
+            GROUP_CONCAT(DISTINCT p.stocks SEPARATOR ', ') AS stocks,
+            GROUP_CONCAT(DISTINCT p.product_description SEPARATOR ' | ') AS product_descriptions,
+            GROUP_CONCAT(DISTINCT pc.product_category SEPARATOR ', ') AS product_categories,
+            GROUP_CONCAT(DISTINCT os.order_status) AS order_statuses,
+            MAX(CONCAT(u.firstname, ' ', u.lastname)) AS full_name, -- Using MAX() to avoid GROUP BY issues
+            MAX(po.ordered_date) AS ordered_date -- Using MAX() to select the latest order date
+        FROM " . self::$table . " po 
+        JOIN products p ON po.product_id = p.id
+        JOIN product_category pc ON p.product_category_id = pc.id
+        JOIN order_status os ON po.order_status = os.id
+        JOIN users u ON po.user_id = u.id
+        WHERE u.role = 'User'
+        GROUP BY po.order_track
+        ORDER BY ordered_date ASC
+    ");
 
 
         
@@ -128,7 +128,8 @@ class Order extends Model
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result['total'] ?? 0; // Return 0 if no result found
         }
-        public static function OrderReport(){
+        
+    public static function OrderReport(){
             $pdo = Database::connect();
             $stmt = $pdo->prepare("SELECT po.*, 
                 p.product_name,p.shipping_fee, p.stocks, p.product_description, p.selling_price, p.cost_price, p.profit_margin,
@@ -141,9 +142,9 @@ class Order extends Model
             
             $stmt->execute(); // Execute the query before fetching results
             return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch results as an associative array
-        }
-        
-        public static function getProductSales($year = null, $category = null) {
+    }
+    
+    public static function getProductSales($year = null, $category = null) {
             $pdo = Database::connect();
         
             $sql = "SELECT po.product_id, p.product_name, 
@@ -175,8 +176,26 @@ class Order extends Model
             $stmt->execute($params);
         
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+    }
         
-        
+    public static function soldProducts($id)
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("
+            SELECT 
+                po.product_id, 
+                p.product_name, 
+                SUM(po.product_quantity) AS total_sold
+            FROM " . self::$table . " po
+            JOIN products p ON po.product_id = p.id
+            WHERE po.order_status = 4 AND po.product_id = :id
+            GROUP BY po.product_id, p.product_name
+            ORDER BY total_sold DESC
+        ");
+        $stmt->execute(['id' => $id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total_sold'] ?? 0; // Return 0 if no result found
+    }
+ 
         
 }

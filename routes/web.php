@@ -17,6 +17,7 @@ use App\controllers\PdfController;
 use App\controllers\ProductStatusController;
 use App\controllers\RegisterController;
 use App\controllers\ReportController;
+use App\controllers\StockUnitController;
 use App\controllers\VarietyController;
 
 // REGISTER ROUTE
@@ -76,9 +77,15 @@ $router->post('/products/update/{id}', [ProductController::class, 'update']);
 
 $router->get('/product/varieties', [VarietyController::class, 'index']);
 $router->post('/variety/store', [VarietyController::class, 'store']);
+$router->post('/variety/update/{id}', [VarietyController::class, 'update']);
 $router->post('/product_suggest', [VarietyController::class, 'search']);
 $router->post('/variety_suggest', [VarietyController::class, 'suggest']);
 
+// STOCK UNITS
+$router->get('/product/stock-units', [StockUnitController::class, 'index']);
+$router->post('/stock_unit/store', [StockUnitController::class, 'store']);
+$router->post('/stock_units/search', [StockUnitController::class, 'search']);
+$router->post('/stock_units/update/{id}', [StockUnitController::class, 'update']);
 
 
 // PRODUCT CATEGORY ROUTES

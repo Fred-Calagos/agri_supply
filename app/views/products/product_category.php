@@ -21,8 +21,10 @@
     <div id="message-container"></div>
 
     <!-- Product Category Table -->
-    <table class="table table-striped">
-        <thead class="table-dark">
+    <div class="container-fluid container-sm">
+        <div class="p-3 border rounded bg-white mt-4">
+        <table class="table">
+        <thead class="table-light">
             <tr>
                 <th>No.</th>
                 <th>Category Name</th>
@@ -39,10 +41,11 @@
                     <td>    
                         <button class="edit-product-category btn btn-warning btn-sm" 
                                 data-id="<?= $category['id'] ?>" 
-                                data-product-category="<?= $category['product_category'] ?>">
+                                data-product-category="<?= $category['product_category'] ?>"
+                                data-product-description="<?= $category['description'] ?>">
                             <i class="bx bxs-edit"></i> Edit
                         </button>
-                        <button class="delete-category  btn-sm" 
+                        <button class="btn btn-danger delete-category  btn-sm" 
                                 data-id="<?= $category['id'] ?>">
                             <i class="bx bxs-trash"></i> Delete
                         </button>
@@ -51,6 +54,9 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+
+        </div>
+    </div>
 
     <!-- Modal for Adding Product Category -->
     <div class="modal fade" id="productCategoryModal" tabindex="-1" aria-labelledby="productCategoryModalLabel" aria-hidden="true">
@@ -65,6 +71,10 @@
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Category Name</label>
                             <input type="text" class="form-control" id="categoryName" name="product_category" placeholder="Enter Category Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="categoryDescription" name="description" placeholder="Enter Description" rows="4" required></textarea>
                         </div>
                     </form>
                 </div>
@@ -90,6 +100,10 @@
                         <div class="mb-3">
                             <label for="editProductCategoryName" class="form-label">Category Name</label>
                             <input type="text" class="form-control" id="editProductCategoryName" name="product_category" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editProductCategoryDescription" class="form-label">Category Description</label>
+                            <textarea class="form-control" id="editProductCategoryDescription" name="description" rows="4" required></textarea>
                         </div>
                         <div class="modal-footer d-flex justify-content-between">
                             <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
@@ -137,6 +151,7 @@
         $(document).on('click', '.edit-product-category', function() {
             $('#editCategoryId').val($(this).data('id'));
             $('#editProductCategoryName').val($(this).data('product-category'));
+            $('#editProductCategoryDescription').val($(this).data('product-description'));
             $('#editProductCategoryModal').modal('show');
         });
 

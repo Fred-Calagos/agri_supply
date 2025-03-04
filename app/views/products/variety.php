@@ -5,7 +5,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
-                    <a href="/settings"><i class='bx bx-cog bread-icon'></i> Settings</a>
+                    <a href="/settings"><i class='bx bx-cog bread-icon'></i> Products</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Variety</li>
             </ol>
@@ -19,10 +19,12 @@
 
     <!-- Message Container -->
     <div id="message-container"></div>
-
-    <!-- Variety Table -->
-    <table class="table table-striped">
-        <thead class="table-dark">
+    <div class="container-fluid container-sm">
+        <div class="p-3 border rounded bg-white mt-4">
+        <div class="table-responsive">
+            <!-- Variety Table -->
+    <table class="table">
+        <thead class="table-light">
             <tr>
                 <th>No.</th>
                 <th>Variety</th>
@@ -50,6 +52,10 @@
         </tbody>
     </table>
 
+    </div>
+        </div>
+    </div>    
+
 <!-- Modal for Adding Variety -->
 <div class="modal fade" id="varietyModal" tabindex="-1" aria-labelledby="varietyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -64,7 +70,7 @@
                     <div class="mb-3">
                         <label for="productName" class="form-label">Product</label>
                         <input type="text" class="form-control" id="productName" name="product_name" placeholder="Search Product..." autocomplete="off" required>
-                        <input type="text" id="productId" name="product_id">
+                        <input type="hidden" id="productId" name="product_id">
                         <div id="productList" class="list-group position-absolute w-100" style="z-index:1000;"></div>
                     </div>
                     <!-- Variety Name -->
@@ -180,12 +186,27 @@ $(document).ready(function () {
         $('#editVarietyModal').modal('show');
     });
 
-    $("#saveEditedVariety").click(() => {
-        const id = $('#editVarietyId').val();
-        $.post(`/variety/update/${id}`, $("#editVarietyForm").serialize())
-            .done(() => showMessage('Variety Updated Successfully!'))
-            .fail(() => showMessage('Error updating Variety.', 'danger'));
-    });
+// Handle save button click
+$("#saveEditedVariety").click(() => {
+    submitEditedVariety();
+});
+
+// Handle Enter key press in the form
+$("#editVarietyForm").on("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault(); // Prevent form default submission or line break
+        submitEditedVariety();
+    }
+});
+
+// Function to handle form submission
+function submitEditedVariety() {
+    const id = $('#editVarietyId').val();
+    $('#editVarietyModal').modal('hide');
+    $.post(`/variety/update/${id}`, $("#editVarietyForm").serialize())
+        .done(() => showMessage('Variety Updated Successfully!'))
+        .fail(() => showMessage('Error updating Variety.', 'danger'));
+}
 
     $(document).on('click', '.delete-variety', function () {
         $('#varietyInfo').text('Variety: ' + $(this).closest('tr').find('td:nth-child(2)').text());

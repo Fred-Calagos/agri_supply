@@ -21,57 +21,75 @@
 
     </div>
 </div>
+<div class="container-fluid container-sm ">
+<div class="p-3 border rounded bg-white mt-4">
 <div class="message-container"></div> <!-- This is where the success message appears -->
-
-        <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start bg-white p-4 rounded shadow-sm">
-
+    <div class="row">
+        <div class="col-3 col-sm-3 col-md-3">
             <!-- Product Image (Left) -->
             <div class="me-md-4 mb-3 mb-md-0">
 
                 <img src="<?= htmlspecialchars($product['image_path']) ?>" class="img-fluid rounded" 
                     alt="Product Image" style="max-width: 250px; height: 250px;">
             </div>
-
-            <!-- Product Information (Right) -->
-            <div class="flex-grow-1">
-                <h3 class="mb-1"><?= htmlspecialchars($product['product_name']) ?></h3>
-                <p class="text-muted mb-1">Category: <?= htmlspecialchars($product['product_category']) ?></p>
-                <h5 class="text-success fw-bold">₱ <?= number_format($product['selling_price'], 2) ?> per kilo</h5>
-                <p class="small"><?= nl2br(htmlspecialchars($product['product_description'])) ?></p>
-            
-                <form id="addToCartForm">
-                <input type="hidden" id="productId" name="product_id" value="<?= $product['id'] ?>">
-                <input type="hidden" id="userId" name="user_id" value="<?= $user['id'] ?>">
-                            <!-- Quantity Selector -->
-                            <div class="mb-3">
-                            <label for="productQuantity" class="form-label small">Quantity (kg)</label>
-                            <div class="d-flex align-items-center">
-                                <div class="input-group" style="width: auto;">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="decreaseQty">-</button>
-                                    <input type="number" id="productQuantity" class="form-control text-center" name="quantity"
-                                        value="1" min="1" style="max-width: 70px;">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="increaseQty">+</button>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4">
+            <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-1">
+                <!-- Product Information (Right) -->
+                <div class="flex-grow-1">
+                    <h3 class="mb-3"><?= htmlspecialchars($product['product_name']) ?></h3>
+                    <h5 class="text-success fw-bold">₱ <?= number_format($product['selling_price'], 2) ?> per <?= $product['stock_unit']  ?></h5>
+                
+                    <form id="addToCartForm">
+                    <input type="hidden" id="productId" name="product_id" value="<?= $product['id'] ?>">
+                    <input type="hidden" id="userId" name="user_id" value="<?= $user['id'] ?>">
+                                <!-- Quantity Selector -->
+                                <div class="mb-3">
+                                
+                                <div class="d-flex align-items-center justify-content-start gap-1 mt-3">
+                                    <label for="productQuantity" class="form-label small">Quantity: </label> 
+                                    <div class="input-group" style="width: auto;">
+                                        <button class="btn btn-outline-secondary btn-sm" type="button" id="decreaseQty">-</button>
+                                        <input type="number" id="productQuantity" class="form-control text-center" name="quantity"
+                                            value="1" min="1" style="max-width: 70px;">
+                                        <button class="btn btn-outline-secondary btn-sm" type="button" id="increaseQty">+</button>
+                                    </div>
                                 </div>
-                                <span class="ms-2"><?= $product['stocks'] ?> kilo available</span>
+                                <div class="mb-3 mt-2">
+                                <p class="text-muted fs-6"><?= $product['stocks'] ." ". $product['stock_unit']  ?> available</p>
+                                </div>
+                                <div class="mb-3 mt-2">
+                                <p class="text-muted fs-6"><?= $soldProduct?> sold</p>
+                                </div>
                             </div>
-                        </div>
+                    
+                    <!-- Buttons -->
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class='bx bx-cart-add'></i> Add to Cart
+                        </button>
 
+                        <button class="btn btn-outline-danger btn-sm">
+                            <i class='bx bx-heart'></i> Wishlist
+                        </button>
+                    </div>
+                </form>
 
-                <!-- Buttons -->
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        <i class='bx bx-cart-add'></i> Add to Cart
-                    </button>
-
-                    <button class="btn btn-outline-danger btn-sm">
-                        <i class='bx bx-heart'></i> Wishlist
-                    </button>
                 </div>
-            </form>
+            </div> 
+        </div>
 
-            </div>
-        </div> 
-     </form>
+        <div class="col-2 col-sm-2 col-md-4">
+            <h5 class="section-title mb-2">Product Specification</h5>
+            <p class="text-muted mb-2 small">Variety: <?= htmlspecialchars($product['variety']) ?></p>
+            <p class="text-muted mb-2 small">Category: <?= htmlspecialchars($product['product_category']) ?></p>
+            <p class="small">Description: <?= nl2br(htmlspecialchars($product['product_description'])) ?></p>
+        </div>
+    </div>
+</div>
+
+</div>
+
    
 
 <script>

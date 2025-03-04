@@ -55,10 +55,14 @@ class ProductCategoryController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $productCat = $_POST['product_category'];
+            $desctiption = $_POST['description'];
     
-            if ($id && $productCat) {
+            if ($id && $productCat && $desctiption) {
                 // Update the product category
-                $data = ['product_category' => $productCat];
+                $data = [
+                    'product_category' => $productCat,
+                    'description' => $desctiption
+            ];
                 ProductCategory::update($id, $data);
     
                 echo json_encode(['status' => 'success', 'message' => 'Product Cateogry updated successfully.']);

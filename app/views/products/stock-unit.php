@@ -19,10 +19,11 @@
 
     <!-- Message Container -->
     <div id="message-container"></div>
-
-    <!-- Stock Unit Table -->
-    <table class="table table-striped">
-        <thead class="table-dark">
+    <div class="container-fluid container-sm">
+        <div class="p-3 border rounded bg-white mt-4">
+            <div class="table-responsive">
+            <table class="table">
+        <thead class="table-light">
             <tr>
                 <th>No.</th>
                 <th>Stock Unit</th>
@@ -33,11 +34,13 @@
             <?php foreach ($stock_units as $index => $stock_unit): ?>
                 <tr>
                     <td><?= $index + 1 ?></td>
-                    <td><?= $stock_unit['stock_unit_name'] ?></td>
+                    <td><?= $stock_unit['name'] ?></td>
                     <td>    
                         <button class="edit-stock-unit btn btn-warning btn-sm" 
                                 data-id="<?= $stock_unit['id'] ?>" 
-                                data-stock-unit-name="<?= $stock_unit['stock_unit_name'] ?>">
+                                data-stock-unit-name="<?= $stock_unit['name'] ?>"
+                                data-stock-category="<?= $stock_unit['category'] ?>"
+                                data-stock-description="<?= $stock_unit['description'] ?>">
                             <i class="bx bxs-edit"></i> Edit
                         </button>
                         <button class="delete-stock-unit btn btn-danger btn-sm" 
@@ -49,6 +52,11 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+
+            </div>
+        </div>
+    </div>
+    <!-- Stock Unit Table -->
 
 <!-- Add Stock Unit Modal -->
 <div class="modal fade" id="stockUnitModal" tabindex="-1" aria-labelledby="stockUnitModalLabel" aria-hidden="true">
@@ -63,6 +71,18 @@
                     <div class="mb-3">
                         <label for="stockUnitName" class="form-label">Stock Unit Name</label>
                         <input type="text" class="form-control" id="stockUnitName" name="stock_unit_name" placeholder="Enter Stock Unit Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Stock Unit Name</label>
+                        <select name="category" class="form-control" id="category">
+                            <option value="" selected disabled hidden>Select category</option>
+                            <option value="Unit">Unit</option>
+                            <option value="Packaging">Packaging</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="2" required></textarea>
                     </div>
                 </form>
             </div>
@@ -88,6 +108,18 @@
                     <div class="mb-3">
                         <label for="editStockUnitName" class="form-label">Stock Unit Name</label>
                         <input type="text" class="form-control" id="editStockUnitName" name="stock_unit_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editcategory" class="form-label">Stock Unit Name</label>
+                        <select name="category" class="form-control" id="editcategory">
+                            <option value="" selected disabled hidden>Select category</option>
+                            <option value="Unit">Unit</option>
+                            <option value="Packaging">Packaging</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editdescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="editdescription" name="description" rows="2" required></textarea>
                     </div>
                 </form>
             </div>
@@ -138,15 +170,33 @@ $(document).ready(function () {
     $(document).on('click', '.edit-stock-unit', function () {
         $('#editStockUnitId').val($(this).data('id'));
         $('#editStockUnitName').val($(this).data('stock-unit-name'));
+        $('#editcategory').val($(this).data('stock-category'));
+        $('#editdescription').val($(this).data('stock-description'));
         $('#editStockUnitModal').modal('show');
     });
 
-    $("#saveEditedStockUnit").click(() => {
-        const id = $('#editStockUnitId').val();
-        $.post(`/stock_unit/update/${id}`, $("#editStockUnitForm").serialize())
-            .done(() => showMessage('Stock Unit Updated Successfully!'))
-            .fail(() => showMessage('Error updating Stock Unit.', 'danger'));
-    });
+// Handle button click
+$("#saveEditedStockUnit").click(() => {
+    submitEditedStockUnit();
+});
+
+// Handle Enter key press in the form
+$("#editStockUnitForm").on("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault(); // Prevent default form submission or line break
+        submitEditedStockUnit();
+    }
+});
+
+// Function to handle form submission
+function submitEditedStockUnit() {
+    const id = $('#editStockUnitId').val();
+    $('#editStockUnitModal').modal('hide'); // Hide the modal (if using modal)
+    $.post(`/stock_units/update/${id}`, $("#editStockUnitForm").serialize())
+        .done(() => showMessage('Stock Unit Updated Successfully!'))
+        .fail(() => showMessage('Error updating Stock Unit.', 'danger'));
+}
+
 
     $(document).on('click', '.delete-stock-unit', function () {
         $('#stockUnitInfo').text('Stock Unit: ' + $(this).closest('tr').find('td:nth-child(2)').text());

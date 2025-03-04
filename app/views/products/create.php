@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-md-3 mb-3 position-relative">
                                     <label for="variety" class="form-label">Variety</label>
-                                    <input type="text" class="form-control" id="variety" name="variety" placeholder="Search Variety..." autocomplete="off" required>
+                                    <input type="text" class="form-control" id="variety" name="variety" placeholder="" autocomplete="off" required>
                                     <div id="varietyList" class="list-group position-absolute w-100" style="z-index:1000;"></div>
                                 </div>
 
@@ -102,10 +102,12 @@
                             <label for="stocks" class="form-label">Stocks</label>
                             <input type="number" class="form-control" id="stocks" name="stocks" min="0" step="0.01">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 position-relative">
                             <label for="stock_unit" class="form-label">Stock Units</label>
-                            <input type="text" class="form-control" id="stock_unit" name="stock_unit">
+                            <input type="text" class="form-control" id="stock_unit" name="stock_unit" autocomplete="off">
+                            <div id="stockUnitList" class="list-group position-absolute w-100"></div>
                         </div>
+
                     </div>
                         <div class="d-flex justify-content-between md-3 mb-3 p-3">
                             <button type="reset" class="btn btn-secondary btn-lg  btn-sm ">Reset</button>
@@ -120,7 +122,7 @@
         $(document).ready(function() {
     $('#variety').keyup(function() {
         let query = $(this).val();
-        if (query.length > 1) {
+        if (query.length > 0) {
             $.ajax({
                 url: '/variety_suggest', // Route for fetching varieties
                 method: 'POST',
@@ -143,6 +145,35 @@
     $(document).click(function(event) {
         if (!$(event.target).closest('#variety, #varietyList').length) {
             $('#varietyList').fadeOut();
+        }
+    });
+});
+
+$(document).ready(function() {
+    $('#stock_unit').on('keyup', function() {
+        let query = $(this).val();
+        if (query.length > 0) {
+            $.ajax({
+                url: "/stock_units/search", // Adjust this route to your PHP MVC controller
+                method: "POST",
+                data: { query: query },
+                success: function(data) {
+                    $('#stockUnitList').fadeIn().html(data);
+                }
+            });
+        } else {
+            $('#stockUnitList').fadeOut();
+        }
+    });
+
+    $(document).on('click', '.stock-unit-item', function() {
+        $('#stock_unit').val($(this).text());
+        $('#stockUnitList').fadeOut();
+    });
+
+    $(document).click(function(e) {
+        if (!$(e.target).closest('#stock_unit').length) {
+            $('#stockUnitList').fadeOut();
         }
     });
 });

@@ -52,6 +52,21 @@ class VarietyController extends BaseController
         }
     }
 
+    public function update($id){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pdo = Database::connect();
+            $variety = $_POST['variety_name'];
+            $id = $_POST['id'];
+            $data = [
+                'variety_name' => $variety
+            ];
+            Variety::update($id, $data);
+            $updatedVariety = Variety::find($id);
+            echo json_encode(["status" => "success", "updatedVariety" => $updatedVariety]);
+            exit;
+        }
+    }
+
     public function suggest()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

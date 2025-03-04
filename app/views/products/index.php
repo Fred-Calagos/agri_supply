@@ -6,29 +6,28 @@
         </div>
     </div>
     <!-- Search and Filters -->
-<div class="container mt-4 bg-white p-3 mb-3 rounded">
+<div class="container mt-4 bg-white p-3 mb-3 rounded shadow-sm">
     <h6>Search and Filter Products</h6>
-  <form method="GET" action="/products/filter" class="row g-2">
+  <form class="row g-2 align-items-center justify-content-center">
     
     <!-- Search Input -->
     <div class="col-md-4">
-      <input type="text" name="search" class="form-control" placeholder="Search product, variety, or category..." id="searchInput" autocomplete="off">
-      <div id="searchResults" class="list-group"></div>
+        <input type="text" name="search" id="searchInput" class="form-control" placeholder="Search for products...">
     </div>
 
     <!-- Category Filter -->
     <div class="col-md-3">
-      <select name="category_id" class="form-select">
+    <select name="category_id" id="categoryFilter" class="form-select">
         <option value="">All Categories</option>
         <?php foreach($categories as $category): ?>
-          <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+          <option value="<?= $category['id'] ?>"><?= $category['product_category'] ?></option>
         <?php endforeach; ?>
       </select>
     </div>
 
     <!-- Variety Filter -->
     <div class="col-md-3">
-      <select name="variety" class="form-select">
+    <select name="variety" id="varietyFilter" class="form-select">
         <option value="">All Varieties</option>
         <?php foreach($varieties as $variety): ?>
           <option value="<?= $variety ?>"><?= $variety ?></option>
@@ -36,24 +35,20 @@
       </select>
     </div>
 
-    <!-- Submit Button -->
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-primary w-100">Filter</button>
-    </div>
-
   </form>
 </div>
 
     <div id="message-container"></div>
-    <div class="container-fluid mt-4 bg-white rounded p-3">
-    <div class="table-responsive table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
+    <div class="container-fluid mt-4 bg-white rounded p-3  shadow-sm">
+        <div class="table-responsive table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
 
-            <table class="table table-hover text-center">
+            <table class="table table-hover">
                 <thead class="table-light p-3 ">
                     <tr>
                         <th>No.</th>
                         <th>Image</th>
                         <th>Product Name</th>
+                        <th>Category</th>
                         <th>Selling Price</th>
                         <th>Stocks</th>
                         <th>Action</th>
@@ -61,7 +56,12 @@
                 </thead>
                 <tbody class="table-group-divider">
                     <?php foreach ($products as $index => $product): ?>
-                        <tr class="text-center">
+                        <tr class="product-row"
+                                    data-category="<?= $product['product_category_id'] ?>"
+                                    data-category-name="<?= $product['product_category'] ?>"
+                                    data-variety="<?= htmlspecialchars($product['variety']) ?>"
+                                    data-name="<?= htmlspecialchars(strtolower($product['product_name'])) ?>">
+
                             <td><?= $index + 1 ?></td>
                             <td>
                                 <img src="<?= htmlspecialchars($product['image_path']) ?>"
@@ -69,6 +69,7 @@
                                     class="img-thumbnail product-img-tbl">
                             </td>
                             <td class="text-start"><?= htmlspecialchars($product['product_name']) ?></td>
+                            <td class="text-start"><?= htmlspecialchars($product['product_category']) ?></td>
                             <td>₱<?= number_format($product['selling_price'], 2) ?></td>
                             <td><?= htmlspecialchars($product['stocks']) ?></td>
                             <td>
@@ -91,7 +92,41 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function () {
+    const categoryFilter = document.getElementById('categoryFilter');
+    const varietyFilter = document.getElementById('varietyFilter');
+    const searchInput = document.getElementById('searchInput');
+    const productRows = document.querySelectorAll('.product-row');
+
+    function filterProducts() {
+        const selectedCategory = categoryFilter.value;
+        const selectedVariety = varietyFilter.value.toLowerCase();
+        const searchText = searchInput.value.toLowerCase();
+
+        productRows.forEach(row => {
+            const rowCategory = row.getAttribute('data-category');
+            const rowCategoryName = row.getAttribute('data-category-name').toLowerCase();
+            const rowVariety = row.getAttribute('data-variety').toLowerCase();
+            const rowName = row.getAttribute('data-name');
+
+            const matchesCategory = !selectedCategory || rowCategory === selectedCategory;
+            const matchesVariety = !selectedVariety || rowVariety === selectedVariety;
+            const matchesSearch = !searchText || rowName.includes(searchText) || rowCategoryName.includes(searchText);
+
+            if (matchesCategory && matchesVariety && matchesSearch) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    categoryFilter.addEventListener('change', filterProducts);
+    varietyFilter.addEventListener('change', filterProducts);
+    searchInput.addEventListener('input', filterProducts);
+});
+
+$(document).ready(function() {
         $(document).on('click', '.edit-product', function() {
             $('#editProductId').val($(this).data('id'));
             $('#editProductName').val($(this).data('name'));
