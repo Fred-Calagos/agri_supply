@@ -97,3 +97,25 @@
     </div>
 </div>
 
+<div class="container mt-4">
+<div id="salesChart"></div>
+<script>
+    var options = {
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        series: [{
+            name: 'Sales',
+            data: [15000, 20000, 18000, 22000]
+        }],
+        xaxis: {
+            categories: ['January', 'February', 'March', 'April']
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#salesChart"), options);
+    chart.render();
+</script>
+</div>
+

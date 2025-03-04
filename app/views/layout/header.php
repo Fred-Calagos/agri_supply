@@ -9,6 +9,7 @@
     
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/script.js" defer></script>
+    <script src="/js/main.js" defer></script>
     <script src="/js/jquery-3.6.0.min.js"></script>
 
 

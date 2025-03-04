@@ -6,7 +6,9 @@ import DataTable from 'datatables.net-bs5';
 import 'datatables.net-autofill-bs5';
 import 'datatables.net-buttons-bs5';
 import 'datatables.net-buttons/js/buttons.colVis.mjs';
+import 'apexcharts/dist/apexcharts.css';
 
+import ApexCharts from 'node_modules/apexcharts'
 // Ensure jQuery is globally available (for plugins to work properly)
 window.$ = window.jQuery = jQuery;
 

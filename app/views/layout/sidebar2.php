@@ -128,6 +128,57 @@
         </ul>
       </li>
 
+      <!-- MARKETING -->
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-bullhorn'></i>
+            <span class="link_name">Marketing</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow'></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Marketing</a></li>
+          <li><a href="/marketing/coupons">Discount Coupons</a></li>
+          <li><a href="/marketing/announcements">Announcements</a></li>
+          <li><a href="/marketing/newsletter">Newsletter Subscribers</a></li>
+        </ul>
+      </li>
+
+      <!-- NOTIFICATIONS -->
+      <li>
+        <a href="/notifications">
+          <i class='bx bx-bell'></i>
+          <span class="link_name">Notifications</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="/notifications">Notification Center</a></li>
+        </ul>
+      </li>
+
+      <!-- LOGS -->
+      <li>
+        <a href="/logs">
+          <i class='bx bx-history'></i>
+          <span class="link_name">Logs</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="/logs">Activity Logs</a></li>
+        </ul>
+      </li>
+
+      <!-- MESSAGES -->
+      <li>
+        <a href="/messages">
+          <i class='bx bx-message'></i>
+          <span class="link_name">Messages</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="/messages">Customer Messages</a></li>
+        </ul>
+      </li>
+
+
     </ul>
   <?php endif; ?>
 
