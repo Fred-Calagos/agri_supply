@@ -72,4 +72,37 @@ class Cart extends Model
         $stmt = $pdo->prepare("DELETE FROM " . self::$table . " WHERE id IN ($placeholders)");
         return $stmt->execute($ids);
     }
+
+    public static function getSelectedItems($userId, $cartIds)
+    {
+        if (empty($cartIds)) return []; // Avoid empty queries
+    
+        $pdo = Database::connect();
+        $placeholders = implode(',', array_fill(0, count($cartIds), '?'));
+    
+        $sql = "
+            SELECT 
+                pc.*, 
+                p.product_name, 
+                p.image_path, 
+                p.shipping_fee, 
+                p.stocks, 
+                p.product_description, 
+                p.selling_price
+            FROM " . self::$table . " pc
+            JOIN products p ON pc.product_id = p.id
+            WHERE pc.id IN ($placeholders) AND pc.user_id = ?
+        ";
+    
+        $stmt = $pdo->prepare($sql);
+    
+        // Merge cart IDs with the user ID for binding
+        $params = array_merge($cartIds, [$userId]);
+    
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    
+
 }

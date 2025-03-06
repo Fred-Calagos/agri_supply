@@ -7,6 +7,8 @@
 @import 'card.css';
 @import 'bootstrap.min.css';
 @import 'boxicons.min.css';
+@import 'dataTables.dataTables.css';
+@import 'dataTables.dataTables.min.css';
 
 
 .form-container {

@@ -117,13 +117,14 @@ $router->get('/customer/cart/delete/{id}', [CartController::class, 'deleteCart']
 $router->get('/customer/category', [CustomerController::class, 'viewCategory']);
 $router->get('/customer/viewCategory', [CustomerController::class, 'OpenCategory']);
 
+//CHECKOUT ROUTE
+
+$router->get('/customer/checkout', [CustomerController::class, 'checkout']);
 
 // ORDER ROUTE 
 
 $router->get('/orders', [OrderController::class,'index']);
 $router->get('/orders/order_details', [OrderController::class,'edit']);
-
-
 $router->post('/orders/updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
 
 

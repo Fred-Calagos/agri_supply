@@ -96,26 +96,92 @@
         </div>
     </div>
 </div>
+<?php
+$categories = [];
+$months = [];
 
-<div class="container mt-4">
-<div id="salesChart"></div>
-<script>
-    var options = {
-        chart: {
-            type: 'bar',
-            height: 350
-        },
-        series: [{
-            name: 'Sales',
-            data: [15000, 20000, 18000, 22000]
-        }],
-        xaxis: {
-            categories: ['January', 'February', 'March', 'April']
+$dataPerCategory = [];
+
+foreach ($salesByMonth as $row) {
+    $month = $row['month'];
+    $category = $row['product_category'];
+    $total = (float)$row['total_sales'];
+
+    if (!in_array($month, $months)) {
+        $months[] = $month;
+    }
+
+    if (!isset($dataPerCategory[$category])) {
+        $dataPerCategory[$category] = [];
+    }
+
+    $dataPerCategory[$category][$month] = $total;
+}
+
+// Fill missing months with 0 per category
+foreach ($dataPerCategory as $category => &$sales) {
+    foreach ($months as $month) {
+        if (!isset($sales[$month])) {
+            $sales[$month] = 0;
         }
-    };
+    }
+    ksort($sales); // Ensure months are in order
+}
+unset($sales);
 
-    var chart = new ApexCharts(document.querySelector("#salesChart"), options);
-    chart.render();
-</script>
+$series = [];
+foreach ($dataPerCategory as $category => $sales) {
+    $series[] = [
+        'name' => $category,
+        'data' => array_values($sales)
+    ];
+}
+
+$salesMonths = json_encode($months);
+$salesSeries = json_encode($series);
+?>
+
+
+
+<div class="row mt-4 gap-3">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-4 col-xxl-6">
+        <div class="card p-3">
+            <h5 class="section-title">Sales by Month & Category</h5>
+            <div id="salesChart"></div>
+
+            <script>
+                const months = <?= $salesMonths ?>;
+                const series = <?= $salesSeries ?>;
+
+                var options = {
+                    chart: {
+                        type: 'bar',
+                        height: 400,
+                        stacked: true
+                    },
+                    series: series,
+                    xaxis: {
+                        categories: months
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Total Sales'
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: (val) => '₱' + val.toFixed(2)
+                        }
+                    }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#salesChart"), options);
+                chart.render();
+            </script>
+        </div>
+    </div>
 </div>
 

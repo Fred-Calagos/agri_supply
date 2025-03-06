@@ -59,6 +59,7 @@
             <div class="col-12 col-sm-12 col-md-6 d-flex justify-content-md-end align-items-center gap-2">
                 <span>Total (<span id="totalItems">0</span> items): ₱ <span id="totalPrice">0.00</span></span>
                 <input name="submit" type="submit" value="Order Now" id="submit" class="btn btn-secondary btn-sm">
+                <input name="submit" type="submit" value="Check Out Now" id="checkout" class="btn btn-warning btn-sm">
             </div>
         </div>
 
@@ -216,6 +217,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+// Checkout Button Handler
+$("#checkout").click(function (e) {
+    e.preventDefault();
+
+    var selectedItems = $("[name='cartIds[]']:checked").map(function () {
+        return $(this).val();
+    }).get(); // Get all checked cart item IDs
+
+    if (selectedItems.length === 0) {
+        alert("Please select product(s) to checkout.");
+        return false;
+    }
+
+    // Redirect to checkout page with cart IDs as query parameters
+    let queryString = selectedItems.map(id => `cartIds[]=${id}`).join('&');
+    window.location.href = `/customer/checkout?${queryString}`;
+});
+
 
 // Delete Cart Item Modal
 $(document).on('click', '.removeFromCartBtn', function (e) {

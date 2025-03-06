@@ -197,5 +197,25 @@ class Order extends Model
         return $result['total_sold'] ?? 0; // Return 0 if no result found
     }
  
-        
+    public static function totalSalesByMonth()
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("
+            SELECT 
+                DATE_FORMAT(po.ordered_date, '%Y-%m') AS month,
+                pc.product_category,
+                SUM(p.selling_price * po.product_quantity) AS total_sales
+            FROM " . self::$table . " po
+            JOIN products p ON po.product_id = p.id
+            JOIN product_category pc ON p.product_category_id = pc.id
+            WHERE po.order_status = 4
+            GROUP BY month, pc.product_category
+            ORDER BY month ASC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    
+
 }

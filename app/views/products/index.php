@@ -42,8 +42,8 @@
     <div class="container-fluid mt-4 bg-white rounded p-3  shadow-sm">
         <div class="table-responsive table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
 
-            <table class="table table-hover">
-                <thead class="table-light p-3 ">
+            <table class="table table-hover" id="myTable">
+                <thead class=" p-3" >
                     <tr>
                         <th>No.</th>
                         <th>Image</th>
@@ -92,6 +92,9 @@
 </div>
 
 <script>
+    $(document).ready(function() {
+    $('#myTable').DataTable();
+});
 document.addEventListener("DOMContentLoaded", function () {
     const categoryFilter = document.getElementById('categoryFilter');
     const varietyFilter = document.getElementById('varietyFilter');

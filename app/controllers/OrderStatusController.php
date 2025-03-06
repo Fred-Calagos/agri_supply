@@ -42,7 +42,7 @@ class OrderStatusController extends BaseController
     public function update($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $orderStat = $_POST['order_status'];
-    
+            
             // Make sure all fields are valid
             if ($id && $orderStat) {
                 // Update the academic year

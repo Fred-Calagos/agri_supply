@@ -202,6 +202,43 @@ class CustomerController extends BaseController
         $this->view('layout/main', $data);
     }
     
+    public function checkout()
+    {
+        $user = $_SESSION['user'] ?? null;
+    
+        if (!$user) {
+            header('Location: /login');
+            exit;
+        }
+    
+        $selectedCartIds = $_GET['cartIds'] ?? [];
+    
+        if (empty($selectedCartIds)) {
+            header('Location: /customer/cart?error=Please select items to checkout.');
+            exit;
+        }
+    
+        // Fetch only the selected cart items belonging to the user
+        $cartItems = Cart::getSelectedItems($user['id'], $selectedCartIds);
+    
+        if (empty($cartItems)) {
+            header('Location: /customer/cart?error=No valid cart items found.');
+            exit;
+        }
+    
+        $data = [
+            'title' => 'Checkout',
+            'cartItems' => $cartItems,
+            'user' => $user,
+            'content' => $this->renderView('/customer/checkout/index', [
+                'cartItems' => $cartItems,
+                'user' => $user
+            ])
+        ];
+    
+        $this->view('layout/main', $data);
+    }
+    
     private function checkAuth()
     {
         if (!isset($_SESSION['user'])) {

@@ -6,20 +6,8 @@ import DataTable from 'datatables.net-bs5';
 import 'datatables.net-autofill-bs5';
 import 'datatables.net-buttons-bs5';
 import 'datatables.net-buttons/js/buttons.colVis.mjs';
-import 'apexcharts/dist/apexcharts.css';
-
-import ApexCharts from 'node_modules/apexcharts'
+import 'vendor/dataTables.dataTables.js';
+import 'vendor/dataTables.dataTables.min.js';
+import 'vendor/dataTables.dataTables.min.css';
 // Ensure jQuery is globally available (for plugins to work properly)
 window.$ = window.jQuery = jQuery;
-
-// Initialize DataTable when the DOM is ready
-document.addEventListener("DOMContentLoaded", function () {
-    $('#myTable').DataTable({
-        autoFill: true,
-        dom: 'Bfrtip', // Enables buttons (filter, pagination, etc.)
-        buttons: [
-            'colvis', // Column visibility button
-            'copy', 'csv', 'excel', 'pdf', 'print' // Export buttons
-        ]
-    });
-});

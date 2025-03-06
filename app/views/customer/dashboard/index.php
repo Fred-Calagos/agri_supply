@@ -5,7 +5,7 @@
     <div class="scroll-container container-fluid w-75">
         <?php foreach($categories as $category): ?>
             <div class="scroll-item">
-                <div class="card shadow-sm card-category">
+                <div class="card card-sm shadow-sm card-category">
                     <div class="card-body d-flex align-items-center justify-content-center category-body ">
                         <h5 class="card-title text-center m-0"><?= htmlspecialchars($category['product_category']) ?></h5>
                         <a href="/customer/category?category=<?= htmlspecialchars($category['id']) ?>" class="stretched-link"></a>
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <div class="p-3 border rounded bg-white mt-4">
 <!-- Header Section with Search Bar -->
     <div class="row g-3 border-bottom bottom-primary mb-2">
-            <div class="col-md-6 mb-2">
+            <div class="col-12 col-sm-12 col-md-6 mb-2">
                 <!-- Title on the Left -->
                 <h4 class="section-title mb-0">Agri-Supply Products</h4>
             </div>
@@ -175,16 +175,15 @@ foreach ($products as $product) {
 </div>
 </div>
 
-<div class="container">
     <!-- Product Cards -->
 <?php foreach ($groupedProducts as $category => $categoryProducts): ?>
     <div class="category-container my-2">
     <div class="p-3 border rounded bg-white mt-4">
     <h3 class="mb-4"><?= htmlspecialchars($category) ?></h3>
-        <div class="row  g-3">
+        <div class="row g-3">
             <?php foreach ($categoryProducts as $product): ?> 
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="card product-card h-100 shadow-sm add-to-cart-card"
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="card card-sm product-card h-100 shadow-sm add-to-cart-card"
                         data-id="<?= htmlspecialchars($product['id']) ?>"
                         onclick="window.location.href='/customer/product_detail?id=<?= htmlspecialchars($product['id']) ?>'">
 
@@ -204,7 +203,7 @@ foreach ($products as $product) {
     </div>
 <?php endforeach; ?>
 
-</div>
+
 
 
 <script>

@@ -19,6 +19,7 @@ class AdminController extends BaseController
     {
         $products = Products::totalProducts();
         $orders = Order::totalOrders();
+        $salesByMonth = Order::totalSalesByMonth();
         $user = User::totalUser();
         $data = [
             'title' => 'Admin Dashboard',
@@ -26,6 +27,7 @@ class AdminController extends BaseController
             'content' => $this->renderView('dashboard/index', [
                 'products' => $products,
                 'orders' => $orders,
+                'salesByMonth' => $salesByMonth,
                 'user' => $user
             ])
         ];
