@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\controllers\SpecificationController;
 use App\controllers\UserController;
 use App\Controllers\AdminController;
 use App\controllers\BrandController;
@@ -93,6 +94,18 @@ $router->get('/product_category', [ProductCategoryController::class, 'index']);
 $router->get('/product_category/create', [ProductCategoryController::class, 'create']);
 $router->post('/product_category/store', [ProductCategoryController::class, 'store']);
 $router->post('/product_category/update/{id}', [ProductCategoryController::class, 'update']);
+
+
+// SPECIFICATION ROUTES
+
+$router->get('/product/specifications', [SpecificationController::class, 'index']);
+$router->get('/product/category/specification', [SpecificationController::class, 'categorySpecification']);
+$router->post('/products/add_specification', [SpecificationController::class, 'store']);
+$router->post('/products/category/add_specification', [SpecificationController::class, 'categorySpecificationStore']);
+$router->post('/product/specification/update/{id}', [SpecificationController::class, 'update']);
+$router->post('/specification_suggest', [SpecificationController::class, 'suggest']);
+$router->get('/category_specification/get_by_category/{id}', [SpecificationController::class, 'get_by_category']);
+
 
 // USER 
 $router->get('/user', [UserController::class, 'index']);

@@ -35,29 +35,22 @@
 
                             <div class="row mt-2">
                                 <!-- Product Name -->
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="productName" class="form-label">Product Name</label>
                                     <input type="text" class="form-control" id="productName" name="product_name" required>
                                 </div>
-                                <div class="col-md-3 mb-3 position-relative">
-                                    <label for="variety" class="form-label">Variety</label>
-                                    <input type="text" class="form-control" id="variety" name="variety" placeholder="" autocomplete="off" required>
-                                    <div id="varietyList" class="list-group position-absolute w-100" style="z-index:1000;"></div>
-                                </div>
-
-
-                                <!-- Product Category -->
-                                <div class="col-md-3 mb-3">
-                                    <label for="productCategory" class="form-label">Category</label>
-                                    <select class="form-control" id="productCategory" name="product_category_id" required>
+                                    <div class="col-md-4">
+                                        <label for="productCategory" class="form-label">Category</label>
+                                        <select class="form-select" id="productCategory" name="product_category_id" required>
                                         <option value="" selected hidden disabled>Select a Category</option>
                                         <?php foreach ($categories as $category): ?>
                                             <option value="<?= $category['id'] ?>"><?= $category['product_category'] ?></option>
                                         <?php endforeach; ?>
-                                    </select>
-                                </div>
+                                        </select>
+                                    </div>
 
-                                <div class="col-md-3 mb-3">
+
+                                <div class="col-md-4 mb-3">
                                     <label for="productStatus" class="form-label">Product Status</label>
                                     <select class="form-control" id="productStatus" name="product_status_id" required>
                                         <?php foreach ($productStatus as $prodStat): ?>
@@ -74,6 +67,10 @@
                             </div>
                         </div>
                     </div>
+                        <div class="section-title">Product Specifications</div>
+    
+                            <div id="specificationFields" class="row"></div>
+       
                     <div class="row p-3">
                         <div class="section-title">Pricing & Shipping</div>
 
@@ -119,35 +116,95 @@
         </form>
     </div>
     <script>
-        $(document).ready(function() {
-    $('#variety').keyup(function() {
-        let query = $(this).val();
-        if (query.length > 0) {
-            $.ajax({
-                url: '/variety_suggest', // Route for fetching varieties
-                method: 'POST',
-                data: { query: query },
-                success: function(data) {
-                    $('#varietyList').fadeIn();
-                    $('#varietyList').html(data);
-                }
-            });
-        } else {
-            $('#varietyList').fadeOut();
-        }
-    });
+$(document).ready(function() {
 
-    $(document).on('click', '.variety-item', function() {
-        $('#variety').val($(this).text());
-        $('#varietyList').fadeOut();
-    });
+// Handle category change and load specifications
+$('#productCategory').on('change', function() {
+    var categoryId = $(this).val();
+    console.log(categoryId);
 
-    $(document).click(function(event) {
-        if (!$(event.target).closest('#variety, #varietyList').length) {
-            $('#varietyList').fadeOut();
+    $.ajax({
+        type: 'GET',
+        url: '/category_specification/get_by_category/' + encodeURIComponent(categoryId),
+        dataType: 'json',
+        success: function(response) {
+            var specContainer = $('#specificationFields');
+            specContainer.empty(); // Clear previous specifications
+
+            if (response.length > 0) {
+                response.forEach(function(spec) {
+                    var fieldHtml = '';
+
+                    if (spec.specification_name.toLowerCase() === 'variety') {
+                        fieldHtml = `
+                            <div class="col-md-3 mb-3 position-relative">
+                                <label class="form-label">${spec.specification_name}</label>
+                                <input type="text" class="form-control variety-autocomplete" name="specifications[${spec.specification_id}]" placeholder="Search ${spec.specification_name}" autocomplete="off">
+                                <div class="list-group position-absolute w-100 varietyList" style="z-index:1000;"></div>
+                            </div>
+                        `;
+                    } else {
+                        fieldHtml = `
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">${spec.specification_name}</label>
+                                <input type="text" class="form-control" name="specifications[${spec.specification_id}]" placeholder="Enter ${spec.specification_name}">
+                            </div>
+                        `;
+                    }
+
+                    specContainer.append(fieldHtml);
+                });
+
+            } else {
+                specContainer.html('<div class="col-12"><div class="alert alert-info">No specifications found for this category.</div></div>');
+            }
+        },
+        error: function() {
+            alert('Failed to load specifications.');
         }
     });
 });
+
+// Autocomplete for dynamically created Variety input
+$(document).on('keyup', '.variety-autocomplete', function() {
+    let input = $(this);
+    let query = input.val();
+    let suggestionBox = input.siblings('.varietyList');
+
+    if (query.length > 0) {
+        $.ajax({
+            url: '/variety_suggest', // Your backend route for fetching varieties
+            method: 'POST',
+            data: { query: query },
+            success: function(data) {
+                suggestionBox.fadeIn();
+                suggestionBox.html(data);
+            }
+        });
+    } else {
+        suggestionBox.fadeOut();
+    }
+});
+
+// When clicking on a variety suggestion
+$(document).on('click', '.varietyList .variety-item', function() {
+    let selectedText = $(this).text();
+    let suggestionBox = $(this).closest('.varietyList');
+    let input = suggestionBox.siblings('.variety-autocomplete');
+
+    input.val(selectedText);
+    suggestionBox.fadeOut();
+});
+
+// Hide suggestions when clicking outside
+$(document).click(function(event) {
+    if (!$(event.target).closest('.variety-autocomplete, .varietyList').length) {
+        $('.varietyList').fadeOut();
+    }
+});
+
+});
+
 
 $(document).ready(function() {
     $('#stock_unit').on('keyup', function() {

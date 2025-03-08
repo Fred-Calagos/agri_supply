@@ -1,9 +1,10 @@
 <div class="sidebar close">
   <?php if (isAdmin()): ?>
     <div class="logo-details">
-      <i class='bx bxl-c-plus-plus'></i>
-      <span class="logo_name">ADMIN</span>
+      <img src="/uploads/store_logo.png" alt="Store Logo" style="height: 40px; margin-right: 10px;">
+      <span class="logo_name">Your Store Name</span>
     </div>
+
     <ul class="nav-links">
 
     <!-- DASHBOARD -->
@@ -32,6 +33,7 @@
           <li><a href="/products/create">Add New Product</a></li>
           <li><a href="/product_category">Product Category</a></li>
           <li><a href="/product/varieties">Varieties</a></li>
+          <li><a href="/product/specifications">Specifications</a></li> 
           <li><a href="/product/stock-units">Stock Units</a></li>
           <li><a href="/product/batches">Batches</a></li>
           <li><a href="/product/inventory-adjustments">Inventory Adjustment</a></li>

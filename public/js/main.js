@@ -11,3 +11,4 @@ import 'vendor/dataTables.dataTables.min.js';
 import 'vendor/dataTables.dataTables.min.css';
 // Ensure jQuery is globally available (for plugins to work properly)
 window.$ = window.jQuery = jQuery;
+

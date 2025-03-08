@@ -91,6 +91,19 @@ class Products extends Model {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'] ?? 0; // Return 0 if no result found
     }
+    public static function getLastInsertId() {
+        $pdo = Database::connect();
+        return $pdo->lastInsertId();
+    }
     
+    public static function getProductSpecification($productId) {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare("SELECT p.*, ps.value, s.name FROM ". self::$table ." p 
+        JOIN product_specification ps ON p.id = ps.product_id
+        JOIN specification s ON ps.specification_id = s.id
+        WHERE ps.product_id = ?");
+        $stmt->execute([$productId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
 }

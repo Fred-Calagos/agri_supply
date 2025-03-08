@@ -79,12 +79,28 @@
             </div> 
         </div>
 
-        <div class="col-2 col-sm-2 col-md-4">
+        <div class="col-12 col-md-4">
             <h5 class="section-title mb-2">Product Specification</h5>
-            <p class="text-muted mb-2 small">Variety: <?= htmlspecialchars($product['variety']) ?></p>
-            <p class="text-muted mb-2 small">Category: <?= htmlspecialchars($product['product_category']) ?></p>
-            <p class="small">Description: <?= nl2br(htmlspecialchars($product['product_description'])) ?></p>
+            
+            <div class="row  mb-2 small">
+                    <div class="col-5 text-muted"><p class="text-muted mb-2 small">Category: </p></div>
+                    <div class="col-1">:</div>
+                    <div class="col-6 col-md-5 text-start"><?= htmlspecialchars($product['product_category']) ?></div>
+            </div>
+            <div class="row  mb-2 small">
+                    <div class="col-5 text-muted"><p class="small">Description</p></div>
+                    <div class="col-1">:</div>
+                    <div class="col-6 col-md-5 text-start"> <?= nl2br(htmlspecialchars($product['product_description'])) ?></div>
+            </div>
+            <?php foreach ($productSpecification as $ps): ?>
+                <div class="row  mb-2 small">
+                    <div class="col-5 text-muted"><?= htmlspecialchars($ps['name']); ?></div>
+                    <div class="col-1">:</div>
+                    <div class="col-6 col-md-5 text-start"><?= htmlspecialchars($ps['value']); ?></div>
+                </div>
+            <?php endforeach; ?>
         </div>
+
     </div>
 </div>
 

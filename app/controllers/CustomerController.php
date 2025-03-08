@@ -133,6 +133,7 @@ class CustomerController extends BaseController
     
         // Fetch product details
         $product = Products::find($productId);
+        $productSpecification = Products::getProductSpecification($productId);
         $soldProduct = Order::soldProducts($productId);
         if (!$product) {
             die("Product not found.");
@@ -149,10 +150,12 @@ class CustomerController extends BaseController
             'user' => $user,
             'cartCount' => $cartCount,
             'soldProduct' => $soldProduct,
+            'productSpecification' => $productSpecification,
             'content' => $this->renderView('/customer/product_detail/index', [
                 'product' => $product,
                 'user' => $user,
                 'soldProduct' => $soldProduct,
+                'productSpecification' => $productSpecification,
                 'cartCount' => $cartCount
             ])
         ];

@@ -2,10 +2,12 @@
 
 namespace App\controllers;
 
+use App\Core\Database;
 use App\models\Products;
 use App\Core\BaseController;
 use App\models\ProductStatus;
 use App\models\ProductCategory;
+use App\models\ProductSpecifications;
 
 class ProductController extends BaseController
 {
@@ -53,10 +55,10 @@ class ProductController extends BaseController
     
     public function store() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pdo = Database::connect();
             // Get the form data
             $product_name = $_POST['product_name'] ?? '';
             $product_category_id = $_POST['product_category_id'] ?? '';
-            $variety = $_POST['variety'] ?? '';
             $product_status = $_POST['product_status_id'] ?? '';
             $product_description = $_POST['product_description'] ?? '';
             $cost_price = $_POST['cost_price'] ?? 0;
@@ -65,6 +67,17 @@ class ProductController extends BaseController
             $shipping_fee = $_POST['shipping_fee'] ?? 0;
             $stocks = $_POST['stocks'] ?? 0;
             $stock_unit = $_POST['stock_unit'] ?? '';
+            $specifications = $_POST['specifications'] ?? [];
+    
+            // // If you specifically want the 'Variety' value
+            // $variety = '';
+            // foreach ($specifications as $specification_id => $value) {
+            //     // Assuming you know the specification_id of "Variety", you can check like:
+            //     if ($this->isVarietySpecification($specification_id)) {
+            //         $variety = $value;
+            //         break;
+            //     }
+            // }
     
             // File upload handling
             $image = null;
@@ -72,16 +85,14 @@ class ProductController extends BaseController
                 $image_name = time() . '_' . $_FILES['image']['name'];
                 $upload_dir = __DIR__ . '/../../public/uploads/';
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $image_name)) {
-                    $image = '/uploads/' . $image_name; // Save the relative path
+                    $image = '/uploads/' . $image_name;
                 }
             }
     
             // Save to database (assuming you have a Product model)
-            $productModel = new Products();
             $productData = [
                 'product_name' => $product_name,
                 'product_category_id' => $product_category_id,
-                'variety' => $variety,
                 'product_status_id' => $product_status,
                 'product_description' => $product_description,
                 'cost_price' => $cost_price,
@@ -93,16 +104,34 @@ class ProductController extends BaseController
                 'image_path' => $image
             ];
     
-            if ($productModel->create($productData)) {
-                // Redirect to products list or success page
+            if (Products::create($productData)) {
+
+                // Get the last inserted product ID
+                $product_id = (int) Products::getLastInsertId(); // Ensure this returns an integer
+            
+                // Debugging check (remove later)
+                // var_dump($product_id); // Debugging check (remove later)
+            
+                // Save specifications
+                $productSpecificationsModel = new ProductSpecifications();
+                foreach ($specifications as $specification_id => $value) {
+                    $productSpecificationsModel->create([
+                        'product_id' => $product_id, // Ensure this is an integer
+                        'specification_id' => $specification_id,
+                        'value' => $value
+                    ]);
+                }
+            
+                // Redirect to products page
                 header('Location: /products');
                 exit;
             } else {
                 die('Error saving product.');
             }
+            
         }
     }
-
+    
     public function edit($id) {
         $product = Products::find($id);
         $categories = ProductCategory::all();
@@ -160,5 +189,6 @@ class ProductController extends BaseController
             }
         }
     }
-    
+
+
 }

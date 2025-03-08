@@ -45,6 +45,9 @@
                                 data-product-description="<?= $category['description'] ?>">
                             <i class="bx bxs-edit"></i> Edit
                         </button>
+                        <a href="/product/category/specification?category=<?= $category['id'] ?>" class="btn btn-success btn-sm">
+                            <i class="bx bx-plus-circle"></i> Specification
+                        </a>
                         <button class="btn btn-danger delete-category  btn-sm" 
                                 data-id="<?= $category['id'] ?>">
                             <i class="bx bxs-trash"></i> Delete

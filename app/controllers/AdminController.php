@@ -17,9 +17,14 @@ class AdminController extends BaseController
 
     public function index()
     {
+        $year = date('Y');
         $products = Products::totalProducts();
+        $pendingOrders = Order::pendingOrders();
         $orders = Order::totalOrders();
         $salesByMonth = Order::totalSalesByMonth();
+        $monthSales = Order::totalSalesThisMonth();
+        $todaySales = Order::totalSalesToday();
+        $yearlySales = Order::totalSalesYearly();
         $user = User::totalUser();
         $data = [
             'title' => 'Admin Dashboard',
@@ -27,6 +32,10 @@ class AdminController extends BaseController
             'content' => $this->renderView('dashboard/index', [
                 'products' => $products,
                 'orders' => $orders,
+                'todaySales' => $todaySales,
+                'yearlySales' => $yearlySales,
+                'monthSales' => $monthSales,
+                'pendingOrders' => $pendingOrders,
                 'salesByMonth' => $salesByMonth,
                 'user' => $user
             ])

@@ -129,6 +129,19 @@ class Order extends Model
             return $result['total'] ?? 0; // Return 0 if no result found
         }
         
+    public static function pendingOrders()
+        {
+            $pdo = Database::connect();
+            $stmt = $pdo->prepare("
+                SELECT COUNT(*) as total 
+                FROM " . self::$table . " 
+                WHERE order_status = (SELECT id FROM order_status WHERE id = 1)
+            ");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'] ?? 0; // Return 0 if no result found
+        }
+        
     public static function OrderReport(){
             $pdo = Database::connect();
             $stmt = $pdo->prepare("SELECT po.*, 
@@ -215,7 +228,54 @@ class Order extends Model
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function totalSalesThisMonth()
+    {
+        $pdo = Database::connect();
+        $query = "
+            SELECT COALESCE(SUM(p.selling_price * po.product_quantity), 0) AS total_sales
+            FROM " . self::$table . " po
+            JOIN products p ON po.product_id = p.id
+            WHERE po.order_status = 4
+            AND DATE_FORMAT(po.ordered_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
+        ";
+    
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchColumn(); // Returns a single number
+    }
     
     
+
+public static function totalSalesToday()
+{
+    $pdo = Database::connect();
+    $query = "
+        SELECT SUM(p.selling_price * po.product_quantity) AS total_sales
+        FROM " . self::$table . " po
+        JOIN products p ON po.product_id = p.id
+        WHERE po.order_status = 4 
+        AND DATE(po.ordered_date) = CURDATE()
+    ";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn() ?: 0; // Returns 0 if null
+}
+
+public static function totalSalesYearly()
+{
+    $pdo = Database::connect();
+    $query = "
+        SELECT SUM(p.selling_price * po.product_quantity) AS total_sales
+        FROM " . self::$table . " po
+        JOIN products p ON po.product_id = p.id
+        WHERE po.order_status = 4 
+        AND YEAR(po.ordered_date) = YEAR(CURDATE())
+    ";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn() ?: 0; // Returns 0 if null
+}
 
 }
