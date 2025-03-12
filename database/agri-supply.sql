@@ -67,7 +67,7 @@ CREATE TABLE `brands` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `business_permit` (
   `description` text,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +123,7 @@ CREATE TABLE `cashflow_statement` (
   `year_4` decimal(15,2) DEFAULT NULL,
   `year_5` decimal(15,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,6 +133,33 @@ CREATE TABLE `cashflow_statement` (
 LOCK TABLES `cashflow_statement` WRITE;
 /*!40000 ALTER TABLE `cashflow_statement` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cashflow_statement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `category_specification`
+--
+
+DROP TABLE IF EXISTS `category_specification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `category_specification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `category_id` int DEFAULT NULL,
+  `specification_id` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `category_specification`
+--
+
+LOCK TABLES `category_specification` WRITE;
+/*!40000 ALTER TABLE `category_specification` DISABLE KEYS */;
+INSERT INTO `category_specification` VALUES (1,1,1,'2025-03-07 12:55:12','2025-03-07 12:55:12'),(2,1,5,'2025-03-07 12:59:23','2025-03-07 12:59:23'),(3,1,3,'2025-03-07 13:02:36','2025-03-07 13:02:36'),(4,1,26,'2025-03-07 13:03:44','2025-03-07 13:03:44'),(5,2,1,'2025-03-07 22:40:48','2025-03-07 22:40:48');
+/*!40000 ALTER TABLE `category_specification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -151,7 +178,7 @@ CREATE TABLE `cleaning_supplies` (
   `total_cost` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +205,7 @@ CREATE TABLE `cost_of_goods_sold` (
   `cogs` decimal(12,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +233,7 @@ CREATE TABLE `equipments` (
   `useful_years` int DEFAULT NULL,
   `depreciation` decimal(15,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,7 +261,7 @@ CREATE TABLE `investors` (
   `ownership_percentage` decimal(5,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +292,7 @@ CREATE TABLE `liabilities_and_equity` (
   `total_owners_equity` decimal(15,2) DEFAULT NULL,
   `total_liability_and_equity` decimal(15,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,7 +317,7 @@ CREATE TABLE `market_segmentation` (
   `value` decimal(10,2) DEFAULT NULL,
   `percentage` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,7 +345,7 @@ CREATE TABLE `office_supplies` (
   `annual_cost` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,7 +371,7 @@ CREATE TABLE `operational_costs` (
   `annual_cost` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +396,7 @@ CREATE TABLE `order_status` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -378,7 +405,7 @@ CREATE TABLE `order_status` (
 
 LOCK TABLES `order_status` WRITE;
 /*!40000 ALTER TABLE `order_status` DISABLE KEYS */;
-INSERT INTO `order_status` VALUES (1,'Pending','2025-02-23 08:06:14','2025-02-23 10:50:45'),(2,'To pay','2025-02-23 08:29:14','2025-02-23 10:50:45'),(3,'To Shipped','2025-02-23 08:29:34','2025-02-23 10:50:45'),(4,'Received','2025-02-23 08:31:42','2025-03-01 11:27:18');
+INSERT INTO `order_status` VALUES (1,'To Pay','2025-02-23 08:06:14','2025-03-04 06:03:29'),(2,'To Ship','2025-02-23 08:29:14','2025-03-04 06:03:38'),(3,'To Receive','2025-02-23 08:29:34','2025-03-04 06:03:52'),(4,'Received','2025-02-23 08:31:42','2025-03-01 11:27:18');
 /*!40000 ALTER TABLE `order_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,7 +420,7 @@ CREATE TABLE `payment_method` (
   `id` int NOT NULL AUTO_INCREMENT,
   `payment_method` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -403,6 +430,39 @@ CREATE TABLE `payment_method` (
 LOCK TABLES `payment_method` WRITE;
 /*!40000 ALTER TABLE `payment_method` DISABLE KEYS */;
 /*!40000 ALTER TABLE `payment_method` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_batch`
+--
+
+DROP TABLE IF EXISTS `product_batch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_batch` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `batch_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `cost_price` decimal(10,2) NOT NULL,
+  `profit_margin` decimal(10,2) NOT NULL,
+  `selling_price` decimal(10,2) NOT NULL,
+  `stocks` int NOT NULL,
+  `stock_category` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `stock_unit` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `best_before_date` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_batch`
+--
+
+LOCK TABLES `product_batch` WRITE;
+/*!40000 ALTER TABLE `product_batch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -423,7 +483,7 @@ CREATE TABLE `product_cart` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `product_cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,6 +492,7 @@ CREATE TABLE `product_cart` (
 
 LOCK TABLES `product_cart` WRITE;
 /*!40000 ALTER TABLE `product_cart` DISABLE KEYS */;
+INSERT INTO `product_cart` VALUES (42,2,10,1,'2025-03-05 11:20:07'),(43,2,15,1,'2025-03-05 11:39:27');
 /*!40000 ALTER TABLE `product_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,10 +506,11 @@ DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `product_category` varchar(100) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -457,7 +519,7 @@ CREATE TABLE `product_category` (
 
 LOCK TABLES `product_category` WRITE;
 /*!40000 ALTER TABLE `product_category` DISABLE KEYS */;
-INSERT INTO `product_category` VALUES (1,'Fruit','2025-02-19 14:09:50','2025-02-23 08:06:56'),(2,'Vegetable','2025-02-19 15:11:07','2025-02-19 15:11:07'),(3,'Health & Beauty','2025-02-20 04:26:04','2025-02-20 04:26:04'),(4,'Meat','2025-02-27 04:04:22','2025-02-27 04:04:22'),(5,'Electronics','2025-02-27 04:04:22','2025-02-27 04:04:22'),(6,'Farm Items','2025-02-27 04:04:22','2025-02-27 04:04:22'),(7,'Farm Motors','2025-02-27 04:04:22','2025-02-27 04:04:22');
+INSERT INTO `product_category` VALUES (1,'Fruit','Fresh fruit productss','2025-02-19 14:09:50','2025-03-04 09:54:55'),(2,'Vegetable','Fresh vegetable products','2025-02-19 15:11:07','2025-03-03 12:13:53'),(3,'Meat and Poultry','Fresh meat and poultry products','2025-03-03 12:09:28','2025-03-03 12:14:41'),(4,'Dairy Products','Milk, cheese, and other dairy items','2025-03-03 12:09:28','2025-03-03 12:14:41'),(5,'Grains and Cereals','Rice, oats, and flour products','2025-03-03 12:09:28','2025-03-03 12:14:41'),(6,'Condiments','Sauces, spices, and seasonings','2025-03-03 12:09:28','2025-03-03 12:14:41'),(7,'Beverages','Drinks and refreshments','2025-03-03 12:09:28','2025-03-03 12:14:41'),(8,'Household Items','Cleaning and household essentials','2025-03-03 12:09:28','2025-03-03 12:14:41'),(9,'Hardware Supplies','Tools and construction materials','2025-03-03 12:09:28','2025-03-03 12:14:41'),(17,'Snacks and Confectionery','Chips, chocolates, candies, nuts, and other snack items.','2025-03-04 04:39:12','2025-03-04 04:39:12');
 /*!40000 ALTER TABLE `product_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -481,7 +543,7 @@ CREATE TABLE `product_ordered` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_ordered_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `product_ordered_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -490,8 +552,38 @@ CREATE TABLE `product_ordered` (
 
 LOCK TABLES `product_ordered` WRITE;
 /*!40000 ALTER TABLE `product_ordered` DISABLE KEYS */;
-INSERT INTO `product_ordered` VALUES (1,2,14,2,'4','2025-02-23 10:57:21','ORD-20250223-8834'),(2,2,8,2,'4','2025-02-23 11:08:37','ORD-20250223-8834'),(3,2,11,1,'4','2025-02-23 11:11:23','ORD-20250223-8834'),(4,2,13,1,'4','2025-02-23 11:12:13','ORD-20250223-8834'),(5,2,10,6,'4','2025-02-23 11:52:13','ORD-20250223-8834'),(6,2,6,1,'4','2025-02-23 11:56:01','ORD-20250223-8251'),(7,2,10,1,'4','2025-02-23 11:58:41','ORD-20250223-5508'),(8,2,8,1,'1','2025-02-23 12:00:52','ORD-20250223-5774'),(9,2,13,1,'1','2025-02-23 12:00:52','ORD-20250223-9558'),(10,3,6,1,'1','2025-02-23 13:10:14','ORD-20250223-7786'),(11,3,12,1,'2','2025-02-23 14:11:07','ORD-20250223-8525'),(12,3,10,1,'2','2025-02-23 14:11:07','ORD-20250223-8525'),(13,2,6,1,'1','2025-02-26 11:33:36','ORD-20250226-9287'),(14,2,6,1,'1','2025-02-26 11:34:35','ORD-20250226-1443'),(15,2,5,1,'1','2025-02-26 11:34:35','ORD-20250226-1443'),(16,2,5,2,'1','2025-03-01 09:21:35','ORD-20250301-8874'),(17,2,8,1,'1','2025-03-01 09:21:35','ORD-20250301-8874'),(18,2,6,5,'1','2025-03-02 02:27:02','ORD-20250302-4370');
+INSERT INTO `product_ordered` VALUES (1,2,14,2,'4','2025-02-23 10:57:21','ORD-20250223-8834'),(2,2,8,2,'4','2025-02-23 11:08:37','ORD-20250223-8834'),(3,2,11,1,'4','2025-02-23 11:11:23','ORD-20250223-8834'),(4,2,13,1,'4','2025-02-23 11:12:13','ORD-20250223-8834'),(5,2,10,6,'4','2025-02-23 11:52:13','ORD-20250223-8834'),(6,2,6,1,'4','2024-02-23 11:56:01','ORD-20250223-8251'),(7,2,10,1,'4','2025-02-23 11:58:41','ORD-20250223-5508'),(8,2,8,1,'4','2025-02-23 12:00:52','ORD-20250223-5774'),(9,2,13,1,'4','2025-02-23 12:00:52','ORD-20250223-9558'),(10,3,6,1,'4','2023-02-23 13:10:14','ORD-20250223-7786'),(11,3,12,1,'4','2027-02-23 14:11:07','ORD-20250223-8525'),(12,3,10,1,'4','2026-02-23 14:11:07','ORD-20250223-8525'),(13,2,6,1,'1','2025-02-26 11:33:36','ORD-20250226-9287'),(14,2,6,1,'1','2025-02-26 11:34:35','ORD-20250226-1443'),(15,2,5,1,'1','2025-02-26 11:34:35','ORD-20250226-1443'),(16,2,5,2,'1','2025-03-01 09:21:35','ORD-20250301-8874'),(17,2,8,1,'1','2025-03-01 09:21:35','ORD-20250301-8874'),(18,2,6,5,'1','2025-03-02 02:27:02','ORD-20250302-4370'),(19,2,10,1,'1','2025-03-04 03:18:47','ORD-20250304-2245'),(20,2,6,1,'1','2025-03-04 04:32:29','ORD-20250304-5966'),(21,2,6,8,'4','2025-03-04 07:04:54','ORD-20250304-7808'),(22,2,6,2,'4','2025-03-04 07:05:44','ORD-20250304-7071');
 /*!40000 ALTER TABLE `product_ordered` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_specification`
+--
+
+DROP TABLE IF EXISTS `product_specification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_specification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `specification_id` int NOT NULL,
+  `value` text COLLATE utf8mb4_general_ci,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `product_id_idx` (`product_id`),
+  CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_specification`
+--
+
+LOCK TABLES `product_specification` WRITE;
+/*!40000 ALTER TABLE `product_specification` DISABLE KEYS */;
+INSERT INTO `product_specification` VALUES (2,21,1,'Honeycrisp','2025-03-07 23:09:42','2025-03-07 23:09:42'),(3,21,5,'Single','2025-03-07 23:09:42','2025-03-07 23:09:42'),(4,21,3,'Green','2025-03-07 23:09:42','2025-03-07 23:09:42'),(5,21,26,'Yes','2025-03-07 23:09:42','2025-03-07 23:09:42'),(6,22,1,'Honeycrisp','2025-03-07 23:13:51','2025-03-07 23:13:51'),(7,22,5,'Single','2025-03-07 23:13:51','2025-03-07 23:13:51'),(8,22,3,'Green','2025-03-07 23:13:51','2025-03-07 23:13:51'),(9,22,26,'Yes','2025-03-07 23:13:51','2025-03-07 23:13:51');
+/*!40000 ALTER TABLE `product_specification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -507,7 +599,7 @@ CREATE TABLE `product_status` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -531,6 +623,7 @@ CREATE TABLE `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `product_name` varchar(255) NOT NULL,
   `product_description` text,
+  `variety` varchar(45) DEFAULT NULL,
   `product_category_id` int NOT NULL,
   `cost_price` decimal(10,2) NOT NULL,
   `profit_margin` decimal(10,2) NOT NULL,
@@ -539,12 +632,11 @@ CREATE TABLE `products` (
   `product_status_id` int NOT NULL,
   `shipping_fee` decimal(10,2) NOT NULL DEFAULT '0.00',
   `stocks` int NOT NULL DEFAULT '0',
+  `stock_unit` varchar(45) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `product_category_id` (`product_category_id`),
-  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`product_category_id`) REFERENCES `product_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -553,7 +645,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (5,'Laravel112','qweqweqwe',2,12.00,12.00,13.44,'/uploads/1739983368_images.jpg',4,12.00,12,'2025-02-19 16:42:48','2025-02-23 08:57:37'),(6,'Mango (apricot)','Apricot mango',1,120.00,20.00,144.00,'/uploads/1740033499_brigitte-tohm-J91jD9u6Nk4-unsplash.jpg',4,10.00,200,'2025-02-20 06:38:19','2025-02-23 08:57:37'),(7,'Brocolli','Green Voadas',2,15.00,20.00,18.00,'/uploads/1740040249_annie-spratt-m1t-RJ1iCIU-unsplash.jpg',4,10.00,200,'2025-02-20 08:30:49','2025-02-23 08:57:37'),(8,'Apple','Apple',1,15.00,20.00,18.00,'/uploads/1740040330_marek-studzinski-3D6yReT06p0-unsplash.jpg',4,10.00,200,'2025-02-20 08:32:10','2025-02-23 08:57:37'),(9,'Chilli','Red Chilli, Hot',2,50.00,10.00,55.00,'/uploads/1740110076_artem-beliaikin-11VU8ydkbiA-unsplash.jpg',4,10.00,30,'2025-02-21 03:54:36','2025-02-23 08:57:37'),(10,'Cherry Tomato','small tomato',1,100.00,10.00,110.00,'/uploads/1740110147_mockup-graphics-paOhdpqcYuY-unsplash.jpg',4,10.00,30,'2025-02-21 03:55:47','2025-02-23 08:57:37'),(11,'Asparagus','aasdadsa',2,123.00,12.00,137.76,'/uploads/1740110329_alisa-golovinska-PqiucwQwZQg-unsplash.jpg',4,12.00,31,'2025-02-21 03:56:15','2025-02-23 08:57:37'),(12,'Onion','asadsdasd',2,12.00,12.00,13.44,'/uploads/1740110413_mockup-graphics-bC1fXU1v98U-unsplash.jpg',4,11.00,12,'2025-02-21 04:00:13','2025-02-23 08:57:37'),(13,'Pepino','asdasd',1,12.00,12.00,13.44,'/uploads/1740110463_harshal-s-hirve-2GiRcLP_jkI-unsplash.jpg',4,12.00,12,'2025-02-21 04:01:03','2025-02-23 08:57:37'),(14,'Laravel1','dasdasd',2,12.00,12.00,13.44,'/uploads/1740300631_artem-beliaikin-11VU8ydkbiA-unsplash.jpg',5,12.00,12,'2025-02-23 08:50:31','2025-02-23 08:50:31');
+INSERT INTO `products` VALUES (5,'Laravel112','qweqweqwe','Apricot',2,12.00,12.00,13.44,'/uploads/1739983368_images.jpg',4,12.00,12,'box','2025-02-19 16:42:48','2025-03-03 18:15:17'),(6,'Mango (apricot)','Apricot mango','Apricot',1,120.00,20.00,144.00,'/uploads/1740033499_brigitte-tohm-J91jD9u6Nk4-unsplash.jpg',4,10.00,190,'box','2025-02-20 06:38:19','2025-03-04 07:05:44'),(7,'Brocolli','Green Voadas','Apricot',2,15.00,20.00,18.00,'/uploads/1740040249_annie-spratt-m1t-RJ1iCIU-unsplash.jpg',4,10.00,200,'box','2025-02-20 08:30:49','2025-03-03 18:15:17'),(8,'Apple','Apple','Gala',1,15.00,20.00,18.00,NULL,4,10.00,200,'box','2025-02-20 08:32:10','2025-03-03 17:08:26'),(9,'Chilli','Red Chilli, Hot','Apricot',2,50.00,10.00,55.00,'/uploads/1740110076_artem-beliaikin-11VU8ydkbiA-unsplash.jpg',4,10.00,30,'box','2025-02-21 03:54:36','2025-03-03 18:15:17'),(10,'Cherry Tomato','small tomato','Apricot',1,100.00,10.00,110.00,'/uploads/1740110147_mockup-graphics-paOhdpqcYuY-unsplash.jpg',4,10.00,30,'box','2025-02-21 03:55:47','2025-03-03 18:15:17'),(11,'Asparagus','aasdadsa','Apricot',2,123.00,12.00,137.76,'/uploads/1740110329_alisa-golovinska-PqiucwQwZQg-unsplash.jpg',4,12.00,31,'box','2025-02-21 03:56:15','2025-03-03 18:15:17'),(12,'Onion','asadsdasd','Apricot',2,12.00,12.00,13.44,'/uploads/1740110413_mockup-graphics-bC1fXU1v98U-unsplash.jpg',4,11.00,12,'box','2025-02-21 04:00:13','2025-03-03 18:15:17'),(13,'Pepino','asdasd','Apricot',1,12.00,12.00,13.44,'/uploads/1740110463_harshal-s-hirve-2GiRcLP_jkI-unsplash.jpg',4,12.00,12,'box','2025-02-21 04:01:03','2025-03-03 18:15:17'),(14,'Laravel1','dasdasd','Apricot',2,12.00,12.00,13.44,'/uploads/1740300631_artem-beliaikin-11VU8ydkbiA-unsplash.jpg',5,12.00,12,'Sack','2025-02-23 08:50:31','2025-03-03 18:15:17'),(15,'Mango','sdasdasdasdasd','Apricot',1,500.00,20.00,600.00,'/uploads/1741014500_store_logo.png',4,30.00,300,'box','2025-03-03 15:08:20','2025-03-03 15:08:20'),(21,'Grocery','very healthy goods ',NULL,1,500.00,20.00,600.00,'/uploads/1741388982_alexandr-podvalny-WOxddhzhC1w-unsplash.jpg',4,10.00,100,'Box','2025-03-07 23:09:42','2025-03-07 23:09:42'),(22,'dsaasdasd','dasdasdasdadas',NULL,1,123.00,12.00,137.76,'/uploads/1741389231_store_logo.png',4,123.00,123,'Box','2025-03-07 23:13:51','2025-03-07 23:13:51');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -682,7 +774,7 @@ CREATE TABLE `role` (
   `role_name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -710,7 +802,7 @@ CREATE TABLE `salary_wages` (
   `thirteenth_month_pay` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -720,6 +812,88 @@ CREATE TABLE `salary_wages` (
 LOCK TABLES `salary_wages` WRITE;
 /*!40000 ALTER TABLE `salary_wages` DISABLE KEYS */;
 /*!40000 ALTER TABLE `salary_wages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shipping_fee`
+--
+
+DROP TABLE IF EXISTS `shipping_fee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shipping_fee` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `shipping_fee` decimal(10,2) NOT NULL,
+  `city_mun_id` int DEFAULT NULL,
+  `brgy_id` int DEFAULT NULL,
+  `region_id` int NOT NULL,
+  `prov_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shipping_fee`
+--
+
+LOCK TABLES `shipping_fee` WRITE;
+/*!40000 ALTER TABLE `shipping_fee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shipping_fee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `specification`
+--
+
+DROP TABLE IF EXISTS `specification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `specification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `specification`
+--
+
+LOCK TABLES `specification` WRITE;
+/*!40000 ALTER TABLE `specification` DISABLE KEYS */;
+INSERT INTO `specification` VALUES (1,'Variety','2025-03-07 06:05:34','2025-03-07 11:04:34'),(2,'Weight','2025-03-07 06:12:04','2025-03-07 06:12:04'),(3,'Ripeness','2025-03-07 06:12:20','2025-03-07 10:46:54'),(4,'Organic','2025-03-07 06:12:40','2025-03-07 06:12:40'),(5,'Packaging Type','2025-03-07 06:12:47','2025-03-07 06:12:47'),(7,'Cut Type','2025-03-07 11:06:40','2025-03-07 11:06:40'),(8,'Fresh/Frozen','2025-03-07 11:07:01','2025-03-07 11:07:01'),(9,'Expiration Date','2025-03-07 11:07:07','2025-03-07 11:07:07'),(10,'Fat Content','2025-03-07 11:07:16','2025-03-07 11:07:16'),(11,'Volume','2025-03-07 11:07:26','2025-03-07 11:07:26'),(12,'Pasteurized (Yes/No)','2025-03-07 11:07:36','2025-03-07 11:07:36'),(13,'Brand','2025-03-07 11:07:43','2025-03-07 11:07:43'),(14,'Type','2025-03-07 11:07:51','2025-03-07 11:07:51'),(15,'Shelf Life','2025-03-07 11:07:59','2025-03-07 11:07:59'),(16,'Flavor','2025-03-07 11:08:19','2025-03-07 11:08:19'),(17,'Spice Level','2025-03-07 11:08:55','2025-03-07 11:08:55'),(18,'Sugar Content','2025-03-07 11:09:09','2025-03-07 11:09:09'),(19,'Material','2025-03-07 11:09:23','2025-03-07 11:09:23'),(20,'Size','2025-03-07 11:09:28','2025-03-07 11:09:28'),(21,'Usage Type','2025-03-07 11:09:41','2025-03-07 11:09:41'),(22,'Quantity','2025-03-07 11:09:51','2025-03-07 11:09:51'),(23,'Ingredients','2025-03-07 11:10:14','2025-03-07 11:10:14'),(24,'Allergen Warning','2025-03-07 12:28:58','2025-03-07 12:30:59'),(25,'Contains','2025-03-07 12:30:39','2025-03-07 12:30:39'),(26,'Organic (Yes/No)','2025-03-07 13:03:30','2025-03-07 13:03:30'),(27,'Plant Species','2025-03-07 22:45:12','2025-03-07 22:45:12'),(28,'Ships From','2025-03-07 22:45:33','2025-03-07 22:45:33'),(29,'Country of Origin','2025-03-07 22:45:49','2025-03-07 22:45:49');
+/*!40000 ALTER TABLE `specification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stock_units`
+--
+
+DROP TABLE IF EXISTS `stock_units`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stock_units` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `category` enum('Unit','Packaging') COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_units`
+--
+
+LOCK TABLES `stock_units` WRITE;
+/*!40000 ALTER TABLE `stock_units` DISABLE KEYS */;
+INSERT INTO `stock_units` VALUES (1,'Piece (pc)','Unit','Single Piece Item','2025-03-03 18:00:13'),(2,'Kilogram (kg)','Unit','Weight measurement','2025-03-03 18:02:50'),(3,'Gram (g)','Unit','Small weight measurement','2025-03-03 18:02:50'),(4,'Liter (L)','Unit','Liquid volume measurement','2025-03-03 18:02:50'),(5,'Dozen','Unit','Group of 12 items','2025-03-03 18:02:50'),(6,'Sack','Packaging','Woven sack packaging','2025-03-03 18:02:50'),(7,'Crate','Packaging','Plastic or wooden crate','2025-03-03 18:02:50'),(8,'Bundle','Packaging','Grouped items tied together','2025-03-03 18:02:50'),(9,'Pack','Packaging','Small packaged group of items','2025-03-03 18:02:50'),(10,'Box','Packaging','Cardboard box packaging','2025-03-03 18:13:12');
+/*!40000 ALTER TABLE `stock_units` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -738,7 +912,7 @@ CREATE TABLE `supplies` (
   `annual_cost` decimal(10,2) NOT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -768,7 +942,7 @@ CREATE TABLE `system_setting` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -803,7 +977,7 @@ CREATE TABLE `users` (
   `role` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -812,8 +986,35 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Frederick','Calagos','frederickcalagos12@gmail.com','fred','09169134585','Tawog','VII','','','','','Admin'),(2,'Ashley','Japson','ashley@gmail.com','ashley','1231231','0864','08','086403','086403035','6608','resort','User'),(3,'Sample','sample','sample@gmail.com','sample','1231231','Sample','V','','','','','User'),(4,'Frederick','Dadap','frederickcalagos7@gmail.com','fred8701','09169134592','Southern Leyte','VIII','Hinunangan','Tawog','6608','adsadasdadasdasd','User'),(6,'Frederick','Dadap','frederickcalagos@gmail.com','Fred8701','09169134592','Southern Leyte','VIII','HINUNANGAN','Tawog','6608','dsadadsasdsdasdasa','User'),(7,'Piyek','Calagos','piyek@gmail.com','piyek111','09169134591','0864','08','086403','086403035','6608','near nobleza rice mill','User');
+INSERT INTO `users` VALUES (1,'Frederick','Calagos','admin@gmail.com','admin','09169134585','Tawog','VII','','','','','Admin'),(2,'Ashley','Japson','ashley@gmail.com','ashley','1231231','0864','08','086403','086403035','6608','resort','User'),(3,'Sample','sample','sample@gmail.com','sample','1231231','Sample','V','','','','','User'),(4,'Frederick','Dadap','frederickcalagos7@gmail.com','fred8701','09169134592','Southern Leyte','VIII','Hinunangan','Tawog','6608','adsadasdadasdasd','User'),(6,'Frederick','Dadap','frederickcalagos@gmail.com','Fred8701','09169134592','Southern Leyte','VIII','HINUNANGAN','Tawog','6608','dsadadsasdsdasdasa','User'),(7,'Piyek','Calagos','piyek@gmail.com','piyek111','09169134591','0864','08','086403','086403035','6608','near nobleza rice mill','User');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `variety`
+--
+
+DROP TABLE IF EXISTS `variety`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `variety` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `variety_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `product_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `variety`
+--
+
+LOCK TABLES `variety` WRITE;
+/*!40000 ALTER TABLE `variety` DISABLE KEYS */;
+INSERT INTO `variety` VALUES (1,'Carabao',15,'2025-03-03 16:49:06','2025-03-04 05:03:46'),(2,'Ataulfo',15,'2025-03-04 04:51:55','2025-03-04 04:51:55'),(3,'Honeycrisp',8,'2025-03-04 09:58:24','2025-03-04 09:59:05');
+/*!40000 ALTER TABLE `variety` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -825,4 +1026,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-03 12:17:27
+-- Dump completed on 2025-03-08 14:03:05

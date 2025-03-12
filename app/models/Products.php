@@ -77,12 +77,26 @@ class Products extends Model {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getProductCategory($category){
+    public static function getProductCategory($id) {
         $pdo = Database::connect();
-        $stmt = $pdo->prepare("SELECT * FROM " . self::$table . " WHERE product_category_id = ?");
-        $stmt->execute([$category]);
+        $stmt = $pdo->prepare("
+            WITH ranked_batches AS (
+                SELECT 
+                    pb.*, p.image_path, p.product_name,
+                    pc.product_category, ps.product_status,
+                    ROW_NUMBER() OVER (PARTITION BY pb.product_id ORDER BY pb.id ASC) AS rn
+                FROM product_batch pb
+                JOIN products p ON pb.product_id = p.id
+                JOIN product_status ps ON pb.stock_category = ps.id
+                JOIN product_category pc ON p.product_category_id = pc.id
+                WHERE pb.stocks > 0 AND p.product_category_id = ?
+            )
+            SELECT * FROM ranked_batches WHERE rn = 1
+        ");
+        $stmt->execute([$id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
     public static function totalProducts()
     {
         $pdo = Database::connect();
@@ -96,14 +110,7 @@ class Products extends Model {
         return $pdo->lastInsertId();
     }
     
-    public static function getProductSpecification($productId) {
-        $pdo = Database::connect();
-        $stmt = $pdo->prepare("SELECT p.*, ps.value, s.name FROM ". self::$table ." p 
-        JOIN product_specification ps ON p.id = ps.product_id
-        JOIN specification s ON ps.specification_id = s.id
-        WHERE ps.product_id = ?");
-        $stmt->execute([$productId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+
+
     
 }

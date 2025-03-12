@@ -107,9 +107,7 @@ $(document).ready(function() {
         successTimeout: 2000,
         reloadOnSuccess: true
     });
-});
 
-$(document).ready(function () {
     handleEditModalForm({
         triggerSelector: '.edit-specification',
         modalId: '#editSpecificationModal',
@@ -123,11 +121,6 @@ $(document).ready(function () {
             { fieldId: 'editSpecificationName', dataKey: 'name' }
         ]
     });
-});
-
-
-$(document).ready(function() {
-    $('#myTable').DataTable();
 });
 
 

@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <!-- Title on the Left -->
                 <h4 class="section-title mb-0">Agri-Supply Products</h4>
             </div>
-            <div class="col-md-6">
+            <div class="col-12 col-sm-3 col-md-6">
             <!-- Search Bar with Icon -->
             <div class="mb-2 position-relative" style="right:0; width: 100%;">
                 <!-- Search Icon -->
@@ -164,14 +164,21 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 <?php
 $groupedProducts = [];
-foreach ($products as $product) {
-    $category = $product['product_category']; // Assuming you have 'category_name' in your product data
-    if (!isset($groupedProducts[$category])) {
-        $groupedProducts[$category] = [];
+
+if (!empty($productBatch) && is_array($productBatch)) {
+    foreach ($productBatch as $product) {
+        $category = $product['product_category'] ?? 'Uncategorized'; // Avoid undefined index
+        if (!isset($groupedProducts[$category])) {
+            $groupedProducts[$category] = [];
+        }
+        $groupedProducts[$category][] = $product;
     }
-    $groupedProducts[$category][] = $product;
+} else {
+    echo "<p class='text-muted'>No product batches available.</p>";
 }
 ?>
+
+
 </div>
 </div>
 
@@ -185,7 +192,7 @@ foreach ($products as $product) {
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <div class="card card-sm product-card h-100 shadow-sm add-to-cart-card"
                         data-id="<?= htmlspecialchars($product['id']) ?>"
-                        onclick="window.location.href='/customer/product_detail?id=<?= htmlspecialchars($product['id']) ?>'">
+                        onclick="window.location.href='/customer/product_detail/<?= htmlspecialchars($product['id']) ?>'">
 
                         <img src="<?= htmlspecialchars($product['image_path']) ?>" class="card-img-top product-img" alt="Product Image">
                         <div class="card-body text-center border border-top">
@@ -223,7 +230,7 @@ $(document).ready(function () {
                             let resultHTML = '<ul class="list-group mb-3">';
                             result.products.forEach(product => {
                                 resultHTML += `<li class="list-group-item">
-                                    <a href="/customer/product_detail?id=${product.id}" class="text-decoration-none">
+                                    <a href="/customer/product_detail/${product.id}" class="text-decoration-none">
                                         ${product.product_name} - ${product.product_category}
                                     </a>
                                 </li>`;
@@ -249,7 +256,7 @@ $(document).ready(function () {
 
     $(".add-to-cart-card").click(function () {
         const productId = $(this).data("id");
-        window.location.href = `/customer/product_detail?id=${productId}`;
+        window.location.href = `/customer/product_detail/${productId}`;
     });
 });
 

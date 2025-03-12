@@ -1,25 +1,27 @@
 <?php
 
+use App\controllers\PdfController;
 use App\Controllers\AuthController;
-use App\controllers\SpecificationController;
+use App\controllers\CartController;
 use App\controllers\UserController;
 use App\Controllers\AdminController;
+use App\controllers\BatchController;
 use App\controllers\BrandController;
+use App\controllers\ExcelController;
+use App\controllers\OrderController;
+use App\controllers\ReportController;
+use App\controllers\PaymentController;
 use App\controllers\ProductController;
 use App\controllers\SettingController;
-use App\Controllers\CustomerController;
-use App\controllers\OrderStatusController;
-use App\controllers\ProductCategoryController;
-use App\controllers\CartController;
-use App\controllers\ExcelController;
-use App\controllers\LocationController;
-use App\controllers\OrderController;
-use App\controllers\PdfController;
-use App\controllers\ProductStatusController;
-use App\controllers\RegisterController;
-use App\controllers\ReportController;
-use App\controllers\StockUnitController;
 use App\controllers\VarietyController;
+use App\Controllers\CustomerController;
+use App\controllers\LocationController;
+use App\controllers\RegisterController;
+use App\controllers\StockUnitController;
+use App\controllers\OrderStatusController;
+use App\controllers\ProductStatusController;
+use App\controllers\SpecificationController;
+use App\controllers\ProductCategoryController;
 
 // REGISTER ROUTE
 $router->get('/register', [RegisterController::class, 'showRegister']);
@@ -74,6 +76,13 @@ $router->post('/products/store', [ProductController::class, 'store']);
 $router->get('/products/edit/{id}', [ProductController::class, 'edit']);
 $router->post('/products/update/{id}', [ProductController::class, 'update']);
 
+
+// BATCH ROUTE
+
+$router->get('/products/batch/{id}', [BatchController::class, 'index']);
+$router->post('/batch/store', [BatchController::class, 'store']);
+$router->get('/batch/edit/{id}', [BatchController::class, 'edit']);
+$router->post('/batch/update/{id}', [BatchController::class, 'update']);
 // VARIETY ROUTE
 
 $router->get('/product/varieties', [VarietyController::class, 'index']);
@@ -112,11 +121,12 @@ $router->get('/user', [UserController::class, 'index']);
 
 
 // CUSTOMER DASHBOARD ROUTES (Protected)
+
 $router->get('/customer/dashboard', [CustomerController::class, 'index']);
 $router->get('/customer/account', [CustomerController::class, 'profile']);
 $router->get('/customer/orders', [CustomerController::class, 'orders']);
 $router->get('/customer/cart', [CustomerController::class, 'cart']);
-$router->get('/customer/product_detail', [CustomerController::class, 'viewProduct']);
+$router->get('/customer/product_detail/{id}', [CustomerController::class, 'viewProduct']);
 
 // Product Search Route (AJAX)
 $router->post('/customer/search', [CustomerController::class, 'search']);
@@ -127,7 +137,7 @@ $router->post('/customer/cart/updateQuantity/{id}',[CartController::class, 'upda
 $router->post('/customer/cart/OrderSelected', [CartController::class, 'OrderSelected']);
 $router->get('/customer/cart/delete/{id}', [CartController::class, 'deleteCart']);
 
-$router->get('/customer/category', [CustomerController::class, 'viewCategory']);
+$router->get('/customer/category/{id}', [CustomerController::class, 'viewCategory']);
 $router->get('/customer/viewCategory', [CustomerController::class, 'OpenCategory']);
 
 //CHECKOUT ROUTE
@@ -154,3 +164,9 @@ $router->get('/excel/ProductSalesReport', [ExcelController::class, 'generateSale
 $router->get('/report', [ReportController::class, 'reportPage']);
 $router->get('/report-orders', [ReportController::class, 'reportOrderPage']);
 $router->get('/sales', [ReportController::class, 'reportProductSales']);
+
+// PAYMENT METHOD ROUTE
+
+$router->get('/payment', [PaymentController::class, 'index']);
+$router->post('/payment/store', [PaymentController::class, 'store']);
+$router->post('/payment/update/{id}', [PaymentController::class, 'update']);

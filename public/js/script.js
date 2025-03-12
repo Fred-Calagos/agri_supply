@@ -18,3 +18,7 @@ function toggleDisabilityOptions() {
     // Show sublist only if parent checkbox is checked
     sublist.style.display = parentCheckbox.checked ? "block" : "none";
 }
+
+$(document).ready(function() {
+  $('#myTable').DataTable();
+});

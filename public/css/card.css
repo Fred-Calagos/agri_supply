@@ -29,7 +29,6 @@
 }
 
 .card {
-    cursor: pointer;
     position: relative; /* Needed for the stretched-link */
 }
 

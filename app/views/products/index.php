@@ -49,8 +49,6 @@
                         <th>Image</th>
                         <th>Product Name</th>
                         <th>Category</th>
-                        <th>Selling Price</th>
-                        <th>Stocks</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -70,12 +68,13 @@
                             </td>
                             <td class="text-start"><?= htmlspecialchars($product['product_name']) ?></td>
                             <td class="text-start"><?= htmlspecialchars($product['product_category']) ?></td>
-                            <td>₱<?= number_format($product['selling_price'], 2) ?></td>
-                            <td><?= htmlspecialchars($product['stocks']) ?></td>
                             <td>
-                                <div class="d-flex justify-content-center gap-2">
+                                <div class="d-flex justify-content-start gap-2">
                                     <a href="/products/edit/<?= $product['id'] ?>" class="btn btn-warning btn-sm">
                                         <i class="bx bxs-edit"></i>
+                                    </a>
+                                    <a href="/products/batch/<?= $product['id'] ?>" class="btn btn-success btn-sm">
+                                        <i class="bx bxs-plus-circle"></i> Batch
                                     </a>
                                     <button class="delete-product btn btn-danger btn-sm" data-id="<?= $product['id'] ?>">
                                         <i class="bx bxs-trash"></i>

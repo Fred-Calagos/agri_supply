@@ -70,42 +70,6 @@
                         <div class="section-title">Product Specifications</div>
     
                             <div id="specificationFields" class="row"></div>
-       
-                    <div class="row p-3">
-                        <div class="section-title">Pricing & Shipping</div>
-
-                        <div class="col-md-3">
-                            <label for="costPrice" class="form-label">Cost Price (₱)</label>
-                            <input type="number" class="form-control" id="costPrice" name="cost_price" min="0" step="0.01" required>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="profitMargin" class="form-label">Profit Margin (%)</label>
-                            <input type="number" class="form-control" id="profitMargin" name="profit_margin" min="0" max="100" step="0.01">
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="productPrice" class="form-label">Selling Price (₱)</label>
-                            <input type="number" class="form-control" id="productPrice" name="selling_price" min="0" step="0.01" readonly>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="shippingFee" class="form-label">Shipping Fee (₱)</label>
-                            <input type="number" class="form-control" id="shippingFee" name="shipping_fee" min="0" step="0.01">
-                        </div>
-                    </div>
-                    <div class="row p-3 mb-3">
-                        <div class="col-md-3">
-                            <label for="stocks" class="form-label">Stocks</label>
-                            <input type="number" class="form-control" id="stocks" name="stocks" min="0" step="0.01">
-                        </div>
-                        <div class="col-md-3 position-relative">
-                            <label for="stock_unit" class="form-label">Stock Units</label>
-                            <input type="text" class="form-control" id="stock_unit" name="stock_unit" autocomplete="off">
-                            <div id="stockUnitList" class="list-group position-absolute w-100"></div>
-                        </div>
-
-                    </div>
                         <div class="d-flex justify-content-between md-3 mb-3 p-3">
                             <button type="reset" class="btn btn-secondary btn-lg  btn-sm ">Reset</button>
                             <button type="submit" class="btn btn-success btn-lg btn-sm"><i class="bx bx-save"></i> Save Product</button>
@@ -206,34 +170,6 @@ $(document).click(function(event) {
 });
 
 
-$(document).ready(function() {
-    $('#stock_unit').on('keyup', function() {
-        let query = $(this).val();
-        if (query.length > 0) {
-            $.ajax({
-                url: "/stock_units/search", // Adjust this route to your PHP MVC controller
-                method: "POST",
-                data: { query: query },
-                success: function(data) {
-                    $('#stockUnitList').fadeIn().html(data);
-                }
-            });
-        } else {
-            $('#stockUnitList').fadeOut();
-        }
-    });
-
-    $(document).on('click', '.stock-unit-item', function() {
-        $('#stock_unit').val($(this).text());
-        $('#stockUnitList').fadeOut();
-    });
-
-    $(document).click(function(e) {
-        if (!$(e.target).closest('#stock_unit').length) {
-            $('#stockUnitList').fadeOut();
-        }
-    });
-});
 
         // Auto-calculate product price based on cost price & profit margin
         document.getElementById('profitMargin').addEventListener('keyup', function () {

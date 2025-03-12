@@ -22,9 +22,12 @@ class Cart extends Model
     public static function totalItems($user_id)
     {
         $pdo = Database::connect();
-        $stmt = $pdo->prepare("SELECT pc.*, p.product_name, p.image_path, p.shipping_fee, p.stocks, p.product_description, p.selling_price FROM " 
+        $stmt = $pdo->prepare("SELECT pc.*, 
+        p.product_name, p.image_path,  p.product_description,
+        pb.stocks, pb.selling_price FROM " 
             . self::$table . " pc
-            JOIN products p ON pc.product_id = p.id
+            JOIN product_batch pb ON pc.batch_id = pb.id 
+            JOIN products p ON pb.product_id = p.id
             WHERE user_id = ? ");
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(mode: PDO::FETCH_ASSOC);
@@ -82,16 +85,18 @@ class Cart extends Model
     
         $sql = "
             SELECT 
-                pc.*, 
-                p.product_name, 
-                p.image_path, 
-                p.shipping_fee, 
-                p.stocks, 
-                p.product_description, 
-                p.selling_price
+            pc.*, 
+            p.product_name, 
+            p.image_path,  
+            p.product_description, 
+            pb.stocks, 
+            pb.selling_price,
+            SUM(pb.selling_price * pc.quantity) AS grand_total
             FROM " . self::$table . " pc
-            JOIN products p ON pc.product_id = p.id
+            JOIN product_batch pb ON pc.batch_id = pb.id
+            JOIN products p ON pb.product_id = p.id
             WHERE pc.id IN ($placeholders) AND pc.user_id = ?
+            GROUP BY pc.id, pb.stocks, pb.selling_price
         ";
     
         $stmt = $pdo->prepare($sql);

@@ -30,7 +30,7 @@ class User extends Model {
     public static function getUserAccount($user)
     {
         $pdo = Database::connect();
-        $stmt = $pdo->prepare("SELECT u.*, rr.regDesc, rp.provDesc, rc.citymunDesc, rb.brgyDesc FROM 
+        $stmt = $pdo->prepare("SELECT u.*, CONCAT(u.firstname,' ', u.lastname) as name, CONCAT(rr.regDesc,', ', rp.provDesc,', ', rc.citymunDesc,', ', rb.brgyDesc) AS address FROM 
         " . self::$table . " u
         JOIN refregion rr ON u.reg = rr.regCode
         JOIN refprovince rp ON u.prov = rp.provCode

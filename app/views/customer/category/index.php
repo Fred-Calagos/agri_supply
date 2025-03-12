@@ -5,7 +5,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card h-100 shadow-sm add-to-cart-card" 
                     data-id="<?= htmlspecialchars($product['id']) ?>" 
-                    onclick="window.location.href='/customer/product_detail?id=<?= htmlspecialchars($product['id']) ?>'">
+                    onclick="window.location.href='/customer/product_detail/<?= htmlspecialchars($product['id']) ?>'">
                     
                     <img src="<?= htmlspecialchars($product['image_path']) ?>" class="card-img-top product-img" alt="Product Image">
                     <div class="card-body text-center border border-top">

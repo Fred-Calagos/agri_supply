@@ -4,13 +4,15 @@ namespace App\Controllers;
 
 use PDO;
 use App\models\Cart;
+use App\models\User;
+use App\models\Batch;
 use App\models\Order;
 use App\Core\Database;
 use App\models\Products;
-use App\Core\BaseController;
-use App\models\ProductCategory;
 use App\models\OrderStatus;
-use App\models\User;
+use App\Core\BaseController;
+use App\models\PaymentMethod;
+use App\models\ProductCategory;
 
 class CustomerController extends BaseController
 {
@@ -22,45 +24,28 @@ class CustomerController extends BaseController
 
     public function index()
     {
-
-            // Fetch all products
-            $products = Products::all();
-            $category = ProductCategory::all();
+        $productBatch = Batch::getProductFirstBatch();
+    
+        // Debug to check if data is returned
+        if (empty($productBatch)) {
+            die("No product batches found.");
+        }
+    
+        $category = ProductCategory::all();
     
         $data = [
             'title' => 'Customer Dashboard',
-            'products' => $products,
+            'productBatch' => $productBatch,
             'category'=> $category,
             'content' => $this->renderView('/customer/dashboard/index', [
-                'products' => $products,
+                'productBatch' => $productBatch,
                 'categories' => $category
             ])
         ];
     
         $this->view('layout/main', $data);
     }
-    public function search()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $pdo = Database::connect();
-            $searchQuery = trim($_POST['query']) ?? '';
-
-            if (!empty($searchQuery)) {
-                $stmt = $pdo->prepare(
-                "SELECT p.*, pc.product_category FROM products p 
-                        JOIN product_category pc ON p.product_category_id = pc.id
-                        WHERE p.product_name LIKE :query OR pc.product_category LIKE :query");
-                $stmt->execute(['query' => '%' . $searchQuery . '%']);
-                $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                echo json_encode(["status" => "success", "products" => $products]);
-                exit;
-            } else {
-                echo json_encode(["status" => "error", "message" => "No products found"]);
-                exit;
-            }
-        }
-    }
+    
 
     public function profile()
 {
@@ -123,20 +108,19 @@ class CustomerController extends BaseController
         $this->view('layout/main', $data);
     }
 
-    public function viewProduct() {
-        // Validate and sanitize product ID
-        $productId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+    public function viewProduct($id) {
+        // Validate and sanitize product I
     
-        if ($productId <= 0) {
+        if ($id <= 0) {
             die("Invalid Product ID.");
         }
     
         // Fetch product details
-        $product = Products::find($productId);
-        $productSpecification = Products::getProductSpecification($productId);
-        $soldProduct = Order::soldProducts($productId);
+        $product = Batch::getBatch($id);
+        $productSpecification = Batch::getProductSpecification($id);
+        $soldProduct = Order::soldProducts($id);
         if (!$product) {
-            die("Product not found.");
+            die("Batch not found.");
         }
     
         // Fetch user data from session
@@ -154,9 +138,9 @@ class CustomerController extends BaseController
             'content' => $this->renderView('/customer/product_detail/index', [
                 'product' => $product,
                 'user' => $user,
-                'soldProduct' => $soldProduct,
                 'productSpecification' => $productSpecification,
-                'cartCount' => $cartCount
+                'cartCount' => $cartCount,
+                'soldProduct' => $soldProduct
             ])
         ];
     
@@ -165,15 +149,10 @@ class CustomerController extends BaseController
     }
     
     
-    public function viewCategory() {
-    
-        // Check if the product ID is set in the URL
-        if (!isset($_GET['category'])) {
-            die("Invalid Category.");
-        }
+    public function viewCategory($id) {
     
         // Fetch product details
-        $category = Products::getProductCategory($_GET['category']);
+        $category = Products::getProductCategory($id);
     
         // Fetch user data (assuming you store user data in session)
         $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
@@ -223,7 +202,8 @@ class CustomerController extends BaseController
     
         // Fetch only the selected cart items belonging to the user
         $cartItems = Cart::getSelectedItems($user['id'], $selectedCartIds);
-    
+        $user = User::getUserAccount($user['id']);
+        $payment = PaymentMethod::all();
         if (empty($cartItems)) {
             header('Location: /customer/cart?error=No valid cart items found.');
             exit;
@@ -235,7 +215,8 @@ class CustomerController extends BaseController
             'user' => $user,
             'content' => $this->renderView('/customer/checkout/index', [
                 'cartItems' => $cartItems,
-                'user' => $user
+                'user' => $user,
+                'payment' => $payment
             ])
         ];
     

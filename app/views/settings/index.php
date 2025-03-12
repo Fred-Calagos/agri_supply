@@ -36,5 +36,14 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-sm-12 col-md-4 mt-4">
+            <div class="card position-relative">
+                <a href="/payment" class="stretched-link"></a> <!-- Adjusted URL -->
+                <div class="card-body text-center">
+                <i class='bx bxl-mastercard'></i>
+                    <h5 class="card-title mt-2">PAYMENT METHOD</h5>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

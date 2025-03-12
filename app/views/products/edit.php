@@ -33,16 +33,11 @@
                         <div class="section-title mb-2">Product Details</div>
 
                         <div class="row mt-2">
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label for="productName" class="form-label">Product Name</label>
                                 <input type="text" class="form-control" id="productName" name="product_name" value="<?= htmlspecialchars($product['product_name']) ?>" required>
                             </div>
-                            <div class="col-md-3 mb-3">
-                                    <label for="variety" class="form-label">Variety</label>
-                                    <input type="text" class="form-control" id="variety" name="variety" value="<?= htmlspecialchars($product['variety']) ?? '' ?>" required>
-                            </div>
-
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label for="productCategory" class="form-label">Category</label>
                                 <select class="form-control" id="productCategory" name="product_category_id" required>
                                     <option value="" hidden disabled>Select a Category</option>
@@ -54,7 +49,7 @@
                                 </select>
                             </div>
         
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label for="productStatus" class="form-label">Status</label>
                                 <select class="form-control" id="productStatus" name="product_status_id" required>
                                     <?php foreach ($productStatus as $prodStatus): ?>
@@ -73,41 +68,29 @@
                             </div>
                         </div>
                     </div>
+<div class="row">
+    <div class="section-title">Product Specifications</div>
+</div>
+
+<div class="row">
+    <?php 
+
+    if (!empty($productSpecifications)): ?>
+    <div class="row">
+        <?php foreach ($productSpecifications as $spec): ?>
+            <div class="col-md-3 mb-3">
+                <label for="spec_<?= htmlspecialchars($spec['id']) ?>" class="form-label"><?= htmlspecialchars($spec['name']) ?></label>
+                <input type="text" class="form-control" id="spec_<?= htmlspecialchars($spec['id']) ?>" name="specifications[<?= htmlspecialchars($spec['id']) ?>]" value="<?= htmlspecialchars($spec['value']) ?>">
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php else: ?>
+        <p class="text-muted">No specifications available.</p>
+    <?php endif; ?>
+</div>
+
                 </div>
-
-                <div class="row p-3">
-                    <div class="section-title">Pricing & Shipping</div>
-
-                    <div class="col-md-3">
-                        <label for="costPrice" class="form-label">Cost Price (₱)</label>
-                        <input type="number" class="form-control" id="costPrice" name="cost_price" min="0" step="0.01" value="<?= htmlspecialchars($product['cost_price']) ?>" required>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="profitMargin" class="form-label">Profit Margin (%)</label>
-                        <input type="number" class="form-control" id="profitMargin" name="profit_margin" min="0" max="100" step="0.01" value="<?= htmlspecialchars($product['profit_margin']) ?>">
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="productPrice" class="form-label">Selling Price (₱)</label>
-                        <input type="number" class="form-control" id="productPrice" name="selling_price" min="0" step="0.01" value="<?= htmlspecialchars($product['selling_price']) ?>" readonly>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="shippingFee" class="form-label">Shipping Fee (₱)</label>
-                        <input type="number" class="form-control" id="shippingFee" name="shipping_fee" min="0" step="0.01" value="<?= htmlspecialchars($product['shipping_fee']) ?>">
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="stocks" class="form-label">Stocks</label>
-                        <input type="number" class="form-control" id="stocks" name="stocks" min="0" step="0.01" value="<?= htmlspecialchars($product['stocks']) ?>">
-                    </div>
-                    <div class="col-md-3">
-                            <label for="stock_unit" class="form-label">Stock Units</label>
-                            <input type="text" class="form-control" id="stock_unit" name="stock_unit" value="<?= htmlspecialchars($product['stock_unit']) ?? ''?>" required>
-                    </div>
-                </div>
-
+                
                 <div class="d-flex justify-content-between mt-3">
                     <button type="reset" class="btn btn-secondary btn-sm">Reset</button>
                     <button type="submit" class="btn btn-success btn-sm"><i class="bx bx-save"></i> Update Product</button>
@@ -116,16 +99,7 @@
         </div>
     </form>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Auto-calculate product price based on cost price & profit margin
-    document.getElementById('profitMargin').addEventListener('keyup', function () {
-        const costPrice = parseFloat(document.getElementById('costPrice').value) || 0;
-        const profitMargin = parseFloat(this.value) || 0;
-        const sellingPrice = costPrice + (costPrice * (profitMargin / 100));
-        document.getElementById('productPrice').value = sellingPrice.toFixed(2);
-    });
 
     function previewImage(event) {
         const imagePreview = document.getElementById('productImagePreview');

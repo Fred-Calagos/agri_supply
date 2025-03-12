@@ -61,23 +61,8 @@ class ProductController extends BaseController
             $product_category_id = $_POST['product_category_id'] ?? '';
             $product_status = $_POST['product_status_id'] ?? '';
             $product_description = $_POST['product_description'] ?? '';
-            $cost_price = $_POST['cost_price'] ?? 0;
-            $profit_margin = $_POST['profit_margin'] ?? 0;
-            $selling_price = $_POST['selling_price'] ?? 0;
-            $shipping_fee = $_POST['shipping_fee'] ?? 0;
-            $stocks = $_POST['stocks'] ?? 0;
-            $stock_unit = $_POST['stock_unit'] ?? '';
             $specifications = $_POST['specifications'] ?? [];
-    
-            // // If you specifically want the 'Variety' value
-            // $variety = '';
-            // foreach ($specifications as $specification_id => $value) {
-            //     // Assuming you know the specification_id of "Variety", you can check like:
-            //     if ($this->isVarietySpecification($specification_id)) {
-            //         $variety = $value;
-            //         break;
-            //     }
-            // }
+
     
             // File upload handling
             $image = null;
@@ -95,12 +80,6 @@ class ProductController extends BaseController
                 'product_category_id' => $product_category_id,
                 'product_status_id' => $product_status,
                 'product_description' => $product_description,
-                'cost_price' => $cost_price,
-                'profit_margin' => $profit_margin,
-                'selling_price' => $selling_price,
-                'shipping_fee' => $shipping_fee,
-                'stocks' => $stocks,
-                'stock_unit' => $stock_unit,
                 'image_path' => $image
             ];
     
@@ -134,6 +113,7 @@ class ProductController extends BaseController
     
     public function edit($id) {
         $product = Products::find($id);
+        $productSpecifications = ProductSpecifications::getProductSpecifications( $id);
         $categories = ProductCategory::all();
         $productStatus = ProductStatus::all();
 
@@ -142,7 +122,10 @@ class ProductController extends BaseController
             'product' => $product,
             'categories' => $categories,
             'productStatus'=> $productStatus,
-            'content' => $this->renderView('/products/edit', ['product' => $product, 'categories' => $categories, 'productStatus'=> $productStatus])
+            'productSpecifications' => $productSpecifications,
+            'content' => $this->renderView('/products/edit', ['product' => $product, 'categories' => $categories, 'productStatus'=> $productStatus,
+            'productSpecifications' => $productSpecifications
+            ])
         ];
 
         $this->view('layout/main', $data);
@@ -153,42 +136,54 @@ class ProductController extends BaseController
             // Get the form data
             $product_name = $_POST['product_name'] ?? '';
             $product_category_id = $_POST['product_category_id'] ?? '';
-            $variety = $_POST['variety'] ?? '';
             $product_status_id = $_POST['product_status_id'] ?? '';
             $product_description = $_POST['product_description'] ?? '';
-            $cost_price = $_POST['cost_price'] ?? 0;
-            $profit_margin = $_POST['profit_margin'] ?? 0;
-            $selling_price = $_POST['selling_price'] ?? 0;
-            $shipping_fee = $_POST['shipping_fee'] ?? 0;
-            $stocks = $_POST['stocks'] ?? 0;
-            $stock_unit = $_POST['stock_unit'] ?? '';
+            $specifications = $_POST['specifications'] ?? [];
+            
+            // Fetch existing product details
+            $existingProduct = Products::find($id);
     
+            // File upload handling
+            $image = $existingProduct['image_path']; // Keep existing image if no new one is uploaded
+            if (!empty($_FILES['image']['name'])) {
+                $image_name = time() . '_' . $_FILES['image']['name'];
+                $upload_dir = __DIR__ . '/../../public/uploads/';
+                $image_path = '/uploads/' . $image_name;
     
-            // Save to database (assuming you have a Product model)
-            $productModel = new Products();
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $image_name)) {
+                    // Delete old image if a new one is uploaded
+                    if (!empty($existingProduct['image_path']) && file_exists(__DIR__ . '/../../public' . $existingProduct['image_path'])) {
+                        unlink(__DIR__ . '/../../public' . $existingProduct['image_path']);
+                    }
+                    $image = $image_path;
+                }
+            }
+    
+            // Update product details
             $productData = [
                 'product_name' => $product_name,
                 'product_category_id' => $product_category_id,
-                'variety' => $variety,
                 'product_status_id' => $product_status_id,
                 'product_description' => $product_description,
-                'cost_price' => $cost_price,
-                'profit_margin' => $profit_margin,
-                'selling_price' => $selling_price,
-                'shipping_fee' => $shipping_fee,
-                'stocks' => $stocks,
-                'stock_unit' => $stock_unit
+                'image_path' => $image, // Save new image path
             ];
     
-            if ($productModel->update($id, $productData)) {
-                // Redirect to products list or success page
+            $updateProduct = Products::update($id, $productData);
+    
+            // Update specifications
+            foreach ($specifications as $spec_id => $spec_value) {
+                ProductSpecifications::update($spec_id, ['value' => $spec_value]);
+            }
+    
+            if ($updateProduct) {
                 header('Location: /products');
                 exit;
             } else {
-                die('Error saving product.');
+                die('Error updating product.');
             }
         }
     }
+    
 
 
 }

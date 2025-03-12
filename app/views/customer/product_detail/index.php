@@ -38,10 +38,11 @@
                 <!-- Product Information (Right) -->
                 <div class="flex-grow-1">
                     <h3 class="mb-3"><?= htmlspecialchars($product['product_name']) ?></h3>
+                    <h3 class="mb-3"><?= htmlspecialchars($product['batch_number']) ?></h3>
                     <h5 class="text-success fw-bold">₱ <?= number_format($product['selling_price'], 2) ?> per <?= $product['stock_unit']  ?></h5>
                 
                     <form id="addToCartForm">
-                    <input type="hidden" id="productId" name="product_id" value="<?= $product['id'] ?>">
+                    <input type="hidden" id="batch_id" name="batch_id" value="<?= $product['id'] ?>">
                     <input type="hidden" id="userId" name="user_id" value="<?= $user['id'] ?>">
                                 <!-- Quantity Selector -->
                                 <div class="mb-3">
@@ -90,14 +91,17 @@
             <div class="row  mb-2 small">
                     <div class="col-5 text-muted"><p class="small">Description</p></div>
                     <div class="col-1">:</div>
-                    <div class="col-6 col-md-5 text-start"> <?= nl2br(htmlspecialchars($product['product_description'])) ?></div>
+                    <div class="col-6 col-md-5 text-start"> <?= htmlspecialchars($product['product_description']) ?></div>
             </div>
+            
             <?php foreach ($productSpecification as $ps): ?>
                 <div class="row  mb-2 small">
                     <div class="col-5 text-muted"><?= htmlspecialchars($ps['name']); ?></div>
                     <div class="col-1">:</div>
                     <div class="col-6 col-md-5 text-start"><?= htmlspecialchars($ps['value']); ?></div>
                 </div>
+
+
             <?php endforeach; ?>
         </div>
 
@@ -112,7 +116,7 @@
 $(document).ready(function () {
     $("#addToCartForm").submit(function (e) {
         e.preventDefault(); // Prevent normal form submission
-        var productId = $('#productId').val(); // Get grade_id
+        var productId = $('#batch_id').val(); // Get grade_id
         let formData = $(this).serialize(); // Serialize form data
 
         $.ajax({
@@ -131,7 +135,7 @@ $(document).ready(function () {
                 if (response.status === "success") {
                     setTimeout(() => {
                         $(".message-container").fadeOut();
-                        window.location.href = "/customer/product_detail?id=" + productId;
+                        window.location.href = "/customer/product_detail/" + productId;
                     }, 1000);
                 }
             },
